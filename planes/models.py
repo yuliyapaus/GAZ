@@ -3,11 +3,42 @@ from django.contrib.auth.models import User
 
 
 class Curator(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=120)
 
 
-class FinanceCosts(models.Model): # статья финансирования
-    curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING) # TODO
+class CustomUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING)
+
+
+class FinanceCosts(models.Model): #  A 1000      B 2000
+    total = models.FloatField(verbose_name="сумма 4-x кварталов")
+    title = models.CharField(
+        verbose_name="название статьи",
+        max_length=100
+    )
+
+
+class Quart(models.Model): # A1-250|A2-250|A3-250|A4-250|B1-500|B2-500|B3-500|B4-500
+    finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING)
+    total = models.FloatField(verbose_name="сумма по кварталу")
+    title = models.CharField(max_length=50)
+
+
+class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
+    quart = models.ForeignKey(
+        Quart,
+        on_delete=models.DO_NOTHING,
+        verbose_name="квартал куратора"
+    )
+    curator = models.ForeignKey(
+        Curator,
+        on_delete=models.DO_NOTHING,
+        verbose_name="куратор"
+    )
+    total = models.FloatField(
+        verbose_name="деньги выделенные данному куратору в данной статье данного квартала"
+    )
 
 
 class PurchaseType(models.Model):
@@ -394,8 +425,6 @@ class Contract(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # TODO   contract_mode
 
-# class Planing(models.Model):
 
-
-# Create your models here.
-
+class Planing(models.Model):
+    pass
