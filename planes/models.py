@@ -5,24 +5,66 @@ from django.contrib.auth.models import User
 class Curator(models.Model):
     title = models.CharField(max_length=120)
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Подразделение/куратор'
+        verbose_name_plural = 'Подразделение/кураторы'
+
 
 class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        try:
+            return str(self.user)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
 
 class FinanceCosts(models.Model): #  A 1000      B 2000
     total = models.FloatField(verbose_name="сумма 4-x кварталов")
     title = models.CharField(
         verbose_name="название статьи",
-        max_length=100
+        max_length=100,
     )
+
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Статья финансирования'
+        verbose_name_plural = 'Статьи финансирования'
 
 
 class Quart(models.Model): # A1-250|A2-250|A3-250|A4-250|B1-500|B2-500|B3-500|B4-500
     finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING)
     total = models.FloatField(verbose_name="сумма по кварталу")
     title = models.CharField(max_length=50)
+
+    # TODO сделать возможным выбор кварталов от 1 до 4
+
+    def __str__(self):
+        try:
+            return 'Квартал %s, статьи %s' % (self.title, self.finance_cost)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Квартал'
+        verbose_name_plural = 'Кварталы'
 
 
 class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
@@ -40,39 +82,128 @@ class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
         verbose_name="деньги выделенные данному куратору в данной статье данного квартала"
     )
 
+    def __str__(self):
+        try:
+            return 'Куратор %s, квартал %s' % (self.curator, self.quart)
+        except:
+            return 'Ошибка в данных'
 
-class PurchaseType(models.Model):
+    class Meta:
+        verbose_name_plural = 'Поквартальные финансы кураторов'
+
+
+
+class PurchaseType(models.Model): # TODO что это такое в ТЗ?
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
 
-class ActivityForm(models.Model):
+    class Meta:
+        verbose_name = 'Тип договора'
+        verbose_name_plural = 'Типы договоров'
+
+
+class ActivityForm(models.Model): # TODO что это такое в ТЗ?
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Вид договора'
+        verbose_name_plural = 'Виды договоров'
 
 class StateASEZ(models.Model):
     title = models.CharField(max_length=200)
+
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Состояние АСЭЗ'
+        verbose_name_plural = 'Состояние АСЭЗ'
 
 
 class NumberPZTRU(models.Model):
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Номер ППЗ АСЭЗ'
+        verbose_name_plural = 'Номер ППЗ АСЭЗ'
+
 
 class ContractStatus(models.Model):
     title = models.CharField(max_length=200)
+
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Статус договора'
+        verbose_name_plural = 'Статусы договоров'
 
 
 class Currency(models.Model):
     title = models.CharField(max_length=10)
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
 
-class Price(models.Model):
+    class Meta:
+        verbose_name = 'Валюта'
+        verbose_name_plural = 'Типы валют'
+
+
+class Price(models.Model): # TODO что это в тз? Потеряна связь с договором или так и должно быть?
     value = models.FloatField(verbose_name="цена")
     currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
 
+    def __str__(self):
+        try:
+            return str(self.value) + str(self.currency)
+        except:
+            return 'Ошибка в данных'
 
-class ContractTerm(models.Model):
+    class Meta:
+        verbose_name = 'Сумма договора'
+        verbose_name_plural = 'Суммы договоров'
+
+
+class ContractTerm(models.Model): # TODO нет ссылки на договор?
     start_date = models.DateField()
     end_date = models.DateField()
+
+    def __str__(self):
+        try:
+            return 'с %s по %s' % (str(self.start_date), str(self.end_date))
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Период действия договора'
+        verbose_name_plural = 'Период действия договора'
 
 
 class Counterpart(models.Model):
@@ -81,6 +212,16 @@ class Counterpart(models.Model):
     reg_addr = models.CharField(max_length=255)
     UNP = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+
+    def __str__(self):
+        try:
+            return '%s УНП: %s' % (self.name, str(self.UNP))
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Контрагент'
+        verbose_name_plural = 'Контрагенты'
 
 
 class Contract(models.Model):
@@ -96,13 +237,13 @@ class Contract(models.Model):
     )
     contract_type = models.BooleanField(
         default=True,
-        verbose_name="Тип договора",
-        help_text="филиал или центръ"
+        verbose_name="Тип договора (филиал)",
+        help_text="Да - филиал, нет - центр"
     )   # default fillial
     contract_mode = models.BooleanField(
         default=True,
-        verbose_name="Вид договора",
-        help_text="основной либо доп.согл.")   # default main
+        verbose_name="Вид договора (основной)",
+        help_text="Да - основной, нет - доп. согл")   # default main
     purchase_type = models.ForeignKey(
         PurchaseType,
         verbose_name="тип закупки",
@@ -425,6 +566,28 @@ class Contract(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # TODO   contract_mode
 
+    def __str__(self):
+        try:
+            return 'Договор %s, куратор %s, ст. фин %s' % (self.title,
+                                                           self.curator,
+                                                           self.finance_cost)
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Договор'
+        verbose_name_plural = 'Договоры'
+
 
 class Planing(models.Model):
     pass
+
+    def __str__(self):
+        try:
+            return 'Здесь пока ничего нет'
+        except:
+            return 'Ошибка в данных'
+
+    class Meta:
+        verbose_name = 'Планирование'
+        verbose_name_plural = 'Планирование'
