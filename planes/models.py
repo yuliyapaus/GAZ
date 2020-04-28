@@ -50,7 +50,11 @@ class FinanceCosts(models.Model): #  A 1000      B 2000
 
 
 class Quart(models.Model): # A1-250|A2-250|A3-250|A4-250|B1-500|B2-500|B3-500|B4-500
-    finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING)
+    finance_cost = models.ForeignKey(
+        FinanceCosts,
+        on_delete=models.DO_NOTHING,
+        verbose_name='Статья финансирования'
+    )
     total = models.FloatField(verbose_name="сумма по кварталу")
     title = models.CharField(max_length=50)
 
@@ -89,8 +93,8 @@ class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
             return 'Ошибка в данных'
 
     class Meta:
+        verbose_name = 'Поквартальные финансы кураторов'
         verbose_name_plural = 'Поквартальные финансы кураторов'
-
 
 
 class PurchaseType(models.Model): # TODO что это такое в ТЗ?
@@ -178,7 +182,11 @@ class Currency(models.Model):
 
 class Price(models.Model): # TODO что это в тз? Потеряна связь с договором или так и должно быть?
     value = models.FloatField(verbose_name="цена")
-    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
+    currency = models.ForeignKey(
+        Currency,
+        on_delete=models.DO_NOTHING,
+        verbose_name='Валюта'
+    )
 
     def __str__(self):
         try:
@@ -191,7 +199,7 @@ class Price(models.Model): # TODO что это в тз? Потеряна свя
         verbose_name_plural = 'Суммы договоров'
 
 
-class ContractTerm(models.Model): # TODO нет ссылки на договор?
+class ContractTerm(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
@@ -207,7 +215,7 @@ class ContractTerm(models.Model): # TODO нет ссылки на договор
 
 
 class Counterpart(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Наименование')
     email = models.EmailField()
     reg_addr = models.CharField(max_length=255)
     UNP = models.CharField(max_length=100)
@@ -300,7 +308,11 @@ class Contract(models.Model):
         blank=True
     )
     contract_sum_NDS_RUB = models.FloatField(verbose_name="сумма договора с НДС рос.руб.")
-    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
+    currency = models.ForeignKey(
+        Currency,
+        on_delete=models.DO_NOTHING,
+        verbose_name='Валюта'
+    )
     delta_data_ASEZ = models.FloatField(verbose_name="отклонение от НМЦ в АСЭЗ")
     number_KGG = models.CharField(
         max_length=100,
@@ -308,27 +320,42 @@ class Contract(models.Model):
         null=True,
         blank=True
     )
+
     plane_sum_SAP_total = models.FloatField(verbose_name="плановая сумма САП")
     plane_sum_SAP_1 = models.FloatField(default=0, verbose_name="сумма САП 1-й квартал")
     plane_sum_SAP_2 = models.FloatField(default=0, verbose_name="сумма САП 2-й квартал")
     plane_sum_SAP_3 = models.FloatField(default=0, verbose_name="сумма САП 3-й квартал")
     plane_sum_SAP_4 = models.FloatField(default=0, verbose_name="сумма САП 4-й квартал")
-    register_number_SAP = models.CharField(max_length=100)
+    register_number_SAP = models.CharField(
+        max_length=100,
+        verbose_name='Регистрационный номер SAP'
+    )
+
     contract_number = models.CharField(
         max_length=100,
         verbose_name="номер договора",
         null=True,
         blank=True
     )
-    plane_sign_date = models.DateField()
-    fact_sign_date = models.DateField(null=True, blank=True)
+    plane_sign_date = models.DateField(
+        verbose_name='Планируемая дата заключения договора'
+    )
+    fact_sign_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name='Фактическая дата заключения договора'
+    )
     contract_term = models.ForeignKey(
         ContractTerm,
-        verbose_name="период действия",
+        verbose_name="период действия договора",
         on_delete=models.DO_NOTHING
     )
-    counterpart = models.ForeignKey(Counterpart, on_delete=models.DO_NOTHING)
-    contract_sum = models.FloatField(verbose_name="сумма всего договора без НДС")
+    counterpart = models.ForeignKey(
+        Counterpart,
+        on_delete=models.DO_NOTHING,
+        verbose_name='Контрагент'
+    )
+
     contract_sum_1 = models.FloatField(
         verbose_name="сумма 1-й квартал договора без НДС",
         null=True,
@@ -349,6 +376,7 @@ class Contract(models.Model):
         null=True,
         blank=True
     )
+    contract_sum = models.FloatField(verbose_name="сумма всего договора без НДС")
     contract_sum_NDS_BYN = models.FloatField(
         verbose_name="сумма договора с НДС бел.руб.",
         blank=True,
