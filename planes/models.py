@@ -97,7 +97,7 @@ class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
         verbose_name_plural = 'Поквартальные финансы кураторов'
 
 
-class PurchaseType(models.Model): # TODO что это такое в ТЗ?
+class PurchaseType(models.Model):
     title = models.CharField(max_length=200)
 
     def __str__(self):
@@ -107,8 +107,8 @@ class PurchaseType(models.Model): # TODO что это такое в ТЗ?
             return 'Ошибка в данных'
 
     class Meta:
-        verbose_name = 'Тип договора'
-        verbose_name_plural = 'Типы договоров'
+        verbose_name = 'Тип закупки'
+        verbose_name_plural = 'Типы закупок'
 
 
 class ActivityForm(models.Model): # TODO что это такое в ТЗ?
