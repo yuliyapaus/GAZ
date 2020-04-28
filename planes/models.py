@@ -121,8 +121,8 @@ class ActivityForm(models.Model): # TODO что это такое в ТЗ?
             return 'Ошибка в данных'
 
     class Meta:
-        verbose_name = 'Вид договора'
-        verbose_name_plural = 'Виды договоров'
+        verbose_name = 'Вид деятельности'
+        verbose_name_plural = 'Виды деятельности'
 
 class StateASEZ(models.Model):
     title = models.CharField(max_length=200)
