@@ -9,10 +9,7 @@
 <h1>Привет, {{ user.username }}  <button><a href="{% url 'logout' %}">Выйти</a></button></h1>
 {% else %}
 <h1>Авторизироваться <button><a href="{% url 'login' %}">click me</a></button></h1>
-
+<h1>Зарегистрироваться <button><a href="{% url 'register' %}">click me</a></button></h1>
 {% endif %}
-
-
-
 </body>
 </html>
