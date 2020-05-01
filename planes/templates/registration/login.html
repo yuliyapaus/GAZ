@@ -5,21 +5,19 @@
     <title>Login</title>
 </head>
 <body>
+{% if user.is_authenticated %}
+<h1>Вы вошли, как: {{ user.username }}</h1><button><a href="{% url 'logout' %}">Выйти</a></button></h1>
+{% else %}
+<form method="post" action="{% url 'login' %}">
 
-    {% if user.is_authenticated %}
-    <h1>Вы авторизованы как: {{ user.username }}</h1>
-    {% else %}
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <p>Имя пользователя:{{ form.username }}</p>
-        <p>Пароль:{{ form.password }}</p>
-        <p><input type="submit" value="login"></p>
-        <input type="hidden" name="next" value="{{ next }}">
-    </form>
-    {% endif %}
-    {% if form.errors %}
-    <h1>Проверьте введенные вами данные</h1>
-    {% endif %}
-
+    {% csrf_token %}
+    <p>Имя пользователя:{{ form.username }}</p>
+    <p>Пароль:{{ form.password }}</p>
+    <p><input type="submit" value="Войти"></p>
+</form>
+{% endif %}
+{% if form.errors %}
+<h1>проверьте введенные вами данные</h1>
+{% endif %}
 </body>
 </html>
