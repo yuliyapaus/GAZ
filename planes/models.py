@@ -5,10 +5,16 @@ from django.contrib.auth.models import User
 class Curator(models.Model):
     title = models.CharField(max_length=120)
 
+    def __str__(self):
+        return self.title
+
 
 class CustomUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.user.username
 
 
 class FinanceCosts(models.Model): #  A 1000      B 2000
@@ -18,11 +24,17 @@ class FinanceCosts(models.Model): #  A 1000      B 2000
         max_length=100
     )
 
+    def __str__(self):
+        return self.title
+
 
 class Quart(models.Model): # A1-250|A2-250|A3-250|A4-250|B1-500|B2-500|B3-500|B4-500
     finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING)
     total = models.FloatField(verbose_name="сумма по кварталу")
     title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.title}: {self.finance_cost.title}"
 
 
 class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
@@ -40,39 +52,66 @@ class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
         verbose_name="деньги выделенные данному куратору в данной статье данного квартала"
     )
 
+    def __str__(self):
+        return f"{self.curator.title} - {self.quart.title}: {self.quart.finance_cost.title}"
+
 
 class PurchaseType(models.Model):
     title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
 
 
 class ActivityForm(models.Model):
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.title
+
 
 class StateASEZ(models.Model):
     title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
 
 
 class NumberPZTRU(models.Model):
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.title
+
 
 class ContractStatus(models.Model):
     title = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.title
+
 
 class Currency(models.Model):
     title = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.title
 
 
 class Price(models.Model):
     value = models.FloatField(verbose_name="цена")
     currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
 
+    def __str__(self):
+        return f"{self.value} ({self.currency.title})"
+
 
 class ContractTerm(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.start_date} - {self.end_date}"
 
 
 class Counterpart(models.Model):
@@ -81,6 +120,9 @@ class Counterpart(models.Model):
     reg_addr = models.CharField(max_length=255)
     UNP = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Contract(models.Model):
@@ -421,6 +463,9 @@ class Contract(models.Model):
     economy_total_absolute = models.FloatField( # вычисляемое
         verbose_name='Абсолютная экономия по договору, всего'
     )
+
+    def __str__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # TODO   contract_mode
