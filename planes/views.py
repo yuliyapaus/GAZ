@@ -2,14 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
-from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.decorators import login_required
-
 
 @login_required
 def index(request):
-    context = {'pas': BaseUserManager().make_random_password(4)}
-    return render(request, 'planes/index.html',context)
+    return render(request, 'planes/index.html')
 
 def logout_view(request):
     logout(request)
