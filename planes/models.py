@@ -216,10 +216,10 @@ class ContractTerm(models.Model):
 
 class Counterpart(models.Model):
     name = models.CharField(max_length=100, verbose_name='Наименование')
-    email = models.EmailField()
-    reg_addr = models.CharField(max_length=255)
-    UNP = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+    email = models.EmailField(blank=True)
+    reg_addr = models.CharField(max_length=255, blank=True)
+    UNP = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         try:
