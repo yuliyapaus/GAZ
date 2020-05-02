@@ -75,13 +75,13 @@ WSGI_APPLICATION = 'BelGaz.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -146,6 +146,17 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'NAME': "spain_db",
+        "USER": "spain_user",
+        "PASSWORD": "Qq042020",
+        "HOST": "35.223.197.213",
+        "PORT": "5432"
+    }
+}
 
 # EMAIL_HOST = ''
 # EMAIL_PORT = 587
