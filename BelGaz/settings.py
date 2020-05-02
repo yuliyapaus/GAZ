@@ -158,9 +158,9 @@ DATABASES = {
     }
 }
 
-# EMAIL_HOST = ''
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = ''
-# EMAIL_HOST_PASSWORD = ''
-# EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'gazprombelgaz@gmail.com'
+EMAIL_HOST_PASSWORD = 'beltransgaz'
+EMAIL_USE_TLS = True
+
