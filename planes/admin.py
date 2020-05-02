@@ -6,8 +6,6 @@ from .models import (PurchaseType, ActivityForm, StateASEZ,
                      NumberPZTRU, ContractStatus, Currency,
                      Price, ContractTerm, Counterpart,)
 
-
-
 admin.site.register(Curator)
 admin.site.register(FinanceCosts)
 admin.site.register(CustomUser)
