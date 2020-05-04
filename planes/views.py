@@ -10,7 +10,6 @@ from django.core.mail import send_mail
 
 @login_required
 def index(request):
-
     return render(request, 'planes/index.html')
 
 def logout_view(request):
@@ -60,15 +59,14 @@ def register_view(request):
                     password
                 )
                 user.save()
-                messages.success(request, 'Регистрация прошла успешно')
                 send_mail(
                     'Hello from GAZ',
                     'Ваш пароль: ' + str(password),
-                    ' ',
+                    'gazprombelgaz@gmail.com',
                     [email],
                     fail_silently=False
                 )
-                return redirect('/')
+                return HttpResponse(("Регистрация прошла успешна, пароль отправлен на почту: %s") % str(email))
     else:
         form = RegisterForm()
     context = {'form': form}
