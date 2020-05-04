@@ -1,6 +1,6 @@
 from django.urls import path, include
 from planes import views
-from django.contrib.auth import urls
+
 
 urlpatterns = [
     path('', views.index),

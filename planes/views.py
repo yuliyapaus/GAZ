@@ -64,7 +64,7 @@ def register_view(request):
                 send_mail(
                     'Hello from GAZ',
                     'Ваш пароль: ' + str(password),
-                    'po4taforla2@gmail.com',
+                    ' ',
                     [email],
                     fail_silently=False
                 )
