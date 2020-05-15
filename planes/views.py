@@ -18,6 +18,7 @@ from .models import (
     Contract,
     SumsBYN,
     SumsRUR,
+    UserActivityJournal,
 )
 from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
@@ -77,6 +78,8 @@ def register_view(request):
                     password
                 )
                 user.save()
+                create_journal = UserActivityJournal.objects.create(user=user)
+                create_journal.save()
                 send_mail(
                     'Hello from GAZ',
                     'Ваш пароль: ' + str(password),
@@ -153,3 +156,10 @@ def fabricate_contract(request, contract_id=None):
                       'sum_byn_form': sum_byn_form,
                       'sum_rur_form': sum_rur_form,
                   })
+
+
+def adding_click_to_UserActivityJournal(request):
+     counter = UserActivityJournal.objects.get(user=request.user)
+     counter.clicks += 1
+     counter.save()
+     return HttpResponse('add_click')
