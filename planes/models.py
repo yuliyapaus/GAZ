@@ -3,24 +3,106 @@ from django.contrib.auth.models import User
 
 
 class Curator(models.Model):
-    title = models.CharField(max_length=120)
+    class Meta:
+        verbose_name = "Куратор"
+        verbose_name_plural = "Кураторы"
+
+    title = models.CharField(
+        max_length=120,
+        verbose_name="Куратор"
+    )
 
     def __str__(self):
-        return self.title
+        return f"{self.title}"
+
+
+class UserTypes(models.Model):
+    class Meta:
+        verbose_name = "Тип пользователя"
+        verbose_name_plural = "Типы пользователя"
+
+    title = models.CharField(
+        max_length=120,
+        verbose_name="Тип пользователя (Администратор, Куратор, БПиЭА, Пользователь)"
+    )
+
+
+class UserSub(models.Model):
+    group = models.ForeignKey(
+        UserTypes,
+        verbose_name="Группа пользователей",
+        on_delete=models.DO_NOTHING
+    )
+    title = models.CharField(
+        max_length=150,
+        verbose_name="Подтип обычных пользователей (Экономист, специалист АСЭЗ, Юрист)",
+        blank=True,
+        null=True
+    )
 
 
 class CustomUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
-    curator = models.ForeignKey(Curator, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Пользователь")
+    curator = models.ForeignKey(
+        Curator,
+        verbose_name="Подразделение (Куратор)",
+        on_delete=models.DO_NOTHING
+    )
+    email = models.EmailField()
+    name = models.CharField(
+        max_length=150,
+        verbose_name="Фамилия, Имя, Отчество"
+    )
+    position = models.CharField(
+        max_length=200,
+        verbose_name="Должность",
+        null=True,
+        blank=True
+    )
+    user_type = models.ForeignKey(
+        UserTypes,
+        verbose_name="Тип пользователя (Пользователь, Администратор, Куратор, Суперпользователь, БПиЭА)",
+        on_delete=models.DO_NOTHING
+    )
+    user_sub_type = models.ForeignKey(
+        UserSub,
+        verbose_name="Подтип пользователей (Юрист, специалист АСЭЗ, Экономист)",
+        blank=True,
+        null=True,
+        on_delete=models.DO_NOTHING
+    )
 
-    def __str__(self):
-        return self.user.username
+
+class UserActivityJournal(models.Model):
+    user = models.ForeignKey(
+        User,
+        verbose_name="Пользователь",
+        on_delete=models.DO_NOTHING)
+    date_time_of_activity = models.DateTimeField()
+    activity = models.CharField(
+        max_length=200,
+        verbose_name="Действия пользователя в системе",
+        blank=True,
+        null=True
+    )
+    clicks = models.PositiveIntegerField(
+        verbose_name="Количество кликов пользователя",
+        blank=True,
+        null=True
+    )
+    activity_system_module = models.CharField(
+        max_length=100,
+        verbose_name="Раздел системы",
+        blank=True
+    )
 
 
-class FinanceCosts(models.Model): #  A 1000      B 2000
-    total = models.FloatField(verbose_name="сумма 4-x кварталов")
+class FinanceCosts(models.Model):
     title = models.CharField(
-        verbose_name="название статьи",
+        verbose_name="Название статьи",
         max_length=100
     )
 
@@ -28,105 +110,78 @@ class FinanceCosts(models.Model): #  A 1000      B 2000
         return self.title
 
 
-class Quart(models.Model): # A1-250|A2-250|A3-250|A4-250|B1-500|B2-500|B3-500|B4-500
-    finance_cost = models.ForeignKey(FinanceCosts, on_delete=models.DO_NOTHING)
-    total = models.FloatField(verbose_name="сумма по кварталу")
-    title = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f"{self.title}: {self.finance_cost.title}"
-
-
-class CuratorQuartCosts(models.Model): # vadim a1 100    ser a1 100
-    quart = models.ForeignKey(
-        Quart,
-        on_delete=models.DO_NOTHING,
-        verbose_name="квартал куратора"
-    )
-    curator = models.ForeignKey(
-        Curator,
-        on_delete=models.DO_NOTHING,
-        verbose_name="куратор"
-    )
-    total = models.FloatField(
-        verbose_name="деньги выделенные данному куратору в данной статье данного квартала"
-    )
-
-    def __str__(self):
-        return f"{self.curator.title} - {self.quart.title}: {self.quart.finance_cost.title}"
-
-
 class PurchaseType(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Вид закупки (Конкурентная, неконкурентная)"
+    )
 
 
 class ActivityForm(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Вид деятельности"
+    )
 
 
 class StateASEZ(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Состояние АСЭЗ"
+    )
 
 
 class NumberPZTRU(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Номер пункта ПоЗТРУ"
+    )
 
 
 class ContractStatus(models.Model):
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
+    title = models.CharField(
+        max_length=200,
+        verbose_name="Статус договора"
+    )
 
 
 class Currency(models.Model):
-    title = models.CharField(max_length=10)
-
-    def __str__(self):
-        return self.title
-
-
-class Price(models.Model):
-    value = models.FloatField(verbose_name="цена")
-    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return f"{self.value} ({self.currency.title})"
+    title = models.CharField(
+        max_length=10,
+        verbose_name="Валюта"
+    )
 
 
-class ContractTerm(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
+class ContractType(models.Model):
+    title = models.CharField(
+        max_length=150,
+        help_text="Тип договора(Центр, Филиал)"
+    )
 
-    def __str__(self):
-        return f"{self.start_date} - {self.end_date}"
+
+class ContractMode(models.Model):
+    title = models.CharField(
+        max_length=150,
+        help_text="Вид договора (Основной, доп.соглашение)"
+    )
 
 
 class Counterpart(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Контрагент"
+    )
     email = models.EmailField()
     reg_addr = models.CharField(max_length=255)
     UNP = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
-
 
 class Contract(models.Model):
-    title = models.CharField(max_length=150, verbose_name="наименование договора")
+    title = models.CharField(
+        max_length=150,
+        verbose_name="наименование договора"
+    )
     finance_cost = models.ForeignKey(
         FinanceCosts,
         on_delete=models.DO_NOTHING,
@@ -136,20 +191,22 @@ class Contract(models.Model):
         on_delete=models.DO_NOTHING,
         verbose_name="Куратор"
     )
-    contract_type = models.BooleanField(
-        default=True,
+    contract_type = models.ForeignKey(
+        ContractType,
         verbose_name="Тип договора",
+        on_delete=models.DO_NOTHING,
         help_text="филиал или центръ"
-    )   # default fillial
-    contract_mode = models.BooleanField(
-        default=True,
+    )
+    contract_mode = models.ForeignKey(
+        ContractMode,
         verbose_name="Вид договора",
-        help_text="основной либо доп.согл.")   # default main
+        on_delete=models.DO_NOTHING,
+        help_text="основной либо доп.согл.")
     purchase_type = models.ForeignKey(
         PurchaseType,
         verbose_name="тип закупки",
         on_delete=models.DO_NOTHING,
-        help_text="вводить тип закупки которая может меняться"
+        help_text="Вид закупки (конкурентная, неконкурентная)"
     )
     activity_form = models.ForeignKey(
         ActivityForm,
@@ -181,295 +238,207 @@ class Contract(models.Model):
         on_delete=models.DO_NOTHING,
         null=True,
         blank=True
-        )
-    plane_load_date_ASEZ = models.DateField(verbose_name="планируемая дата загрузки в АСЭЗ")
+    )
+    plan_load_date_ASEZ = models.DateField(
+        verbose_name="планируемая дата загрузки в АСЭЗ",
+    )
     fact_load_date_ASEZ = models.DateField(
         verbose_name="фактическая дата загрузки в АСЭЗ",
         null=True,
         blank=True
     )
-    start_max_price_ASEZ_NDS = models.ForeignKey(
-        Price,
-        verbose_name="начальная максимальная цена АСЭЗ с НДС рос. руб.",
-        null=True,
+    currency = models.ForeignKey(
+        Currency,
+        on_delete=models.DO_NOTHING,
         blank=True,
-        on_delete=models.DO_NOTHING
+        null=True
     )
-    currency_rate_on_load_date_ASEZ_NDS = models.FloatField(
-        verbose_name="курс валюты на дату загрузки в бел.руб.",
-        null=True,
-        blank=True
-    )
-    contract_sum_NDS_RUB = models.FloatField(verbose_name="сумма договора с НДС рос.руб.")
-    currency = models.ForeignKey(Currency, on_delete=models.DO_NOTHING)
-    delta_data_ASEZ = models.FloatField(verbose_name="отклонение от НМЦ в АСЭЗ")
     number_KGG = models.CharField(
         max_length=100,
         verbose_name="номер договора от центрального органа",
         null=True,
         blank=True
     )
-    plane_sum_SAP_total = models.FloatField(verbose_name="плановая сумма САП")
-    plane_sum_SAP_1 = models.FloatField(default=0, verbose_name="сумма САП 1-й квартал")
-    plane_sum_SAP_2 = models.FloatField(default=0, verbose_name="сумма САП 2-й квартал")
-    plane_sum_SAP_3 = models.FloatField(default=0, verbose_name="сумма САП 3-й квартал")
-    plane_sum_SAP_4 = models.FloatField(default=0, verbose_name="сумма САП 4-й квартал")
-    register_number_SAP = models.CharField(max_length=100)
+    register_number_SAP = models.CharField(
+        max_length=100,
+        verbose_name="Регистрационный номер в САП",
+        null=True,
+        blank=True
+    )
     contract_number = models.CharField(
         max_length=100,
-        verbose_name="номер договора",
+        verbose_name="Номер договора",
         null=True,
         blank=True
     )
-    plane_sign_date = models.DateField()
-    fact_sign_date = models.DateField(null=True, blank=True)
-    contract_term = models.ForeignKey(
-        ContractTerm,
-        verbose_name="период действия",
-        on_delete=models.DO_NOTHING
-    )
-    counterpart = models.ForeignKey(Counterpart, on_delete=models.DO_NOTHING)
-    contract_sum = models.FloatField(verbose_name="сумма всего договора без НДС")
-    contract_sum_1 = models.FloatField(
-        verbose_name="сумма 1-й квартал договора без НДС",
+    plan_sign_date = models.DateField()
+    fact_sign_date = models.DateField(
         null=True,
         blank=True
     )
-    contract_sum_2 = models.FloatField(
-        verbose_name="сумма 2-й квартал договора без НДС",
-        null=True,
-        blank=True
+    start_date = models.DateField(
+        verbose_name="дата начала контракта"
     )
-    contract_sum_3 = models.FloatField(
-        verbose_name="сумма 3-й квартал договора без НДС",
-        null=True,
-        blank=True
+    end_time = models.DateField(
+        verbose_name="дата окончания",
+        null=True, blank=True
     )
-    contract_sum_4 = models.FloatField(
-        verbose_name="сумма 4-й квартал договора без НДС",
-        null=True,
-        blank=True
-    )
-    contract_sum_NDS_BYN = models.FloatField(
-        verbose_name="сумма договора с НДС бел.руб.",
-        blank=True,
-        null=True,
-    )
-    contract_total_sum_with_sub_BYN = models.FloatField(
-        verbose_name='общая сумма договора всего с доп соглашениями, б.р. без ндс',
-        null=True,
-        blank=True
-    )
-
-    forecast_total = models.FloatField( # вычисляемое
-        verbose_name='прогонз, всего',
-    )
-    forecast_jan = models.FloatField(
-        verbose_name='прогноз январь',
-        default=0
-    )
-    forecast_feb = models.FloatField(
-        verbose_name='прогноз февраль',
-        default=0
-    )
-    forecast_mar = models.FloatField(
-        verbose_name='прогноз март',
-        default=0
-    )
-    forecast_Iq = models.FloatField( # вычисляемое
-        verbose_name='прогноз 1-й квартал'
-    )
-
-    forecast_apr = models.FloatField(
-        verbose_name='прогноз апрель',
-        default=0
-    )
-    forecast_may = models.FloatField(
-        verbose_name='прогноз май',
-        default=0
-    )
-    forecast_jun = models.FloatField(
-        verbose_name='прогноз июнь',
-        default=0
-    )
-    forecast_IIq = models.FloatField( # вычисляемое
-        verbose_name='прогноз 2-й квартал'
-    )
-    forecast_1_half = models.FloatField( # вычисляемое
-        verbose_name='прогноз 1-е полугодие'
-    )
-
-    forecast_jul = models.FloatField(
-        verbose_name='прогноз июль',
-        default=0
-    )
-    forecast_aug = models.FloatField(
-        verbose_name='прогноз август',
-        default=0
-    )
-    forecast_sep = models.FloatField(
-        verbose_name='прогноз сентябрь',
-        default=0
-    )
-    forecast_IIIq = models.FloatField(  # вычисляемое
-        verbose_name='прогноз 3-й квартал'
-    )
-
-    forecast_9mnth = models.FloatField(  # вычисляемое
-        verbose_name='прогноз за 9 месяцев'
-    )
-
-    forecast_oct = models.FloatField(
-        verbose_name='прогноз октябрь',
-        default=0
-    )
-    forecast_nov = models.FloatField(
-        verbose_name='прогноз ноябрь',
-        default=0
-    )
-    forecast_dec = models.FloatField(
-        verbose_name='прогноз декабрь',
-        default=0
-    )
-    forecast_IVq = models.FloatField(  # вычисляемое
-        verbose_name='прогноз 4-й квартал'
-    )
-
-    economy_total = models.FloatField(
-        verbose_name='Экономия по заключенному договору, всего',
-    )
-    economy_Iq = models.FloatField(
-        verbose_name='Экономия по заключенному договору за 1-й квартал',
-    )
-    economy_IIq = models.FloatField(
-        verbose_name='Экономия по заключенному договору за 2-й квартал',
-    )
-    economy_IIIq = models.FloatField(
-        verbose_name='Экономия по заключенному договору за 3-й квартал',
-    )
-    economy_IVq = models.FloatField(
-        verbose_name='Экономия по заключенному договору за 4-й квартал',
-    )
-
-    fact_total = models.FloatField(  # вычисляемое
-        verbose_name='факт, всего',
-    )
-    fact_Iq = models.FloatField(  # вычисляемое
-        verbose_name='1-й квартал',
-    )
-    fact_jan = models.FloatField(
-        verbose_name='факт январь',
-        default=0
-    )
-    fact_feb = models.FloatField(
-        verbose_name='факт февраль',
-        default=0
-    )
-    fact_mar = models.FloatField(
-        verbose_name='факт март',
-        default=0
-    )
-
-    fact_IIq = models.FloatField(  # вычисляемое
-        verbose_name='2-й квартал',
-    )
-    fact_apr = models.FloatField(
-        verbose_name='факт апрель',
-        default=0
-    )
-    fact_may = models.FloatField(
-        verbose_name='факт май',
-        default=0
-    )
-    fact_jun = models.FloatField(
-        verbose_name='факт июнь',
-        default=0
-    )
-
-    plane_sum_SAP_6mth = models.FloatField( # вычисляемое
-        verbose_name='плановая сумма SAP за 6 месяцев'
-    )
-
-    fact_6mth = models.FloatField( # вычисляемое
-        verbose_name='Факт за 6 месяцев'
-    )
-
-    fact_IIIq = models.FloatField(  # вычисляемое
-        verbose_name='3-й квартал',
-    )
-    fact_jul = models.FloatField(
-        verbose_name='факт июль',
-    )
-    fact_aug = models.FloatField(
-        verbose_name='факт август',
-        default=0
-    )
-    fact_sep = models.FloatField(
-        verbose_name='факт сентябрь',
-        default=0
-    )
-
-    plane_sum_SAP_9mth = models.FloatField(  # вычисляемое
-        verbose_name='плановая сумма SAP за 9 месяцев'
-    )
-
-    fact_9mth = models.FloatField( # вычисляемое
-        verbose_name='Факт за 9 месяцев'
-    )
-
-    fact_IVq = models.FloatField( # вычисляемое
-        verbose_name='Факт за 4 квартал'
-    )
-    fact_oct = models.FloatField(
-        verbose_name='факт октябрь',
-        default=0
-    )
-    fact_10mth = models.FloatField( # вычисляемое
-        verbose_name='факт 10 месяцев',
-    )
-    fact_nov = models.FloatField(
-        verbose_name='факт ноябрь',
-        default=0
-    )
-    fact_dec = models.FloatField(
-        verbose_name='факт декабрь',
-        default=0
-    )
-
-    economy_contract_result = models.FloatField(
-        verbose_name='Экономия по результатам исполенения договоров всего'
-    )
-    economy_result_Iq = models.FloatField(
-        verbose_name='Экономия по результатам исполенения договоров 1-й квартал',
-        default=0
-    )
-    economy_result_IIq = models.FloatField(
-        verbose_name='Экономия по результатам исполенения договоров 2-й квартал',
-        default=0
-    )
-    economy_result_IIIq = models.FloatField(
-        verbose_name='Экономия по результатам исполенения договоров 3-й квартал',
-        default=0
-    )
-    economy_result_IVq = models.FloatField(
-        verbose_name='Экономия по результатам исполенения договоров 4-й квартал',
-        default=0
-    )
-
-    total_sum_unsigned_contracts = models.FloatField( # вычисляемое
-        verbose_name='Сумма средств по незаключенным договорам'
-    )
-
-    economy_total_absolute = models.FloatField( # вычисляемое
-        verbose_name='Абсолютная экономия по договору, всего'
-    )
-
-    def __str__(self):
-        return self.title
+    counterpart = models.ForeignKey(
+        Counterpart,
+        on_delete=models.DO_NOTHING)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # TODO   contract_mode
 
 
-class Planing(models.Model):
-    pass
+class SumsRUR(models.Model):
+    contract = models.ForeignKey(
+        Contract,
+        verbose_name="Контракт",
+        on_delete=models.DO_NOTHING
+    )
+    start_max_price_ASEZ_NDS = models.PositiveIntegerField(
+        verbose_name="стартовая цена АСЭЗ с НДС ",
+        null=True,
+        blank=True
+    )
+    currency_rate_on_load_date_ASEZ_NDS = models.FloatField(
+        verbose_name="Курс валюты на дату загрузки в бел.руб.",
+        null=True,
+        blank=True
+    )
+    contract_sum_NDS_RUB = models.FloatField(
+        verbose_name="Сумма договора с НДС рос.руб.",
+        blank=True,
+        null=True
+    )
+    currency = models.ForeignKey(
+        Currency,
+        verbose_name="Валюта",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True
+    )
+    delta_data_ASEZ = models.FloatField(
+        verbose_name="Отклонение от НМЦ в АСЭЗ",
+        blank=True,
+        null=True
+    )
+
+
+class SumsBYN(models.Model):
+    contract = models.ForeignKey(Contract, on_delete=models.DO_NOTHING)
+    year = models.DateField()
+    plan_sum_SAP = models.FloatField(
+        verbose_name="Плановая сумма САП",
+        blank=True,
+        null=True
+    )
+    contract_sum_without_NDS_BYN = models.FloatField(
+        verbose_name="Сумма всего договора без НДС",
+        default=0
+    )
+    contract_sum_with_NDS_BYN = models.FloatField(
+        verbose_name="Сумма договора с НДС бел.руб.",
+        blank=True,
+        null=True
+    )
+    contract_total_sum_with_sub_BYN = models.FloatField(
+        verbose_name='Общая сумма договора всего с доп соглашениями, б.р. без ндс',
+        null=True,
+        blank=True,
+    )
+    forecast_total = models.FloatField(
+        verbose_name='Прогноз, всего',
+        blank=True,
+        null=True
+    )
+    economy_total = models.FloatField(
+        verbose_name='Экономия по заключенному договору, всего',
+        blank=True,
+        null=True
+    )
+    fact_total = models.FloatField(
+        verbose_name='Факт, всего',
+        blank=True,
+        null=True
+    )
+    economy_contract_result = models.FloatField(
+        verbose_name='Экономия по результатам исполнения договоров всего',
+        blank=True,
+        null=True
+    )
+    total_sum_unsigned_contracts = models.FloatField(
+        verbose_name='Сумма средств по незаключенным договорам',
+        blank=True,
+        null=True
+    )
+    economy_total_absolute = models.FloatField(
+        verbose_name='Абсолютная экономия по договору, всего',
+        blank=True,
+        null=True
+    )
+
+
+class Planning(models.Model):
+    FinanceCosts = models.ForeignKey(
+        FinanceCosts,
+        verbose_name="Статья финансирования",
+        on_delete=models.DO_NOTHING
+    )
+    curator = models.ForeignKey(
+        Curator,
+        verbose_name="Куратор",
+        on_delete=models.DO_NOTHING
+    )
+    year = models.DateField(
+        verbose_name="Год"
+    )
+    period = models.DateField(
+        verbose_name="Период"
+    )
+    total = models.FloatField(
+        verbose_name="Сумма, Лимит средств",
+        default=0
+    )
+    currency = models.ForeignKey(
+        Currency,
+        verbose_name="Валюта",
+        blank=True,
+        null=True,
+        on_delete=models.DO_NOTHING
+    )
+
+
+class YearPeriod(models.Model):
+    title = models.IntegerField(verbose_name="Год")
+
+    def __str__(self):
+        return f"{self.title}"
+
+
+class PlanningYearFunding(models.Model):
+    # year = models.IntegerField(verbose_name="Год")
+    year = models.ForeignKey(
+        YearPeriod,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Год"
+    )
+    funding = models.ForeignKey(
+        FinanceCosts,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Статья финансирования"
+    )
+    curator = models.ForeignKey(
+        Curator,
+        on_delete=models.DO_NOTHING,
+        verbose_name="Куратор"
+    )
+    sum_q1 = models.FloatField(verbose_name="Лимит на 1-й квартал", null=True, blank=True)
+    sum_q2 = models.FloatField(verbose_name="Лимит на 2-й квартал", null=True, blank=True)
+    sum_q3 = models.FloatField(verbose_name="Лимит на 3-й квартал", null=True, blank=True)
+    sum_q4 = models.FloatField(verbose_name="Лимит на 4-й квартал", null=True, blank=True)
+    sum_year = models.FloatField(verbose_name="Лимит на год", null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.year.title}: {self.funding.title} + {self.curator.title}"
