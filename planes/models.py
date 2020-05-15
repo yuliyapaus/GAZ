@@ -21,6 +21,12 @@ class UserTypes(models.Model):
         verbose_name = "Тип пользователя"
         verbose_name_plural = "Типы пользователя"
 
+
+class UserTypes(models.Model):
+    class Meta:
+        verbose_name = "Тип пользователя"
+        verbose_name_plural = "Типы пользователя"
+
     title = models.CharField(
         max_length=120,
         verbose_name="Тип пользователя (Администратор, Куратор, БПиЭА, Пользователь)"
@@ -45,6 +51,20 @@ class UserSub(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+      
+class UserSub(models.Model):
+    group = models.ForeignKey(
+        UserTypes,
+        verbose_name="Группа пользователей",
+        on_delete=models.DO_NOTHING
+    )
+    title = models.CharField(
+        max_length=150,
+        verbose_name="Подтип обычных пользователей (Экономист, специалист АСЭЗ, Юрист)",
+        blank=True,
+        null=True
+    )
 
 
 class CustomUser(models.Model):
@@ -106,6 +126,13 @@ class UserActivityJournal(models.Model):
         max_length=100,
         verbose_name="Раздел системы",
         blank=True
+    )
+
+
+class FinanceCosts(models.Model):
+    title = models.CharField(
+        verbose_name="Название статьи",
+        max_length=100
     )
 
 
@@ -177,6 +204,13 @@ class Currency(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class ContractType(models.Model):
+    title = models.CharField(
+        max_length=150,
+        help_text="Тип договора(Центр, Филиал)"
+    )
 
 
 class ContractType(models.Model):
@@ -475,6 +509,35 @@ class PlanningYearFunding(models.Model):
         Curator,
         on_delete=models.DO_NOTHING,
         verbose_name="Куратор"
+
+
+class Planning(models.Model):
+    FinanceCosts = models.ForeignKey(
+        FinanceCosts,
+        verbose_name="Статья финансирования",
+        on_delete=models.DO_NOTHING
+    )
+    curator = models.ForeignKey(
+        Curator,
+        verbose_name="Куратор",
+        on_delete=models.DO_NOTHING
+    )
+    year = models.DateField(
+        verbose_name="Год"
+    )
+    period = models.DateField(
+        verbose_name="Период"
+    )
+    total = models.FloatField(
+        verbose_name="Сумма, Лимит средств",
+        default=0
+    )
+    currency = models.ForeignKey(
+        Currency,
+        verbose_name="Валюта",
+        blank=True,
+        null=True,
+        on_delete=models.DO_NOTHING
     )
     sum_q1 = models.FloatField(verbose_name="Лимит на 1-й квартал", null=True, blank=True)
     sum_q2 = models.FloatField(verbose_name="Лимит на 2-й квартал", null=True, blank=True)

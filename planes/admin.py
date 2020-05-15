@@ -44,6 +44,23 @@ models = (
     # Planning,
     PlanningYearFunding,
     YearPeriod,
+    UserTypes,
+    UserSub,
+    CustomUser,
+    UserActivityJournal,
+    FinanceCosts,
+    PurchaseType,
+    ActivityForm,
+    StateASEZ,
+    NumberPZTRU,
+    ContractStatus,
+    Currency,
+    ContractType,
+    ContractMode,
+    Counterpart,
+    SumsRUR,
+    SumsBYN,
+    Planning
 )
 
 
