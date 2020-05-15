@@ -26,6 +26,9 @@ class UserTypes(models.Model):
         verbose_name="Тип пользователя (Администратор, Куратор, БПиЭА, Пользователь)"
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class UserSub(models.Model):
     group = models.ForeignKey(
@@ -39,6 +42,9 @@ class UserSub(models.Model):
         blank=True,
         null=True
     )
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class CustomUser(models.Model):
@@ -74,6 +80,9 @@ class CustomUser(models.Model):
         null=True,
         on_delete=models.DO_NOTHING
     )
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class UserActivityJournal(models.Model):
@@ -116,12 +125,18 @@ class PurchaseType(models.Model):
         verbose_name="Вид закупки (Конкурентная, неконкурентная)"
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class ActivityForm(models.Model):
     title = models.CharField(
         max_length=200,
         verbose_name="Вид деятельности"
     )
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class StateASEZ(models.Model):
@@ -130,12 +145,18 @@ class StateASEZ(models.Model):
         verbose_name="Состояние АСЭЗ"
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class NumberPZTRU(models.Model):
     title = models.CharField(
         max_length=200,
         verbose_name="Номер пункта ПоЗТРУ"
     )
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class ContractStatus(models.Model):
@@ -144,12 +165,18 @@ class ContractStatus(models.Model):
         verbose_name="Статус договора"
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Currency(models.Model):
     title = models.CharField(
         max_length=10,
         verbose_name="Валюта"
     )
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class ContractType(models.Model):
@@ -158,12 +185,18 @@ class ContractType(models.Model):
         help_text="Тип договора(Центр, Филиал)"
     )
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class ContractMode(models.Model):
     title = models.CharField(
         max_length=150,
         help_text="Вид договора (Основной, доп.соглашение)"
     )
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class Counterpart(models.Model):
@@ -175,6 +208,9 @@ class Counterpart(models.Model):
     reg_addr = models.CharField(max_length=255)
     UNP = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class Contract(models.Model):
@@ -289,6 +325,9 @@ class Contract(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # TODO   contract_mode
+
+    def __str__(self):
+        return f"{self.title}"
 
 
 class SumsRUR(models.Model):
@@ -408,6 +447,9 @@ class Planning(models.Model):
         null=True,
         on_delete=models.DO_NOTHING
     )
+
+    def __str__(self):
+        return f"{self.year}: {self.FinanceCosts.title} + {self.curator.title}"
 
 
 class YearPeriod(models.Model):
