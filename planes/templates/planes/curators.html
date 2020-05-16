@@ -16,10 +16,10 @@
     {% for item in planning  %}
         <tr class="row-curator">
             <td><a href="{% url 'planes:edit_plane' item.id %}">{{ item.curator.title }}</a>  </td>
-            <td class="quart">{{ item.first_quart }}</td>
-            <td class="quart">{{ item.second_quart }}</td>
-            <td class="quart">{{ item.third_quart }}</td>
-            <td class="quart">{{ item.fourth_quart }}</td>
+            <td class="quart">{{ item.q_1 }}</td>
+            <td class="quart">{{ item.q_2 }}</td>
+            <td class="quart">{{ item.q_3 }}</td>
+            <td class="quart">{{ item.q_4 }}</td>
             <td class="res-curat-fot-year"> 0 </td>           
             
         </tr>

@@ -8,16 +8,16 @@ class PlanningForm(forms.ModelForm):
         model = Planning
         fields = (
             'FinanceCosts', 'curator', 'year',
-            'first_quart', 'second_quart', 'third_quart', 
-            'fourth_quart', 'period', 'delete'
+            'q_1', 'q_2', 'q_3', 
+            'q_4', 'period', 'delete'
             )
         labels={
             'FinanceCost':'Статья финансирования',
             'curator':'Куратор',
             'year':'Год',
-            'first_quart':'Квартал 1',
-            'second_quart':'Квартал 2',
-            'third_quart':'Квартал 3',
-            'fourth_quart':'Квартал 4',
+            'q_1':'Квартал 1',
+            'q_2':'Квартал 2',
+            'q_3':'Квартал 3',
+            'q_4':'Квартал 4',
             'period':'Период хз'
         }

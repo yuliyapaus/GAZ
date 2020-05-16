@@ -13,15 +13,10 @@ class Curator(models.Model):
     )
 
     def __str__(self):
-<<<<<<< HEAD
-        return self.title
-    
-=======
         try:
             return str(self.title)
         except:
             return 'Ошибка в данных'
->>>>>>> 04f1b27404b364d1170ba57714ce0fd8f5c9de15
 
 
 class UserTypes(models.Model):
@@ -717,37 +712,13 @@ class Planning(models.Model):
         FinanceCosts,
         verbose_name="Статья финансирования",
         on_delete=models.DO_NOTHING,
-        related_name='with_planning'
+        related_name='with_planning',
     )
     curator = models.ForeignKey(
         Curator,
         verbose_name="Куратор",
         on_delete=models.DO_NOTHING
     )
-<<<<<<< HEAD
-    year = models.IntegerField(
-        verbose_name="Год"
-    )
-    first_quart = models.FloatField(
-        default=0,
-        verbose_name="Деньги на куартора 1 квартал",
-        blank=True
-    )
-    second_quart = models.FloatField(
-        default=0,
-        verbose_name="Деньги на куартора 2 квартал",
-        blank=True
-    )
-    third_quart = models.FloatField(
-        default=0,
-        verbose_name="Деньги на куартора 3 квартал",
-        blank=True
-    )
-    fourth_quart = models.FloatField(
-        default=0,
-        verbose_name="Деньги на куартора 4 квартал",
-        blank=True
-=======
     year = models.CharField(
         verbose_name="Год",
         choices=YEARS,
@@ -787,7 +758,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True
->>>>>>> 04f1b27404b364d1170ba57714ce0fd8f5c9de15
     )
     period = models.DateField(
         verbose_name="Период"

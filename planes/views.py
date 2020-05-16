@@ -6,18 +6,28 @@ from .forms import PlanningForm
 
 def plane(request):
     finance_costs = FinanceCosts.objects.all()
-    year = dt.now().year
+    # year = dt.now().year
     send_list = []
-
+    money = None
     for item in finance_costs:
         try:
             money = item.with_planning.get(curator__title="ALL")
         except Planning.DoesNotExist:
-            print('eror')
-        send_list.append([item, money ])
+            plan = Planning()
+            plan.FinanceCosts = FinanceCosts.objects.get(pk = item.id)
+            plan.curator = Curator.objects.get(title = "ALL")
+            plan.q_1 = 0
+            plan.q_2 = 0
+            plan.q_3 = 0
+            plan.q_4 = 0
+            plan.year = dt.now().year
+            plan.period = dt.now().date()
+            plan.save()
+            money = item.with_planning.get(curator__title="ALL")
+        send_list.append([item, money])
     print(send_list)
 
-    response = {"finance_costs": finance_costs, "year":year,'send_list':send_list}
+    response = {"finance_costs": finance_costs,'send_list':send_list}
     return render(request, './planes/plane.html', response)
 
 
@@ -56,24 +66,24 @@ def from_js(request):
         plan = Planning()
         plan.FinanceCosts = FinanceCosts.objects.get(pk = id_finance_cost)
         plan.curator = Curator.objects.get(pk = id_result_curator)
-        plan.first_quart = jsn['result_money'][0]
-        plan.second_quart = jsn['result_money'][1]
-        plan.third_quart = jsn['result_money'][2]
-        plan.fourth_quart = jsn['result_money'][3]
+        plan.q_1 = jsn['result_money'][0]
+        plan.q_2 = jsn['result_money'][1]
+        plan.q_3 = jsn['result_money'][2]
+        plan.q_4 = jsn['result_money'][3]
         plan.year = dt.now().year
         plan.period = dt.now().date()
         plan.save()
         result_cur = planing.get(curator__title='ALL')
     
-    if result_cur.first_quart != jsn['result_money'][0] : 
-        result_cur.first_quart = jsn['result_money'][0]
+    if result_cur.q_1 != jsn['result_money'][0] : 
+        result_cur.q_1 = jsn['result_money'][0]
         print('helo')
-    if result_cur.second_quart != jsn['result_money'][1]:
-        result_cur.second_quart = jsn['result_money'][1]
-    if result_cur.third_quart != jsn['result_money'][2]:
-        result_cur.third_quart = jsn['result_money'][2]
-    if result_cur.fourth_quart != jsn['result_money'][3]:
-        result_cur.fourth_quart = jsn['result_money'][3]
+    if result_cur.q_2 != jsn['result_money'][1]:
+        result_cur.q_2 = jsn['result_money'][1]
+    if result_cur.q_3 != jsn['result_money'][2]:
+        result_cur.q_3 = jsn['result_money'][2]
+    if result_cur.q_4 != jsn['result_money'][3]:
+        result_cur.q_4 = jsn['result_money'][3]
     result_cur.save()
     return HttpResponse('123')
 
