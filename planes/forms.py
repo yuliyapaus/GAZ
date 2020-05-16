@@ -1,21 +1,60 @@
-from  django.forms import Form, ModelForm, ModelChoiceField
-from .models import YearPeriod, FinanceCosts, PlanningYearFunding
+from django import forms
+from django.forms.widgets import Select
+from planes.models import (
+  Planning,
+  Contract,
+  SumsBYN,
+  SumsRUR)
 
 
-class SelectPlanForm(Form):
-    year = ModelChoiceField(queryset=YearPeriod.objects.all(), label='Год')
-    funding = ModelChoiceField(queryset=FinanceCosts.objects.all(), label='Статья финансирования')
 
 
-class PlanningYearFundingForm(ModelForm):
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField()
+    email = forms.EmailField(required=True)
+
+
+class ContractForm(forms.ModelForm):
     class Meta:
-        model = PlanningYearFunding
-        fields = '__all__'
-        # exclude = ['year', 'funding']
-        labels = {
-            'funding': 'Статья',
-            'sum_q1': '1-й квартал',
-            'sum_q2': '2-й квартал',
-            'sum_q3': '3-й квартал',
-            'sum_q4': '4-й квартал',
+        model = Contract
+        exclude = []
+
+
+class SumsBYNForm(forms.ModelForm):
+    class Meta:
+        model = SumsBYN
+        exclude = ['contract']
+
+
+class SumsRURForm(forms.ModelForm):
+    class Meta:
+        model = SumsRUR
+        exclude = ['contract']
+
+
+
+class PlanningForm(forms.ModelForm):
+    delete = forms.BooleanField(label='удалить', required=False)
+    class Meta:
+        model = Planning
+        fields = (
+            'FinanceCosts', 'curator', 'year',
+            'q_1', 'q_2', 'q_3', 
+            'q_4', 'period', 'delete'
+            )
+        labels={
+            'FinanceCost':'Статья финансирования',
+            'curator':'Куратор',
+            'year':'Год',
+            'q_1':'Квартал 1',
+            'q_2':'Квартал 2',
+            'q_3':'Квартал 3',
+            'q_4':'Квартал 4',
+            'period':'Период хз'
         }
