@@ -14,10 +14,8 @@ class Curator(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
+
 
 
 class UserTypes(models.Model):
@@ -32,10 +30,7 @@ class UserTypes(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class CustomUser(models.Model):
@@ -74,10 +69,8 @@ class CustomUser(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.user)
-        except:
-            return 'Ошибка в данных'
+
+        return self.user.__str__()
 
 
 class UserActivityJournal(models.Model):
@@ -128,10 +121,7 @@ class FinanceCosts(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class PurchaseType(models.Model):
@@ -145,10 +135,7 @@ class PurchaseType(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ActivityForm(models.Model):
@@ -162,10 +149,8 @@ class ActivityForm(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+
+        return self.title.__str__()
 
 
 class StateASEZ(models.Model):
@@ -179,10 +164,7 @@ class StateASEZ(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class NumberPZTRU(models.Model):
@@ -224,10 +206,7 @@ class Currency(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ContractType(models.Model):
@@ -241,10 +220,7 @@ class ContractType(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ContractMode(models.Model):
@@ -258,10 +234,7 @@ class ContractMode(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class Counterpart(models.Model):
