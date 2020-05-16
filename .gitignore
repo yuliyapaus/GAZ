@@ -1,5 +1,7 @@
 **/__pycache__
 **/migrations
 db.sqlite3
-**/.vscode
+/.vscode
 /static/
+**/.vscode
+
