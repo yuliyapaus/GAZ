@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
-from planes.views import (
+from .views import (
     index,
     register_view,
     ContractView,
@@ -9,14 +9,15 @@ from planes.views import (
     curators,
     from_js,
     edit_plane,
-    add
+    add,
+    plane,
 )
 
 app_name = "planes"
 
 
 urlpatterns = [
-    path('', views.plane, name='plane' ),
+    path('', plane, name='plane' ),
     path('register/', register_view, name='register'),
     path('contracts/', login_required(ContractView.as_view()), name='contracts'),
     path('contracts/create_contract/', fabricate_contract, name='create_contract'),
