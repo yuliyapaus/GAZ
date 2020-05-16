@@ -12,6 +12,10 @@ class Curator(models.Model):
         verbose_name="Куратор"
     )
 
+    def __str__(self):
+        return self.title
+    
+
 
 class UserTypes(models.Model):
     class Meta:
@@ -102,6 +106,10 @@ class FinanceCosts(models.Model):
         verbose_name="Название статьи",
         max_length=100
     )
+    def __str__(self):
+        return self.title
+    
+    
 
 
 class PurchaseType(models.Model):
@@ -378,29 +386,44 @@ class Planning(models.Model):
     FinanceCosts = models.ForeignKey(
         FinanceCosts,
         verbose_name="Статья финансирования",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        related_name='with_planning'
     )
     curator = models.ForeignKey(
         Curator,
         verbose_name="Куратор",
         on_delete=models.DO_NOTHING
     )
-    year = models.DateField(
+    year = models.IntegerField(
         verbose_name="Год"
+    )
+    first_quart = models.FloatField(
+        default=0,
+        verbose_name="Деньги на куартора 1 квартал",
+        blank=True
+    )
+    second_quart = models.FloatField(
+        default=0,
+        verbose_name="Деньги на куартора 2 квартал",
+        blank=True
+    )
+    third_quart = models.FloatField(
+        default=0,
+        verbose_name="Деньги на куартора 3 квартал",
+        blank=True
+    )
+    fourth_quart = models.FloatField(
+        default=0,
+        verbose_name="Деньги на куартора 4 квартал",
+        blank=True
     )
     period = models.DateField(
         verbose_name="Период"
     )
-    total = models.FloatField(
-        verbose_name="Сумма, Лимит средств",
-        default=0
-    )
-    currency = models.ForeignKey(
-        Currency,
-        verbose_name="Валюта",
-        blank=True,
-        null=True,
-        on_delete=models.DO_NOTHING
-    )
+
+    def __str__(self):
+        return f'{self.FinanceCosts.title} : {self.curator.title}'
+    
+    
 
 
