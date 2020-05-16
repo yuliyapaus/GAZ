@@ -125,6 +125,16 @@ class FinanceCosts(models.Model):
         verbose_name="Название статьи",
         max_length=100
     )
+    def __str__(self):
+        return self.title
+    
+    
+
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
 
     def __str__(self):
         try:
@@ -707,7 +717,8 @@ class Planning(models.Model):
     FinanceCosts = models.ForeignKey(
         FinanceCosts,
         verbose_name="Статья финансирования",
-        on_delete=models.DO_NOTHING
+        on_delete=models.DO_NOTHING,
+        related_name='with_planning',
     )
     curator = models.ForeignKey(
         Curator,
@@ -754,6 +765,14 @@ class Planning(models.Model):
         default=0,
         null=True
     )
+    period = models.DateField(
+        verbose_name="Период"
+    )
+
+    def __str__(self):
+        return f'{self.FinanceCosts.title} : {self.curator.title}'
+    
+    
 
     def __str__(self):
         try:
