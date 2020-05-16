@@ -136,6 +136,12 @@ class FinanceCosts(models.Model):
         except:
             return 'Ошибка в данных'
 
+    def __str__(self):
+        try:
+            return str(self.title)
+        except:
+            return 'Ошибка в данных'
+
 
 class PurchaseType(models.Model):
     class Meta:
