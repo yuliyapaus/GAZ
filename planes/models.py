@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.shortcuts import reverse
 
 
 class Curator(models.Model):
@@ -13,10 +14,7 @@ class Curator(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class UserTypes(models.Model):
@@ -31,10 +29,7 @@ class UserTypes(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class CustomUser(models.Model):
@@ -73,10 +68,7 @@ class CustomUser(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.user)
-        except:
-            return 'Ошибка в данных'
+        return self.user.__str__()
 
 
 class UserActivityJournal(models.Model):
@@ -142,6 +134,9 @@ class FinanceCosts(models.Model):
         except:
             return 'Ошибка в данных'
 
+    def __str__(self):
+        return self.title.__str__()
+
 
 class PurchaseType(models.Model):
     class Meta:
@@ -154,10 +149,7 @@ class PurchaseType(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ActivityForm(models.Model):
@@ -171,10 +163,7 @@ class ActivityForm(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class StateASEZ(models.Model):
@@ -188,10 +177,7 @@ class StateASEZ(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class NumberPZTRU(models.Model):
@@ -233,10 +219,7 @@ class Currency(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ContractType(models.Model):
@@ -250,10 +233,7 @@ class ContractType(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class ContractMode(models.Model):
@@ -267,10 +247,7 @@ class ContractMode(models.Model):
     )
 
     def __str__(self):
-        try:
-            return str(self.title)
-        except:
-            return 'Ошибка в данных'
+        return self.title.__str__()
 
 
 class Counterpart(models.Model):
@@ -443,6 +420,18 @@ class Contract(models.Model):
                                                            self.finance_cost)
         except:
             return 'Ошибка в данных'
+
+    def get_absolute_url(self):
+        return reverse('change_contract', kwargs={'contract_id':self.id})
+
+    def __str__(self):
+        try:
+            return 'Договор %s, куратор %s, ст. фин %s' % (self.title,
+                                                           self.curator,
+                                                           self.finance_cost)
+        except:
+            return 'Ошибка в данных'
+
 
 
 class SumsRUR(models.Model):
@@ -664,6 +653,55 @@ class ContractPaymentSchedule(models.Model):
         Contract,
         verbose_name="Договора",
         on_delete=models.CASCADE
+
+    )
+    payment_date = models.DateField(
+        verbose_name="Дата платежа"
+    )
+
+    def __str__(self):
+        try:
+            return f'График платежей по договору : {self.contract}, оплата до: {self.payment_date}'
+        except:
+            return 'Ошибка в данных'
+
+
+class ContractRemarks(models.Model):
+    class Meta:
+        verbose_name = 'Примечание к договору'
+        verbose_name_plural = 'Примечания к договору'
+
+    contract = models.ForeignKey(
+        Contract,
+        verbose_name="Контракт",
+        on_delete=models.CASCADE
+    )
+    remark_text = models.TextField(
+        verbose_name="Текст примечания"
+    )
+
+    def __str__(self):
+        try:
+            return f'Примечание к Договору {self.contract}'
+        except:
+            return 'Ошибка в данных'
+
+    def __str__(self):
+        try:
+            return 'Показатели договора %s в белорусских рублях за %s год %s' % (self.contract, self.year, self.period)
+        except:
+            return 'Ошибка в данных'
+
+
+class ContractPaymentSchedule(models.Model):
+    class Meta:
+        verbose_name = 'График платежей по договору'
+        verbose_name_plural = 'Графики платежей по договору'
+
+    contract = models.ForeignKey(
+        Contract,
+        verbose_name="Договора",
+        on_delete=models.CASCADE
     )
     payment_date = models.DateField(
         verbose_name="Дата платежа"
@@ -765,21 +803,13 @@ class Planning(models.Model):
         default=0,
         null=True
     )
-    period = models.DateField(
+    period = models.DateField( # TODO DELL IT AWAY
         verbose_name="Период"
     )
 
     def __str__(self):
         return f'{self.FinanceCosts.title} : {self.curator.title}'
-    
-    
-
-    def __str__(self):
-        try:
-            return f'Планирование {self.year} год, по куратору {self.curator}, ст. фин {self.FinanceCosts}'
-        except Exception:
-            return 'Ошибка в данных'
-
+        
     def save(self, *args, **kwargs):
         self.q_all = self.q_1 + self.q_2 + self.q_3 + self.q_4
         super().save(*args, **kwargs)
