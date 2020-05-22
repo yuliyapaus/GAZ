@@ -528,7 +528,7 @@ class SumsBYN(models.Model):
     ]
     contract = models.ForeignKey(
         Contract,
-        on_delete=models.CASCADE,
+        on_delete=models.DO_NOTHING,
         verbose_name="Контракт"
     )
     year = models.CharField(
@@ -543,73 +543,262 @@ class SumsBYN(models.Model):
     )
     plan_sum_SAP = models.DecimalField(
         verbose_name="Плановая сумма САП",
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='1-4 квартал - вручную; год, 6 месяцев, 9 месяцев - расчетные'
     )
     contract_sum_without_NDS_BYN = models.DecimalField(
         verbose_name="Сумма всего договора без НДС",
         default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='1-4 квартал - вручную, год- расчетное'
     )
     contract_sum_with_NDS_BYN = models.DecimalField(
         verbose_name="Сумма договора с НДС бел.руб.",
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Год - вручную'
     )
     contract_total_sum_with_sub_BYN = models.DecimalField(
         verbose_name='Общая сумма договора всего с доп соглашениями, б.р. без ндс',
-        null=True,
-        blank=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Год - расчетное'
     )
     forecast_total = models.DecimalField(
         verbose_name='Прогноз, всего',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Январь-декабрь - вручную, 1-4 квартал, год, 9 месяцев - расчетные'
     )
     economy_total = models.DecimalField(
         verbose_name='Экономия по заключенному договору, всего',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='1-4 квартал, год - расчетные'
     )
     fact_total = models.DecimalField(
         verbose_name='Факт, всего',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Январь-декабрь - вручную, 1-4 квартал, год, 6 месяцев, 9 месяцев,10 месяцев - расчетные'
     )
     economy_contract_result = models.DecimalField(
         verbose_name='Экономия по результатам исполнения договоров всего',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Год - расчетное'
     )
     total_sum_unsigned_contracts = models.DecimalField(
         verbose_name='Сумма средств по незаключенным договорам',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Год - расчетное'
     )
     economy_total_absolute = models.DecimalField(
         verbose_name='Абсолютная экономия по договору, всего',
-        blank=True,
-        null=True,
+        default=0,
         decimal_places=2,
-        max_digits=12
+        max_digits=12,
+        help_text='Год - расчетное'
     )
+
+    def get_sums_plan_sum_SAP(self):
+        quarts = ('1quart', '2quart', '3quart', '4quart')
+        target_periods = [
+            ('year', quarts[:]),
+            ('6months', quarts[:2]),
+            ('9months', quarts[:3]),
+            ]
+        cust_dict = {}
+        custom_set = SumsBYN.objects.filter(year=self.year, contract=self.contract, period__in=quarts)
+        for entry in custom_set:
+            for custom_period in target_periods:
+                if entry.period in custom_period[1]:
+                    try:
+                        x = cust_dict[custom_period[0]]
+                        x += entry.plan_sum_SAP
+                        cust_dict[custom_period[0]] = x
+                    except:
+                        cust_dict[custom_period[0]] = entry.plan_sum_SAP
+
+        for key, value in cust_dict.items():
+            if SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).exists():
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).update(
+                    plan_sum_SAP=value)
+            else:
+                SumsBYN.objects.create(
+                    year=self.year,
+                    contract=self.contract,
+                    period=key,
+                    plan_sum_SAP=value
+                )
+
+    def get_sums_contract_sum_without_NDS_BYN(self):
+        quarts = ('1quart', '2quart', '3quart', '4quart')
+        target_periods = [
+            ('year', quarts[:]),
+            ('6months', quarts[:2]),
+            ('9months', quarts[:3]),
+            ]
+        cust_dict = {}
+        custom_set = SumsBYN.objects.filter(year=self.year, contract=self.contract, period__in=quarts)
+        for entry in custom_set:
+            for custom_period in target_periods:
+                if entry.period in custom_period[1]:
+                    try:
+                        x = cust_dict[custom_period[0]]
+                        x += entry.contract_sum_without_NDS_BYN
+                        cust_dict[custom_period[0]] = x
+                    except:
+                        cust_dict[custom_period[0]] = entry.contract_sum_without_NDS_BYN
+
+        for key, value in cust_dict.items():
+            if SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).exists():
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).update(
+                    contract_sum_without_NDS_BYN=value)
+            else:
+                SumsBYN.objects.create(
+                    year=self.year,
+                    contract=self.contract,
+                    period=key,
+                    contract_sum_without_NDS_BYN=value
+                )
+
+    def get_contract_sum_with_subsidiaries(self):
+        if Contract.objects.filter(related_contract=self.contract).exists():
+            only_subs = 0
+            for contract in Contract.objects.filter(related_contract=self.contract):
+                only_subs += SumsBYN.objects.get(contract_id=contract.id, year=self.year, period='year').contract_sum_with_NDS_BYN
+            sum_with_subs = SumsBYN.objects.get(contract=self.contract, year=self.year, period='year').contract_sum_with_NDS_BYN
+            sum_with_subs += only_subs
+            SumsBYN.objects.filter(contract=self.contract, year=self.year, period='year').update(contract_total_sum_with_sub_BYN=sum_with_subs)
+        else:
+            SumsBYN.objects.filter(contract=self.contract, year=self.year, period='year').update(
+                contract_total_sum_with_sub_BYN=self.contract_sum_with_NDS_BYN)
+
+
+    def get_sums_forecast_total(self):
+        months = ('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec')
+        target_periods = [
+            ('year', months[:]),
+            ('1quart', months[:3]),
+            ('2quart', months[3:6]),
+            ('3quart', months[6:9]),
+            ('4quart', months[9:]),
+            ("6months", months[:6]),
+            ("9months", months[:9]),
+            ("10months", months[:10]),
+            ("11months", months[:11]),
+        ]
+        cust_dict = {}
+        custom_set = SumsBYN.objects.filter(year=self.year, contract=self.contract, period__in=months)
+        for entry in custom_set:
+            for custom_period in target_periods:
+                if entry.period in custom_period[1]:
+                    try:
+                        x = cust_dict[custom_period[0]]
+                        x += entry.forecast_total
+                        cust_dict[custom_period[0]] = x
+                    except:
+                        cust_dict[custom_period[0]] = entry.forecast_total
+
+        for key, value in cust_dict.items():
+            if SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).exists():
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).update(
+                    forecast_total=value)
+            else:
+                SumsBYN.objects.create(
+                    year=self.year,
+                    contract=self.contract,
+                    period=key,
+                    forecast_total=value
+                )
+
+    def get_sums_fact_total(self):
+        months = ('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec')
+        target_periods = [
+            ('year', months[:]),
+            ('1quart', months[:3]),
+            ('2quart', months[3:6]),
+            ('3quart', months[6:9]),
+            ('4quart', months[9:]),
+            ("6months", months[:6]),
+            ("9months", months[:9]),
+            ("10months", months[:10]),
+            ("11months", months[:11]),
+        ]
+        cust_dict = {}
+        custom_set = SumsBYN.objects.filter(year=self.year, contract=self.contract, period__in=months)
+        for entry in custom_set:
+            for custom_period in target_periods:
+                if entry.period in custom_period[1]:
+                    try:
+                        x = cust_dict[custom_period[0]]
+                        x += entry.fact_total
+                        cust_dict[custom_period[0]] = x
+                    except:
+                        cust_dict[custom_period[0]] = entry.fact_total
+
+        for key, value in cust_dict.items():
+            if SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).exists():
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period=key).update(
+                    fact_total=value)
+            else:
+                SumsBYN.objects.create(
+                    year=self.year,
+                    contract=self.contract,
+                    period=key,
+                    fact_total=value
+                )
+
+    def get_sums_economy_total(self):
+        custom_set = SumsBYN.objects.filter(year=self.year, contract=self.contract, period__contains='quart')
+        sum_year = 0
+        for entry in custom_set:
+            quart_economy_total = entry.plan_sum_SAP - entry.contract_sum_without_NDS_BYN
+            sum_year += entry.economy_total
+            print(quart_economy_total)
+            if SumsBYN.objects.filter(year=self.year, contract=self.contract, period='year').exists():
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period='year').update(
+                    economy_total=sum_year)
+                SumsBYN.objects.filter(year=self.year, contract=self.contract, period=entry.period).update(
+                    economy_total=quart_economy_total)
+            else:
+                SumsBYN.objects.create(
+                    year=self.year,
+                    contract=self.contract,
+                    period='year',
+                    economy_total=sum_year
+                )
+
+    def save(self, *args, **kwargs):
+
+        self.economy_total = self.plan_sum_SAP - self.contract_sum_without_NDS_BYN
+        self.economy_contract_result = self.contract_sum_without_NDS_BYN - self.plan_sum_SAP
+        if self.contract_sum_without_NDS_BYN:
+            self.economy_total_absolute = self.plan_sum_SAP - self.contract_sum_without_NDS_BYN
+            self.total_sum_unsigned_contracts = 0
+        else:
+            self.economy_total_absolute = 0
+            self.total_sum_unsigned_contracts = self.plan_sum_SAP
+
+        super().save(*args, **kwargs)
+        self.get_sums_plan_sum_SAP()
+        self.get_sums_contract_sum_without_NDS_BYN()
+        self.get_contract_sum_with_subsidiaries()
+        self.get_sums_forecast_total()
+        self.get_sums_fact_total()
+        self.get_sums_economy_total()
 
     def __str__(self):
         try:
