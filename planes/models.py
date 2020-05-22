@@ -728,9 +728,6 @@ class Planning(models.Model):
         default=0,
         null=True
     )
-    period = models.DateField( # TODO DELL IT AWAY
-        verbose_name="Период"
-    )
 
     def __str__(self):
         return f'{self.FinanceCosts.title} : {self.curator.title}'

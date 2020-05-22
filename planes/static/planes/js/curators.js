@@ -1,4 +1,4 @@
-console.log('hello');
+
 const all_row = document.querySelectorAll('.row-curator');
 all_row.forEach(el=>{
     let sum_for_all_quart = 0;
@@ -40,11 +40,8 @@ const json = JSON.stringify(result_money);
 const csrftoken = getCookie('csrftoken');
 
 const cost_title = document.querySelector('.cost-title').textContent;
-console.log(cost_title)
 
 
-
-console.log(result_money);
 fetch('/plane/to_server/', {
         'method': 'POST',
         'credentials': 'include',
@@ -61,9 +58,6 @@ fetch('/plane/to_server/', {
         'mode':'cors',
         'cache':'default',
         'credentials':'include'      
-    }).then((response)=>{
-        console.log('well');        
     })
-
 
 

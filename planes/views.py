@@ -192,7 +192,6 @@ def plane(request):
             plan.save()
             money = item.with_planning.get(curator__title="ALL")
         send_list.append([item, money])
-    print(send_list)
 
     response = {"finance_costs": finance_costs,'send_list':send_list}
     return render(request, './planes/plane.html', response)
@@ -238,13 +237,11 @@ def from_js(request):
         plan.q_3 = jsn['result_money'][2]
         plan.q_4 = jsn['result_money'][3]
         plan.year = dt.now().year
-        plan.period = dt.now().date()
         plan.save()
         result_cur = planing.get(curator__title='ALL')
     
     if result_cur.q_1 != jsn['result_money'][0] : 
         result_cur.q_1 = jsn['result_money'][0]
-        print('helo')
     if result_cur.q_2 != jsn['result_money'][1]:
         result_cur.q_2 = jsn['result_money'][1]
     if result_cur.q_3 != jsn['result_money'][2]:
@@ -259,9 +256,7 @@ def edit_plane(request, item_id):
     plan = Planning.objects.get(pk=item_id)
     plan_form = PlanningForm(instance=plan)
     response = {'plan_form':plan_form, 'item_id':item_id}
-    print(request.POST)
     if(request.method == 'POST'):
-        print('in post')
         plan_form = PlanningForm(request.POST, instance=plan)
         if plan_form.is_valid():
             if plan_form.cleaned_data.get('delete'):
@@ -276,7 +271,6 @@ def add(request, finance_cost_id):
     plane_form = PlanningForm(initial={
         'FinanceCosts': finance_cost_id,
         'year': dt.now().year,
-       'period':dt.now().date()
         })
     response = {
         'plane_form':plane_form,
