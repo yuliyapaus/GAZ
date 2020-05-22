@@ -57,3 +57,11 @@ class PlanningForm(forms.ModelForm):
             'q_3':'Квартал 3',
             'q_4':'Квартал 4'
         }
+
+class YearForm(forms.ModelForm):
+    class Meta:
+        model = Planning
+        fields = ('year',)
+        labels = {
+            'year': 'Год'
+        }

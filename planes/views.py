@@ -7,7 +7,8 @@ from .forms import (
     ContractForm,
     SumsBYNForm,
     SumsRURForm,
-    PlanningForm, 
+    PlanningForm,
+    YearForm,
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -173,7 +174,10 @@ def adding_click_to_UserActivityJournal(request):
 
 def plane(request):
     finance_costs = FinanceCosts.objects.all()
-    # year = dt.now().year
+    year = YearForm(initial={
+        'year': dt.now().year
+    })
+    
     send_list = []
     money = None
     for item in finance_costs:
@@ -188,12 +192,11 @@ def plane(request):
             plan.q_3 = 0
             plan.q_4 = 0
             plan.year = dt.now().year
-            plan.period = dt.now().date()
             plan.save()
             money = item.with_planning.get(curator__title="ALL")
         send_list.append([item, money])
 
-    response = {"finance_costs": finance_costs,'send_list':send_list}
+    response = {"finance_costs": finance_costs,'send_list':send_list, 'year':year}
     return render(request, './planes/plane.html', response)
 
 

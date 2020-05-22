@@ -23,6 +23,11 @@
     {% endfor %}
 
 </table>
+<form action="" method="post" >
+    {% csrf_token %}
+    {{ year }}
+    <input type="submit" value="Add">
+</form>
 <script src="{% static 'planes/js/plane.js' %}"></script>
 
 
