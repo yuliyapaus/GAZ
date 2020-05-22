@@ -25,13 +25,19 @@ all_td_result.forEach((el,index) => {
 })
 
 
-
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
 
 
 const json = JSON.stringify(result_money);
-const cookie = document.cookie;
-const arr_cookie = cookie.split(' ');
-const csrftoken = arr_cookie[2].slice(10);
+// const cookie = document.cookie;
+// const arr_cookie = cookie.split(' ');
+// const csrftoken = arr_cookie[2].slice(10);
+const csrftoken = getCookie('csrftoken');
 
 const cost_title = document.querySelector('.cost-title').textContent;
 console.log(cost_title)
