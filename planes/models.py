@@ -659,6 +659,54 @@ class ContractPaymentSchedule(models.Model):
         except:
             return 'Ошибка в данных'
 
+    def __str__(self):
+        try:
+            return 'Показатели договора %s в белорусских рублях за %s год %s' % (self.contract, self.year, self.period)
+        except:
+            return 'Ошибка в данных'
+
+
+class ContractRemarks(models.Model):
+    class Meta:
+        verbose_name = 'Примечание к договору'
+        verbose_name_plural = 'Примечания к договору'
+
+    contract = models.ForeignKey(
+        Contract,
+        verbose_name="Контракт",
+        on_delete=models.CASCADE
+    )
+    remark_text = models.TextField(
+        verbose_name="Текст примечания"
+    )
+
+    def __str__(self):
+        try:
+            return f'Примечание к Договору {self.contract}'
+        except:
+            return 'Ошибка в данных'
+
+
+class ContractPaymentSchedule(models.Model):
+    class Meta:
+        verbose_name = 'График платежей по договору'
+        verbose_name_plural = 'Графики платежей по договору'
+
+    contract = models.ForeignKey(
+        Contract,
+        verbose_name="Договора",
+        on_delete=models.CASCADE
+    )
+    payment_date = models.DateField(
+        verbose_name="Дата платежа"
+    )
+
+    def __str__(self):
+        try:
+            return f'График платежей по договору : {self.contract}, оплата до: {self.payment_date}'
+        except:
+            return 'Ошибка в данных'
+
 
 class Planning(models.Model):
     class Meta:
@@ -727,9 +775,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True
-    )
-    period = models.DateField( # TODO DELL IT AWAY
-        verbose_name="Период"
     )
 
     def __str__(self):
