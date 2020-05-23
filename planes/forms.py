@@ -46,7 +46,7 @@ class PlanningForm(forms.ModelForm):
         fields = (
             'FinanceCosts', 'curator', 'year',
             'q_1', 'q_2', 'q_3', 
-            'q_4', 'period', 'delete'
+            'q_4', 'delete'
             )
         labels={
             'FinanceCost':'Статья финансирования',

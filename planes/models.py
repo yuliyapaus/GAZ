@@ -618,6 +618,9 @@ class SumsBYN(models.Model):
             return 'Ошибка в данных'
 
 
+
+
+
 class ContractRemarks(models.Model):
     class Meta:
         verbose_name = 'Примечание к договору'
