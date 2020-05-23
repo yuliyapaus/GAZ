@@ -18,8 +18,8 @@ from .models import (
     SumsBYN,
     Planning,
     Contract,
-    PlanningYearFunding,
-    YearPeriod,
+    # PlanningYearFunding,
+    # YearPeriod,
 )
 
 models = (
@@ -28,7 +28,7 @@ models = (
     # UserSub,
     # CustomUser,
     # UserActivityJournal,
-    FinanceCosts,
+    # FinanceCosts,
     # PurchaseType,
     # ActivityForm,
     # StateASEZ,
@@ -41,8 +41,8 @@ models = (
     # SumsRUR,
     # SumsBYN,
     # Planning,
-    PlanningYearFunding,
-    YearPeriod,
+    # PlanningYearFunding,
+    # YearPeriod,
     UserTypes,
     CustomUser,
     UserActivityJournal,
