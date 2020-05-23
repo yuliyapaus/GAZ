@@ -59,5 +59,3 @@ fetch('/plane/to_server/', {
         'cache':'default',
         'credentials':'include'      
     })
-
-
