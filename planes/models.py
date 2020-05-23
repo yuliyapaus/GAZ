@@ -662,6 +662,12 @@ class ContractPaymentSchedule(models.Model):
         except:
             return 'Ошибка в данных'
 
+    def __str__(self):
+        try:
+            return 'Показатели договора %s в белорусских рублях за %s год %s' % (self.contract, self.year, self.period)
+        except:
+            return 'Ошибка в данных'
+
 
 class Planning(models.Model):
     class Meta:

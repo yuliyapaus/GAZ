@@ -174,3 +174,5 @@ django.db.utils.IntegrityError: NOT NULL constraint failed: planes_planning.peri
 Not Found: /favicon.ico
 Not Found: /favicon.ico
 Not Found: /favicon.ico
+Not Found: /
+Not Found: /
