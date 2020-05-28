@@ -28,6 +28,7 @@ from .models import (
 )
 from django.urls import reverse
 import json
+from django.forms import formset_factory, modelformset_factory
 
 
 @login_required
@@ -152,37 +153,6 @@ class DeletedContracts(View):
 
     def post(self, request):
         return HttpResponse('post')
-
-
-from django.forms import formset_factory, modelformset_factory
-def test(request, contract_id=None):
-    SumBYNFormSet = formset_factory(SumsBYNForm, extra=0) # создает НОВЫЕ
-    contract = Contract.objects.latest('id') # TODO PLACEHOLDER
-    # SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm, extra=0) # Берет ИЗ БД
-
-    # def post
-    if request.method == "POST":
-        formset = SumBYNFormSet(request.POST)
-        if formset.is_valid():
-            contract = Contract.objects.latest('id') # TODO PLACEHOLDER
-            for form in formset:
-                new_sum_byn = form.save(commit=False)
-                new_sum_byn.contract = contract
-                new_sum_byn.save()
-            return HttpResponse('poset')
-        else:
-            print(formset.errors)
-            return HttpResponse('Невалидненько')
-
-    # formset = SumBYNFormSet(queryset=SumsBYN.objects.filter(contract=contract)) # для вызова из бд
-
-    formset = SumBYNFormSet(initial=[ # для создание нового договора
-        {'period':'1quart'},
-        {'period':'2quart'},
-        {'period':'3quart'},
-        {'period':'4quart'},
-    ])
-    return render(request, template_name='contracts/test.html', context={'formset':formset})
 
 
 class ContractFabric(View):
