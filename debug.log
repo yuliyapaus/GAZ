@@ -7016,3 +7016,682 @@ Traceback (most recent call last):
   File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 422, in get
     num if not limit or num < limit else 'more than %s' % (limit - 1),
 planes.models.Planning.MultipleObjectsReturned: get() returned more than one Planning -- it returned 6!
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Internal Server Error: /plane/add_click/
+Traceback (most recent call last):
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\exception.py", line 34, in inner
+    response = get_response(request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "e:\12\guz2\.env\lib\site-packages\django\core\handlers\base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "E:\12\guz2\GAZ\planes\views.py", line 220, in adding_click_to_UserActivityJournal
+    counter = UserActivityJournal.objects.get(user=request.user)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "e:\12\guz2\.env\lib\site-packages\django\db\models\query.py", line 417, in get
+    self.model._meta.object_name
+planes.models.UserActivityJournal.DoesNotExist: UserActivityJournal matching query does not exist.
+Not Found: /
+Not Found: /
+Not Found: /favicon.ico
+Not Found: /
