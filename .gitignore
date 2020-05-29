@@ -5,3 +5,8 @@ db.sqlite3
 **/.gitignore
 .vscode
 static
+/desc
+/Реестр договоров.xlsx
+/desk_lb.txt
+/analytics/templates/analytics/implementation_plan.html
+/debug.log
