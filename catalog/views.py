@@ -98,4 +98,5 @@ def catalog_numberpztru(request):
     return render(request, 'catalog/article.html', context)
 
 def catalog_report(request):
-    pass
+    return render(request, 'catalog/report.html')
+
