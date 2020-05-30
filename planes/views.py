@@ -372,9 +372,9 @@ def edit_plane(request, year, item_id):
         if plan_form.is_valid():
             if plan_form.cleaned_data.get('delete'):
                 Planning.objects.get(pk=item_id).delete()
-                return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' ) 
+                return redirect('/plane/{0}/{1}/curators'.format(year, str(plan.FinanceCosts.id)) )
             plan_form.save()
-            return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' )
+            return redirect('/plane/{0}/{1}/curators'.format(year, str(plan.FinanceCosts.id)) )
         else:
             print('12324')
             print(plan_form._errors)
@@ -395,7 +395,7 @@ def add(request, finance_cost_id, year):
         plane_form = PlanningForm(request.POST)
         if plane_form.is_valid():
             plane_form.save()
-            return redirect(f'/plane/{year}/{str(finance_cost_id)}/curators' )
+            return redirect('/plane/{0}/{1}/curators'.format(year, finance_cost_id) )
 
             # return reverse('planes', kwargs={'year': year})
     return render(request, './planes/add.html', response)
