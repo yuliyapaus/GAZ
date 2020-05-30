@@ -155,8 +155,8 @@ class DeletedContracts(View):
         return HttpResponse('post')
 
 
-def recovery(request):
-    contract_to_recover = Contract.objects.latest('id')
+def recovery(request, contract_id):
+    contract_to_recover = Contract.objects.get(id=contract_id)
     contract_to_recover.contract_active = True
     contract_to_recover.save()
     return HttpResponse("Contract was recovered")
