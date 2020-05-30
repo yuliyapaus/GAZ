@@ -143,7 +143,10 @@ class ContractView(View):
 
 
 class DeletedContracts(View):
-    def get(self, request):
+    def get(self, request, contract_id=None):
+        if contract_id:
+            self.recovery(contract_id)
+            return HttpResponse('just text!!')
         deleted_contracts = Contract.objects.filter(contract_active=False)
         return render(request,
                       template_name='contracts/deleted_contracts.html',
@@ -154,12 +157,13 @@ class DeletedContracts(View):
     def post(self, request):
         return HttpResponse('post')
 
+    def recovery(self, contract_id):
+        contract_to_recover = Contract.objects.get(id=contract_id)
+        contract_to_recover.contract_active = True
+        contract_to_recover.save()
+        return contract_to_recover
 
-def recovery(request, contract_id):
-    contract_to_recover = Contract.objects.get(id=contract_id)
-    contract_to_recover.contract_active = True
-    contract_to_recover.save()
-    return HttpResponse("Contract was recovered")
+
 
 
 class ContractFabric(View):
