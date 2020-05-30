@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import (
@@ -7,7 +7,8 @@ from .forms import (
     ContractForm,
     SumsBYNForm,
     SumsRURForm,
-    PlanningForm, 
+    PlanningForm,
+    YearForm,
 )
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -101,12 +102,16 @@ def register_view(request):
 
 
 class ContractView(View):
+    ''' render contracts register table and allow to search '''
     template_name = 'contracts/contract_main.html'
     today_year = date.today().year
 
     def get(self, request):
-        contracts = Contract.objects.filter(start_date__contains=self.today_year).order_by('-id')
+        contracts = Contract.objects.filter(
+            start_date__contains=self.today_year,
+            contract_active=True).order_by('-id')
         contract_and_sum = []
+
         for contract in contracts:
             sum_byn = SumsBYN.objects.get(contract=contract)
             sum_rur = SumsRUR.objects.get(contract=contract)
@@ -117,6 +122,7 @@ class ContractView(View):
                     'sum_rur':sum_rur,
                 }
             )
+
         return render(request,
                       template_name=self.template_name,
                       context={'contracts':contracts,
@@ -124,21 +130,46 @@ class ContractView(View):
                                })
 
 
-@login_required
-def fabricate_contract(request, contract_id=None):
-    if not contract_id:
-        instance_contract = None
-        instance_sum_byn = None
-        instance_sum_rur = None
-    else:
-        instance_contract = get_object_or_404(Contract, id=contract_id)
-        instance_sum_byn = get_object_or_404(SumsBYN, contract__id=contract_id)
-        instance_sum_rur = get_object_or_404(SumsRUR, contract__id=contract_id)
+class DeletedContracts(View):
+    def get(self, reqest):
+        deleted_contracts = Contract.objects.filter(contract_active=False)
+        return render(reqest,
+                      template_name='contracts/deleted_contracts.html',
+                      context={
+                          'contracts':deleted_contracts,
+                      })
 
-    if request.method == 'POST':
-        contract_form = ContractForm(request.POST, instance=instance_contract)
-        sum_byn_form = SumsBYNForm(request.POST, instance=instance_sum_byn)
-        sum_rur_form = SumsRURForm(request.POST, instance=instance_sum_rur)
+    def post(self, request):
+        return HttpResponse('post')
+
+
+class ContractFabric(View):
+    ''' allow to create, change, copy and delete (move to deleted) contracts '''
+    create_or_add = 'contracts/add_new_contract.html'
+
+    def get(self, request, contract_id=None):
+        if request.GET.__contains__('from_ajax'):
+            if request.GET['from_ajax'] == 'del_contract':
+                contract_id_list = request.GET.getlist('choosed[]')
+                Contract.objects.filter(id__in=contract_id_list).update(contract_active=False)
+                return HttpResponse('this is delete contract')
+
+        if request.GET.__contains__('pattern_contract_id'):
+            contract_id = int(request.GET['pattern_contract_id'])
+
+        contract_form, sum_byn_form, sum_rur_form = self.make_forms(request, contract_id)
+
+        return render(request,
+                      template_name=self.create_or_add,
+                      context={
+                          'contract_form': contract_form,
+                          'sum_byn_form': sum_byn_form,
+                          'sum_rur_form': sum_rur_form,
+                      })
+
+    def post(self, request, contract_id=None):
+        contract_form, sum_byn_form, sum_rur_form = self.make_forms(request, contract_id)
+
         if \
                 contract_form.is_valid() \
                         and sum_byn_form.is_valid() \
@@ -152,16 +183,37 @@ def fabricate_contract(request, contract_id=None):
             contract_sum_r.save()
             return HttpResponse('saved')
 
-    contract_form = ContractForm(instance=instance_contract)
-    sum_byn_form = SumsBYNForm(instance=instance_sum_byn)
-    sum_rur_form = SumsRURForm(instance=instance_sum_rur)
-    return render(request,
-                  template_name='contracts/add_new_contract.html',
-                  context={
-                      'contract_form': contract_form,
-                      'sum_byn_form': sum_byn_form,
-                      'sum_rur_form': sum_rur_form,
-                  })
+        return render(request,
+                      template_name=self.create_or_add,
+                      context={
+                          'contract_form': contract_form,
+                          'sum_byn_form': sum_byn_form,
+                          'sum_rur_form': sum_rur_form,
+                      })
+
+    def make_forms(self, request,  contract_id):
+        ''' creates instance objects for forms
+        and
+        return forms based on instance objects '''
+        if not contract_id:
+            instance_contract = None
+            instance_sum_byn = None
+            instance_sum_rur = None
+        else:
+            instance_contract = get_object_or_404(Contract, id=contract_id)
+            instance_sum_byn = get_object_or_404(SumsBYN, contract__id=contract_id)
+            instance_sum_rur = get_object_or_404(SumsRUR, contract__id=contract_id)
+
+        if request.method == 'POST':
+            contract_form = ContractForm(request.POST, instance=instance_contract)
+            sum_byn_form = SumsBYNForm(request.POST, instance=instance_sum_byn)
+            sum_rur_form = SumsRURForm(request.POST, instance=instance_sum_rur)
+        else:
+            contract_form = ContractForm(None, instance=instance_contract)
+            sum_byn_form = SumsBYNForm(None, instance=instance_sum_byn)
+            sum_rur_form = SumsRURForm(None, instance=instance_sum_rur)
+
+        return contract_form, sum_byn_form, sum_rur_form
 
 
 def adding_click_to_UserActivityJournal(request):
@@ -171,14 +223,23 @@ def adding_click_to_UserActivityJournal(request):
      return HttpResponse('add_click')
 
 
-def plane(request):
+def plane(request,year=dt.now().year):
     finance_costs = FinanceCosts.objects.all()
-    # year = dt.now().year
+    if request.method != 'POST':
+        year_f = YearForm(initial={
+            'year': year
+        })
+    if request.method == 'POST':
+        year_f = YearForm(request.POST)
+        if year_f.is_valid():
+            year = year_f.cleaned_data['year']
+            print(year_f.cleaned_data['year'])
+    
     send_list = []
     money = None
     for item in finance_costs:
         try:
-            money = item.with_planning.get(curator__title="ALL")
+            money = item.with_planning.filter(year=str(year)).get(curator__title="ALL")
         except Planning.DoesNotExist:
             plan = Planning()
             plan.FinanceCosts = FinanceCosts.objects.get(pk = item.id)
@@ -187,24 +248,27 @@ def plane(request):
             plan.q_2 = 0
             plan.q_3 = 0
             plan.q_4 = 0
-            plan.year = dt.now().year
-            plan.period = dt.now().date()
+            plan.year = year
             plan.save()
-            money = item.with_planning.get(curator__title="ALL")
+            money = item.with_planning.filter(year=str(year)).get(curator__title="ALL")
         send_list.append([item, money])
-    print(send_list)
 
-    response = {"finance_costs": finance_costs,'send_list':send_list}
+    response = {"finance_costs": finance_costs,
+    'send_list':send_list,
+     'year_f':year_f,
+     'year': year
+     }
     return render(request, './planes/plane.html', response)
 
 
-def curators(request, finance_cost_id):
-    planning = Planning.objects.filter(FinanceCosts=finance_cost_id).exclude(curator__title='ALL')
+def curators(request, finance_cost_id, year):
+    planning = Planning.objects.filter(FinanceCosts=finance_cost_id).filter(year=str(year)).exclude(curator__title='ALL')
     finance_cost_name = FinanceCosts.objects.get(pk=finance_cost_id).title
     response = {
         'planning': planning,
         'finance_cost_name': finance_cost_name,
-        'finance_cost_id':finance_cost_id           
+        'finance_cost_id':finance_cost_id,
+        'year' : year          
     }
     return render (request, './planes/curators.html', response)
 
@@ -224,10 +288,11 @@ def from_js(request):
 
 
     finance_cost_title = jsn['cost_title']
+    year = jsn['data_from_django']
     id_finance_cost = FinanceCosts.objects.get(title=finance_cost_title).id
 
     try:
-        planing = Planning.objects.filter(FinanceCosts = id_finance_cost)
+        planing = Planning.objects.filter(FinanceCosts = id_finance_cost).filter(year = year)
         result_cur = planing.get(curator__title='ALL')
     except Planning.DoesNotExist:
         plan = Planning()
@@ -237,14 +302,12 @@ def from_js(request):
         plan.q_2 = jsn['result_money'][1]
         plan.q_3 = jsn['result_money'][2]
         plan.q_4 = jsn['result_money'][3]
-        plan.year = dt.now().year
-        plan.period = dt.now().date()
+        plan.year = year
         plan.save()
         result_cur = planing.get(curator__title='ALL')
     
     if result_cur.q_1 != jsn['result_money'][0] : 
         result_cur.q_1 = jsn['result_money'][0]
-        print('helo')
     if result_cur.q_2 != jsn['result_money'][1]:
         result_cur.q_2 = jsn['result_money'][1]
     if result_cur.q_3 != jsn['result_money'][2]:
@@ -255,37 +318,43 @@ def from_js(request):
     return HttpResponse('123')
 
 
-def edit_plane(request, item_id):
+def edit_plane(request, year, item_id):
     plan = Planning.objects.get(pk=item_id)
     plan_form = PlanningForm(instance=plan)
-    response = {'plan_form':plan_form, 'item_id':item_id}
-    print(request.POST)
+    response = {
+        'plan_form':plan_form,
+         'item_id':item_id,
+         'year':year
+         }
     if(request.method == 'POST'):
-        print('in post')
         plan_form = PlanningForm(request.POST, instance=plan)
         if plan_form.is_valid():
             if plan_form.cleaned_data.get('delete'):
                 Planning.objects.get(pk=item_id).delete()
-                return redirect(f'/plane/{str(plan.FinanceCosts.id)}/curators' ) 
+                return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' ) 
             plan_form.save()
-            return redirect(f'/plane/{str(plan.FinanceCosts.id)}/curators' )
+            return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' )
+        else:
+            print('12324')
+            print(plan_form._errors)
     return render(request, './planes/edit_plane.html', response)
 
   
-def add(request, finance_cost_id):
+def add(request, finance_cost_id, year):
     plane_form = PlanningForm(initial={
         'FinanceCosts': finance_cost_id,
-        'year': dt.now().year,
-       'period':dt.now().date()
+        'year': year,
         })
     response = {
         'plane_form':plane_form,
-        'finance_cost_id':finance_cost_id
+        'finance_cost_id':finance_cost_id,
+        'year': year
     }
     if(request.method == 'POST'):
         plane_form = PlanningForm(request.POST)
         if plane_form.is_valid():
             plane_form.save()
-            return redirect(f'/plane/{str(finance_cost_id)}/curators' )
-    return render(request, './planes/add.html', response)
+            return redirect(f'/plane/{year}/{str(finance_cost_id)}/curators' )
 
+            # return reverse('planes', kwargs={'year': year})
+    return render(request, './planes/add.html', response)
