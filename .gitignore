@@ -4,7 +4,12 @@ db.sqlite3
 **/settings.py
 **/.gitignore
 .vscode
+static
+/desc
+/Реестр договоров.xlsx
+/desk_lb.txt
+/debug.log
+/analytics/static/styles/
 .idea
 debug.log
 env
-s

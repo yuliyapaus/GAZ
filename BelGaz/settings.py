@@ -32,8 +32,10 @@ ALLOWED_HOSTS = '*'
 
 INSTALLED_APPS = [
     'planes',
+    'analytics',
     #'suit',
     'schema_graph',
+    'djmoney',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,6 +77,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'BelGaz.wsgi.application'
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'NAME': "germany_db",
+        "USER": "germany_user",
+        "PASSWORD": "1050Xx27",
+        "HOST": "35.223.197.213",
+        "PORT": "5432",
+    }
+}
+
 
 
 # Database
