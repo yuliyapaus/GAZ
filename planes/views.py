@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,reverse
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import (
@@ -223,17 +223,23 @@ def adding_click_to_UserActivityJournal(request):
      return HttpResponse('add_click')
 
 
-def plane(request):
+def plane(request,year=dt.now().year):
     finance_costs = FinanceCosts.objects.all()
-    year = YearForm(initial={
-        'year': dt.now().year
-    })
+    if request.method != 'POST':
+        year_f = YearForm(initial={
+            'year': year
+        })
+    if request.method == 'POST':
+        year_f = YearForm(request.POST)
+        if year_f.is_valid():
+            year = year_f.cleaned_data['year']
+            print(year_f.cleaned_data['year'])
     
     send_list = []
     money = None
     for item in finance_costs:
         try:
-            money = item.with_planning.get(curator__title="ALL")
+            money = item.with_planning.filter(year=str(year)).get(curator__title="ALL")
         except Planning.DoesNotExist:
             plan = Planning()
             plan.FinanceCosts = FinanceCosts.objects.get(pk = item.id)
@@ -242,22 +248,27 @@ def plane(request):
             plan.q_2 = 0
             plan.q_3 = 0
             plan.q_4 = 0
-            plan.year = dt.now().year
+            plan.year = year
             plan.save()
-            money = item.with_planning.get(curator__title="ALL")
+            money = item.with_planning.filter(year=str(year)).get(curator__title="ALL")
         send_list.append([item, money])
 
-    response = {"finance_costs": finance_costs,'send_list':send_list, 'year':year}
+    response = {"finance_costs": finance_costs,
+    'send_list':send_list,
+     'year_f':year_f,
+     'year': year
+     }
     return render(request, './planes/plane.html', response)
 
 
-def curators(request, finance_cost_id):
-    planning = Planning.objects.filter(FinanceCosts=finance_cost_id).exclude(curator__title='ALL')
+def curators(request, finance_cost_id, year):
+    planning = Planning.objects.filter(FinanceCosts=finance_cost_id).filter(year=str(year)).exclude(curator__title='ALL')
     finance_cost_name = FinanceCosts.objects.get(pk=finance_cost_id).title
     response = {
         'planning': planning,
         'finance_cost_name': finance_cost_name,
-        'finance_cost_id':finance_cost_id           
+        'finance_cost_id':finance_cost_id,
+        'year' : year          
     }
     return render (request, './planes/curators.html', response)
 
@@ -277,10 +288,11 @@ def from_js(request):
 
 
     finance_cost_title = jsn['cost_title']
+    year = jsn['data_from_django']
     id_finance_cost = FinanceCosts.objects.get(title=finance_cost_title).id
 
     try:
-        planing = Planning.objects.filter(FinanceCosts = id_finance_cost)
+        planing = Planning.objects.filter(FinanceCosts = id_finance_cost).filter(year = year)
         result_cur = planing.get(curator__title='ALL')
     except Planning.DoesNotExist:
         plan = Planning()
@@ -290,7 +302,7 @@ def from_js(request):
         plan.q_2 = jsn['result_money'][1]
         plan.q_3 = jsn['result_money'][2]
         plan.q_4 = jsn['result_money'][3]
-        plan.year = dt.now().year
+        plan.year = year
         plan.save()
         result_cur = planing.get(curator__title='ALL')
     
@@ -306,33 +318,43 @@ def from_js(request):
     return HttpResponse('123')
 
 
-def edit_plane(request, item_id):
+def edit_plane(request, year, item_id):
     plan = Planning.objects.get(pk=item_id)
     plan_form = PlanningForm(instance=plan)
-    response = {'plan_form':plan_form, 'item_id':item_id}
+    response = {
+        'plan_form':plan_form,
+         'item_id':item_id,
+         'year':year
+         }
     if(request.method == 'POST'):
         plan_form = PlanningForm(request.POST, instance=plan)
         if plan_form.is_valid():
             if plan_form.cleaned_data.get('delete'):
                 Planning.objects.get(pk=item_id).delete()
-                return redirect(f'/plane/{str(plan.FinanceCosts.id)}/curators' ) 
+                return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' ) 
             plan_form.save()
-            return redirect(f'/plane/{str(plan.FinanceCosts.id)}/curators' )
+            return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' )
+        else:
+            print('12324')
+            print(plan_form._errors)
     return render(request, './planes/edit_plane.html', response)
 
   
-def add(request, finance_cost_id):
+def add(request, finance_cost_id, year):
     plane_form = PlanningForm(initial={
         'FinanceCosts': finance_cost_id,
-        'year': dt.now().year,
+        'year': year,
         })
     response = {
         'plane_form':plane_form,
-        'finance_cost_id':finance_cost_id
+        'finance_cost_id':finance_cost_id,
+        'year': year
     }
     if(request.method == 'POST'):
         plane_form = PlanningForm(request.POST)
         if plane_form.is_valid():
             plane_form.save()
-            return redirect(f'/plane/{str(finance_cost_id)}/curators' )
+            return redirect(f'/plane/{year}/{str(finance_cost_id)}/curators' )
+
+            # return reverse('planes', kwargs={'year': year})
     return render(request, './planes/add.html', response)
