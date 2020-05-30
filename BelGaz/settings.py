@@ -32,6 +32,7 @@ ALLOWED_HOSTS = '*'
 
 INSTALLED_APPS = [
     'planes',
+    'analytics',
     #'suit',
     'schema_graph',
     'djmoney',
@@ -60,7 +61,9 @@ ROOT_URLCONF = 'BelGaz.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, "templates")
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +77,19 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'BelGaz.wsgi.application'
+
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        'NAME': "germany_db",
+        "USER": "germany_user",
+        "PASSWORD": "1050Xx27",
+        "HOST": "35.223.197.213",
+        "PORT": "5432",
+    }
+}
+
 
 
 # Database
