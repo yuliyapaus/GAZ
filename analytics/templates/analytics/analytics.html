@@ -1,0 +1,11 @@
+{% extends "analytics/base_analytics.html" %}
+{% load static %}
+
+{% block content %}
+
+<p><h1><a href="{% url 'analytics:implementation_plan' %}">Исполнение плана по Минскому УМГ</a></h1></p>
+<p><h1><a href="{% url 'analytics:deviation_analysis' %}">Анализ отклонений</a></h1></p>
+<p><h1><a href="{% url 'analytics:report_RKDZ' %}">Отчет RKDZ</a></h1></p>
+
+{% endblock content %}
+
