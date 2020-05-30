@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalog</title>
+    <title>Газпром планировщик</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
 </head>
@@ -24,11 +24,11 @@
 
     <nav>
         <a href="/plane" class="nav-element">Планирование</a>
-        <a href="/" class="nav-element">Реестр договоров</a>
-        <a href="/" class="nav-element">Аналитика</a>
+        <a href="/contractlist" class="nav-element">Реестр договоров</a>
+        <a href="/analytics" class="nav-element">Аналитика</a>
         <a href="/admin" class="nav-element">Администрирование</a>
         <a href="/catalog" class="nav-element">Справочники</a>
-        <a href="/" class="nav-element">Уведомления</a>
+        <a href="/notifications" class="nav-element">Уведомления</a>
     </nav>
 
     {% block content %}
