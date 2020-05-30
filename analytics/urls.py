@@ -7,8 +7,8 @@ app_name = "analytics"
 
 urlpatterns = [
     path('', analytics, name='analytics'),
-    path('implementation_plan/', implementation_plan),
-    path('deviation_analysis/', deviation_analysis),
-    path('report_RKDZ/', report_RKDZ),
+    path('implementation_plan/', implementation_plan, name='implementation_plan'),
+    path('deviation_analysis/', deviation_analysis, name='deviation_analysis'),
+    path('report_RKDZ/', report_RKDZ, name='report_RKDZ'),
 
 ]
