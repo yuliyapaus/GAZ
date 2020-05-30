@@ -58,7 +58,6 @@ models = (
     Counterpart,
     SumsRUR,
     SumsBYN,
-    Planning
 )
 
 
@@ -73,3 +72,18 @@ admin.site.register(Contract, ContractAdmin)
 for model in models:
     admin.site.register(model)
 # Register your models here.
+
+@admin.register(Planning)
+class PlanningAdmin(admin.ModelAdmin):
+    list_display = (
+        'FinanceCosts',
+        'curator',
+        'year',
+        'q_1',
+        'q_2',
+        'q_3',
+        'q_4'
+
+    )
+    list_filter = ('FinanceCosts', 'curator', 'year')
+

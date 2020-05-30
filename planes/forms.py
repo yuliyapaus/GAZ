@@ -4,7 +4,9 @@ from planes.models import (
   Planning,
   Contract,
   SumsBYN,
-  SumsRUR)
+  SumsRUR,
+  Curator
+  )
 
 
 class LoginForm(forms.Form):
@@ -47,7 +49,10 @@ class SumsBYNForm(forms.ModelForm):
 
 
 class PlanningForm(forms.ModelForm):
+    # arr = [ item for item in Curator if item.title != "ALL"]
+    curator = forms.ModelChoiceField(Curator.objects.exclude(title='ALL'))
     delete = forms.BooleanField(label='удалить', required=False)
+
     class Meta:
         model = Planning
         fields = (
