@@ -11,6 +11,7 @@ from .views import (
     plane,
     ContractFabric,
     DeletedContracts,
+    recovery
 )
 
 app_name = "planes"
@@ -29,6 +30,7 @@ urlpatterns = [
     path('to_server/', from_js, name='from_js'),
     path('<int:year>/<int:item_id>/edit-plane', edit_plane, name='edit_plane'),
     path('<int:year>/<int:finance_cost_id>/add/', add, name= 'add'),
+    path('recovery/', recovery, name = 'recover_contract'),
 ]
 
 
