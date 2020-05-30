@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'BelGaz.wsgi.application'
 
 
 
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 #

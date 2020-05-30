@@ -143,6 +143,7 @@ class ContractView(View):
 
 
 class DeletedContracts(View):
+
     def get(self, request, contract_id=None):
         if contract_id:
             self.recovery(contract_id)
@@ -162,8 +163,6 @@ class DeletedContracts(View):
         contract_to_recover.contract_active = True
         contract_to_recover.save()
         return contract_to_recover
-
-
 
 
 class ContractFabric(View):

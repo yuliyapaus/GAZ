@@ -30,6 +30,7 @@ urlpatterns = [
     path('<int:year>/<int:item_id>/edit-plane', edit_plane, name='edit_plane'),
     path('<int:year>/<int:finance_cost_id>/add/', add, name= 'add'),
     path('recovery/<int:contract_id>', DeletedContracts.as_view(), name='recover_contract'),
+
 ]
 
 
