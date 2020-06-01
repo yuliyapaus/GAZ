@@ -589,7 +589,7 @@ class SumsBYN(models.Model):
         default_currency='BYN'
     )
     economy_total = MoneyField(
-        verbose_name='Экономия по заключенному договору, всего',
+        verbose_name='Экономия',
         blank=True,
         null=True,
         decimal_places=2,
@@ -597,7 +597,7 @@ class SumsBYN(models.Model):
         default_currency='BYN'
     )
     fact_total = MoneyField(
-        verbose_name='Факт, всего',
+        verbose_name='Факт',
         blank=True,
         null=True,
         decimal_places=2,

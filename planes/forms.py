@@ -45,7 +45,8 @@ class SumsBYNForm(forms.ModelForm):
             'plan_sum_SAP',
             'contract_sum_without_NDS_BYN',
             'forecast_total',
-            'fact_total']
+            'fact_total',
+            'economy_total',]
 
 
 class PlanningForm(forms.ModelForm):

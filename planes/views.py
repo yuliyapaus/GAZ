@@ -143,7 +143,7 @@ class ContractView(View):
 
 
 class DeletedContracts(View):
-
+    ''' render deleted contracts and allow to recover contract '''
     def get(self, request, contract_id=None):
         if contract_id:
             self.recovery(contract_id)
@@ -197,6 +197,7 @@ class ContractFabric(View):
 
         if request.GET.__contains__('pattern_contract_id'):
             contract_id = int(request.GET['pattern_contract_id'])
+
         if not contract_id:
             ''' Create new contract with initial sumBYN and sumRUR'''
             contract_form = ContractForm
