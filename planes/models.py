@@ -104,7 +104,7 @@ class UserActivityJournal(models.Model):
 
     def __str__(self):
         try:
-            return f'Журнал действий пользователя: {self.user}'
+            return 'Журнал действий пользователя: {0}'.format(self.user)
         except:
             return 'Ошибка в данных'
 
@@ -652,7 +652,7 @@ class ContractRemarks(models.Model):
 
     def __str__(self):
         try:
-            return f'Примечание к Договору {self.contract}'
+            return 'Примечание к Договору {0}'.format(self.contract)
         except:
             return 'Ошибка в данных'
 
@@ -673,13 +673,7 @@ class ContractPaymentSchedule(models.Model):
 
     def __str__(self):
         try:
-            return f'График платежей по договору : {self.contract}, оплата до: {self.payment_date}'
-        except:
-            return 'Ошибка в данных'
-
-    def __str__(self):
-        try:
-            return 'Показатели договора %s в белорусских рублях за %s год %s' % (self.contract, self.year, self.period)
+            return 'График платежей по договору : {0}, оплата до: {1}'.format(self.contract, self.payment_date)
         except:
             return 'Ошибка в данных'
 
@@ -754,7 +748,7 @@ class Planning(models.Model):
     )
 
     def __str__(self):
-        return f'{self.FinanceCosts.title} : {self.curator.title}'
+        return '{0} : {1}'.format(self.FinanceCosts.title, self.curator.title)
         
     def save(self, *args, **kwargs):
         self.q_all = self.q_1 + self.q_2 + self.q_3 + self.q_4
