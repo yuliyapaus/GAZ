@@ -395,12 +395,7 @@ def add(request, finance_cost_id, year):
         plane_form = PlanningForm(request.POST)
         if plane_form.is_valid():
             plane_form.save()
-<<<<<<< HEAD
-            # return redirect(f'/plane/{year}/{str(finance_cost_id)}/curators' )
-            return redirect('/plane/{}/{}/curators'.format(year, finance_cost_id) )
-=======
             return redirect('/plane/{0}/{1}/curators'.format(year, finance_cost_id) )
->>>>>>> 3559b971d12fd906e147d8b8000dd3b8e8930ad4
 
             # return reverse('planes', kwargs={'year': year})
     return render(request, './planes/add.html', response)
