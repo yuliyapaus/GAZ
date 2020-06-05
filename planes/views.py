@@ -143,9 +143,13 @@ class ContractView(View):
 
 
 class DeletedContracts(View):
-    def get(self, reqest):
+
+    def get(self, request, contract_id=None):
+        if contract_id:
+            self.recovery(contract_id)
+            return HttpResponse('just text!!')
         deleted_contracts = Contract.objects.filter(contract_active=False)
-        return render(reqest,
+        return render(request,
                       template_name='contracts/deleted_contracts.html',
                       context={
                           'contracts':deleted_contracts,
@@ -153,6 +157,12 @@ class DeletedContracts(View):
 
     def post(self, request):
         return HttpResponse('post')
+
+    def recovery(self, contract_id):
+        contract_to_recover = Contract.objects.get(id=contract_id)
+        contract_to_recover.contract_active = True
+        contract_to_recover.save()
+        return contract_to_recover
 
 
 class ContractFabric(View):
@@ -362,9 +372,9 @@ def edit_plane(request, year, item_id):
         if plan_form.is_valid():
             if plan_form.cleaned_data.get('delete'):
                 Planning.objects.get(pk=item_id).delete()
-                return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' ) 
+                return redirect('/plane/{0}/{1}/curators'.format(year, str(plan.FinanceCosts.id)) )
             plan_form.save()
-            return redirect(f'/plane/{year}/{str(plan.FinanceCosts.id)}/curators' )
+            return redirect('/plane/{0}/{1}/curators'.format(year, str(plan.FinanceCosts.id)) )
         else:
             print('12324')
             print(plan_form._errors)
@@ -385,8 +395,12 @@ def add(request, finance_cost_id, year):
         plane_form = PlanningForm(request.POST)
         if plane_form.is_valid():
             plane_form.save()
+<<<<<<< HEAD
             # return redirect(f'/plane/{year}/{str(finance_cost_id)}/curators' )
             return redirect('/plane/{}/{}/curators'.format(year, finance_cost_id) )
+=======
+            return redirect('/plane/{0}/{1}/curators'.format(year, finance_cost_id) )
+>>>>>>> 3559b971d12fd906e147d8b8000dd3b8e8930ad4
 
             # return reverse('planes', kwargs={'year': year})
     return render(request, './planes/add.html', response)
