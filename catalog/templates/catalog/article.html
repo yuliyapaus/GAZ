@@ -3,8 +3,9 @@
 {% load static %}
 
 {% block content %}
-    <section id="directories-list">
-    <div class="list-container">
+{#    <section id="directories-list">#}
+{#    <div class="list-container">#}
+    <div id="data-container" class="catalog-container">
         <h3>Справочник "{{ title }}"</h3>
 
         <form action="">
@@ -44,11 +45,28 @@
         </form>
 
     </div>
-    </section>
+{#    </section>#}
+{#--------------------------------------------------------------------#}
+{#    <div id="data-container">#}
+{#        <table>#}
+{#            <thead>#}
+{#                <tr>#}
+{#                    <th>{{ v_name|capfirst }}</th>#}
+{#                </tr>#}
+{#            </thead>#}
+{##}
+{#            {% for name in queryset %}#}
+{#                <tr>#}
+{#                    <td>{{ name }}</td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{##}
+{#        </table>#}
+{#    </div>#}
 
-    <div class="plans-buttonsfield">
-        <div class="buttons-container">
-            <button class="button" onclick="history.back()">Назад</button>
-        </div>
+    <div class="buttons-container">
+        <button class="button" onclick="">Сохранить</button>
+        <button class="button" onclick="history.back()">Назад</button>
     </div>
+
 {% endblock content %}

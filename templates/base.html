@@ -11,28 +11,52 @@
 <body>
     <header>
 
-        <a href="/"><img class="logo" src="{% static 'img/gazpromlogo_2.png' %}" alt="logo"></a>
+        <div class="media">
+            <a href="/"><img class="logo" src="{% static 'img/gazpromlogo_3.png' %}" alt="logo"></a>
+        </div>
 
         <div class="user-info">
 
-            <a href="/"><p class="user-info-txt">UserName</p></a>
-            <a href="/"><p class="user-info-txt">UserEmail</p></a>
+            <a href="/"><p class="user-info-txt">User Name</p></a>
+            <a href="/"><p class="user-info-txt">User E-mail</p></a>
 
         </div>
 
     </header>
 
     <nav>
-        <a href="/plane" class="nav-element">Планирование</a>
-        <a href="/contractlist" class="nav-element">Реестр договоров</a>
-        <a href="/analytics" class="nav-element">Аналитика</a>
+    {% with namespace=request.resolver_match.namespace %}
+        <a href="/plane" class="nav-element{% if namespace == 'plane' %} nav-active{% endif %}">
+            Планирование
+        </a>
+        <a href="/contractlist" class="nav-element{% if namespace == 'contractlist' %} nav-active{% endif %}">
+            Реестр договоров
+        </a>
+        <a href="/analytics" class="nav-element{% if namespace == 'analytics' %} nav-active{% endif %}">
+            Аналитика
+        </a>
         <a href="/admin" class="nav-element">Администрирование</a>
-        <a href="/catalog" class="nav-element">Справочники</a>
-        <a href="/notifications" class="nav-element">Уведомления</a>
+        <a href="/catalog" class="nav-element{% if namespace == 'catalog' %} nav-active{% endif %}">
+            Справочники
+        </a>
+        <a href="/notifications" class="nav-element{% if namespace == 'notifications' %} nav-active{% endif %}">
+            Уведомления
+        </a>
+    {% endwith %}
     </nav>
 
-    {% block content %}
-    {% endblock content %}
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
 
+	<footer class="footer">
+
+        <div>Филиал «Минское управление магистральных газопроводов»</div>
+        <div>ОАО «Газпром трансгаз Беларусь»</div>
+        <br>
+        <div>Сделано командой «Python hack» :P</div>
+
+    </footer>
 </body>
 </html>
