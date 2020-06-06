@@ -1,4 +1,3 @@
-console.log('hello');
 const all_row = document.querySelectorAll('.row-curator');
 all_row.forEach(el=>{
     let sum_for_all_quart = 0;
@@ -25,20 +24,19 @@ all_td_result.forEach((el,index) => {
 })
 
 
-
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
 
 
 const json = JSON.stringify(result_money);
-const cookie = document.cookie;
-const arr_cookie = cookie.split(' ');
-const csrftoken = arr_cookie[2].slice(10);
+const csrftoken = getCookie('csrftoken');
 
 const cost_title = document.querySelector('.cost-title').textContent;
-console.log(cost_title)
 
-
-
-console.log(result_money);
 fetch('/plane/to_server/', {
         'method': 'POST',
         'credentials': 'include',
@@ -50,14 +48,10 @@ fetch('/plane/to_server/', {
         }),
         'body': JSON.stringify({
             cost_title: cost_title,
-            result_money: result_money
+            result_money: result_money,
+            data_from_django: data_from_django
         }),
         'mode':'cors',
         'cache':'default',
         'credentials':'include'      
-    }).then((response)=>{
-        console.log('well');        
     })
-
-
-
