@@ -9,10 +9,13 @@ from .forms import (
     SumsRURForm,
     PlanningForm,
     YearForm,
+    SumsBYNForm_economist,
+    SumsBYNForm_lawyer,
+    SumsBYNForm_asez
 )
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.core.mail import send_mail
 from django.views import View
 from datetime import date
@@ -39,6 +42,17 @@ from django.forms import formset_factory, modelformset_factory
 from django.db.models import Q
 
 
+def test(request):
+    perm = Permission.objects.all()
+    print(request.user.get_user_permissions())
+    if request.user.has_perm('auth.add_group'):
+        return HttpResponse('it can auth.add_group')
+
+
+
+    return render(request, template_name='contracts/test.html', context={})
+
+
 @login_required
 def index(request):
     return render(request, 'planes/index.html')
@@ -47,7 +61,7 @@ def index(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'planes/index.html')
+    return redirect('/login/')
 
 
 def login_view(request,):
@@ -61,7 +75,7 @@ def login_view(request,):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/')
+                    return redirect('/plane/')
                 else:
                     return HttpResponse('disable account')
             else:
@@ -270,6 +284,8 @@ class ContractFabric(View):
         if request.GET.__contains__('pattern_contract_id'):
             contract_id = int(request.GET['pattern_contract_id'])
 
+
+
         if not contract_id:
             ''' Create new contract with initial sumBYN and sumRUR'''
             contract_form = ContractForm
@@ -282,10 +298,35 @@ class ContractFabric(View):
                 {'period': '4quart'},
             ])
         else:
-            SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm, extra=0)  # Берет ИЗ БД
-            formset = SumBYNFormSet(queryset=SumsBYN.objects.filter(contract__id=contract_id))  # для вызова из бд
-            contract_form = ContractForm(instance=get_object_or_404(Contract, id=contract_id))
-            sum_rur_form = SumsRURForm(instance=get_object_or_404(SumsRUR, contract__id=contract_id))
+            # if request.user.has_perm('planes:change_contract'):
+                # return HttpResponse(request.user.groups.all())
+            if request.user.groups.filter(name='economists'):
+                SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm_economist, extra=0)  # Берет ИЗ БД
+                formset = SumBYNFormSet(
+                    queryset=SumsBYN.objects.filter(contract__id=contract_id))  # для вызова из бд
+                contract_form = ContractForm(instance=get_object_or_404(Contract, id=contract_id))
+                sum_rur_form = SumsRURForm(instance=get_object_or_404(SumsRUR, contract__id=contract_id))
+
+            elif request.user.groups.filter(name='lawyers'):
+                SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm_lawyer, extra=0)  # Берет ИЗ БД
+                formset = SumBYNFormSet(
+                    queryset=SumsBYN.objects.filter(contract__id=contract_id))  # для вызова из бд
+                contract_form = ContractForm(instance=get_object_or_404(Contract, id=contract_id))
+                sum_rur_form = SumsRURForm(instance=get_object_or_404(SumsRUR, contract__id=contract_id))
+
+            elif request.user.groups.filter(name='asez'):
+                SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm_asez, extra=0)  # Берет ИЗ БД
+                formset = SumBYNFormSet(
+                    queryset=SumsBYN.objects.filter(contract__id=contract_id))  # для вызова из бд
+                contract_form = ContractForm(instance=get_object_or_404(Contract, id=contract_id))
+                sum_rur_form = SumsRURForm(instance=get_object_or_404(SumsRUR, contract__id=contract_id))
+
+            else:
+                SumBYNFormSet = modelformset_factory(SumsBYN, SumsBYNForm, extra=0)  # Берет ИЗ БД
+                formset = SumBYNFormSet(
+                    queryset=SumsBYN.objects.filter(contract__id=contract_id))  # для вызова из бд
+                contract_form = ContractForm(instance=get_object_or_404(Contract, id=contract_id))
+                sum_rur_form = SumsRURForm(instance=get_object_or_404(SumsRUR, contract__id=contract_id))
 
         return render(request,
                       template_name=self.create_or_add,
@@ -327,7 +368,7 @@ class ContractFabric(View):
             return redirect(reverse('planes:contracts'))
         else:
             print(formset.errors)
-            return HttpResponse('Невалидненько')
+            return HttpResponse(formset.errors)
 
 
 def adding_click_to_UserActivityJournal(request):
@@ -336,7 +377,7 @@ def adding_click_to_UserActivityJournal(request):
      counter.save()
      return HttpResponse('add_click')
 
-
+@login_required
 def plane(request,year=dt.now().year):
     finance_costs = FinanceCosts.objects.all()
     if request.method != 'POST':
@@ -374,7 +415,7 @@ def plane(request,year=dt.now().year):
      }
     return render(request, './planes/plane.html', response)
 
-
+@login_required
 def curators(request, finance_cost_id, year):
     planning = Planning.objects.filter(FinanceCosts=finance_cost_id).filter(year=str(year)).exclude(curator__title='ALL')
     finance_cost_name = FinanceCosts.objects.get(pk=finance_cost_id).title
@@ -431,7 +472,7 @@ def from_js(request):
     result_cur.save()
     return HttpResponse('123')
 
-
+@login_required
 def edit_plane(request, year, item_id):
     plan = Planning.objects.get(pk=item_id)
     plan_form = PlanningForm(instance=plan)
@@ -453,7 +494,7 @@ def edit_plane(request, year, item_id):
             print(plan_form._errors)
     return render(request, './planes/edit_plane.html', response)
 
-  
+@login_required 
 def add(request, finance_cost_id, year):
     plane_form = PlanningForm(initial={
         'FinanceCosts': finance_cost_id,

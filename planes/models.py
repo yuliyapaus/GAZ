@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from djmoney.models.fields import MoneyField
+from django.core.validators import MinValueValidator
 
 
 class Curator(models.Model):
@@ -716,28 +717,28 @@ class Planning(models.Model):
         max_digits=12,
         decimal_places=2,
         default=0,
-        null=True
+        null=True,
     )
     q_2 = models.DecimalField(
         verbose_name="Сумма лимита 2 квартал",
         max_digits=12,
         decimal_places=2,
         default=0,
-        null=True
+        null=True,
     )
     q_3 = models.DecimalField(
         verbose_name="Сумма лимита 3 квартал",
         max_digits=12,
         decimal_places=2,
         default=0,
-        null=True
+        null=True,
     )
     q_4 = models.DecimalField(
         verbose_name="Сумма лимита 4 квартал",
         max_digits=12,
         decimal_places=2,
         default=0,
-        null=True
+        null=True,
     )
     q_all = models.DecimalField(
         verbose_name="Сумма лимита за весь год",
