@@ -39,7 +39,7 @@ def index(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return render(request, 'planes/index.html')
+    return redirect('/login/')
 
 
 def login_view(request,):
@@ -53,7 +53,7 @@ def login_view(request,):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/')
+                    return redirect('/plane/')
                 else:
                     return HttpResponse('disable account')
             else:
