@@ -263,7 +263,7 @@ def adding_click_to_UserActivityJournal(request):
      counter.save()
      return HttpResponse('add_click')
 
-
+@login_required
 def plane(request,year=dt.now().year):
     finance_costs = FinanceCosts.objects.all()
     if request.method != 'POST':
@@ -301,7 +301,7 @@ def plane(request,year=dt.now().year):
      }
     return render(request, './planes/plane.html', response)
 
-
+@login_required
 def curators(request, finance_cost_id, year):
     planning = Planning.objects.filter(FinanceCosts=finance_cost_id).filter(year=str(year)).exclude(curator__title='ALL')
     finance_cost_name = FinanceCosts.objects.get(pk=finance_cost_id).title
@@ -358,7 +358,7 @@ def from_js(request):
     result_cur.save()
     return HttpResponse('123')
 
-
+@login_required
 def edit_plane(request, year, item_id):
     plan = Planning.objects.get(pk=item_id)
     plan_form = PlanningForm(instance=plan)
@@ -380,7 +380,7 @@ def edit_plane(request, year, item_id):
             print(plan_form._errors)
     return render(request, './planes/edit_plane.html', response)
 
-  
+@login_required 
 def add(request, finance_cost_id, year):
     plane_form = PlanningForm(initial={
         'FinanceCosts': finance_cost_id,
