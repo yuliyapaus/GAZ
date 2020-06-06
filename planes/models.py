@@ -712,38 +712,28 @@ class Planning(models.Model):
         choices=YEARS,
         max_length=4
     )
-    q_1 = models.DecimalField(
+    q_1 = models.FloatField(
         verbose_name="Сумма лимита 1 квартал",
-        max_digits=12,
-        decimal_places=2,
         default=0,
         null=True,
     )
-    q_2 = models.DecimalField(
+    q_2 = models.FloatField(
         verbose_name="Сумма лимита 2 квартал",
-        max_digits=12,
-        decimal_places=2,
         default=0,
         null=True,
     )
-    q_3 = models.DecimalField(
+    q_3 = models.FloatField(
         verbose_name="Сумма лимита 3 квартал",
-        max_digits=12,
-        decimal_places=2,
         default=0,
         null=True,
     )
-    q_4 = models.DecimalField(
+    q_4 = models.FloatField(
         verbose_name="Сумма лимита 4 квартал",
-        max_digits=12,
-        decimal_places=2,
         default=0,
         null=True,
     )
-    q_all = models.DecimalField(
+    q_all = models.FloatField(
         verbose_name="Сумма лимита за весь год",
-        max_digits=12,
-        decimal_places=2,
         default=0,
         null=True
     )
