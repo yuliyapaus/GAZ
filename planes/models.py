@@ -718,7 +718,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True,
-        validators=[MinValueValidator(0.0)],
     )
     q_2 = models.DecimalField(
         verbose_name="Сумма лимита 2 квартал",
@@ -726,7 +725,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True,
-        validators=[MinValueValidator(0.0)]
     )
     q_3 = models.DecimalField(
         verbose_name="Сумма лимита 3 квартал",
@@ -734,7 +732,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True,
-        validators=[MinValueValidator(0.0)]
     )
     q_4 = models.DecimalField(
         verbose_name="Сумма лимита 4 квартал",
@@ -742,7 +739,6 @@ class Planning(models.Model):
         decimal_places=2,
         default=0,
         null=True,
-        validators=[MinValueValidator(0.0)]
     )
     q_all = models.DecimalField(
         verbose_name="Сумма лимита за весь год",
