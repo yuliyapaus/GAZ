@@ -17,10 +17,14 @@
 
         <div class="user-info">
 
-            <a href="/"><p class="user-info-txt">User Name</p></a>
-            <a href="/"><p class="user-info-txt">User E-mail</p></a>
+            <a href="/"><p class="user-info-txt">{{ request.user }}</p></a>
+            <a href="/"><p class="user-info-txt">{{ request.user.email }}</p></a>
 
         </div>
+
+        <button class="btn-logout">
+            <a class="btn-logout-text" href="{% url 'logout' %}">Logout</a>
+        </button>
 
     </header>
 
@@ -29,10 +33,10 @@
         <a href="/plane" class="nav-element{% if namespace == 'plane' %} nav-active{% endif %}">
             Планирование
         </a>
-        <a href="/contractlist" class="nav-element{% if namespace == 'contractlist' %} nav-active{% endif %}">
+        <a href="{% url 'planes:contracts' %}" class="nav-element{% if namespace == 'plane' %} nav-active{% endif %}">
             Реестр договоров
         </a>
-        <a href="/analytics" class="nav-element{% if namespace == 'analytics' %} nav-active{% endif %}">
+        <a href="{% url 'analytics:analytics' %}" class="nav-element{% if namespace == 'analytics' %} nav-active{% endif %}">
             Аналитика
         </a>
         <a href="/admin" class="nav-element">Администрирование</a>
