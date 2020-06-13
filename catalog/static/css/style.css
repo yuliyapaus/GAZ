@@ -160,7 +160,7 @@ header{
     margin: 0;    
     /*background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(13,96,209,1) 100%);*/
     background: #007ac2;
-    height: 68px;
+    height: 70px;
     max-height: 200px;
     display: flex;
     justify-content: space-between;
@@ -222,8 +222,10 @@ a.btn-logout:focus, a.btn-logout:hover {
     display: inline-block;
     /*width: 276px;*/
     /*height: 138px;    */
-    width: 126px;
-    height: 63px;
+    /*width: 126px;*/
+    /*height: 63px;*/
+    width: 124px;
+    height: 70px;
     padding: 0;
     margin: 0 0 0 44px;
 }
