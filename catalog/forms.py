@@ -59,7 +59,13 @@ class CatalogStateASEZForm(ModelForm):
 class CatalogCounterpartForm(ModelForm):
     class Meta:
         model = Counterpart
-        fields = ('name',)
+        # fields = ('name',)
+        fields = [
+            'name',
+            'UNP',
+            'reg_addr',
+            'phone',
+            'email', ]
         widgets = {'name': TextInput(attrs={'readonly': 'readonly'}),}
 
 class CatalogContractStatusForm(ModelForm):
