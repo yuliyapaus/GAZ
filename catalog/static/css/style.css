@@ -353,6 +353,25 @@ main {
     /*font-family: Roboto, sans-serif;*/
 }
 
+.container-col-flex {
+    display: flex;
+}
+
+.col-analytics-1 {
+    flex: 1 0 auto;
+    padding: 0;
+}
+
+.col-analytics-2 {
+    flex: 0 0 auto;
+    padding: 0 0 0 36px;
+}
+
+.col-analytics-3 {
+    flex: 0 0 auto;
+    padding: 0 0 0 36px;
+}
+
 #data-container{
     margin: 16px 24px 100px;
 }
