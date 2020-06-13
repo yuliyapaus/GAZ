@@ -176,7 +176,7 @@ header{
     padding: .15em .5em .05em;
     cursor: pointer;
     text-decoration: none;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     line-height: 1.5rem;
     font-weight: 300;
 
@@ -237,7 +237,7 @@ a.btn-logout:focus, a.btn-logout:hover {
 
 .user-info-txt{
     /*font-size: 18px;*/
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     /*display: block;*/
     color: white;
     margin: 5px 24px 0 auto;
@@ -277,9 +277,9 @@ nav a:focus, nav a:hover {
     margin: 3px 15px 7px 0;
     /*margin: 5px 12px 10px 0;*/
     /*padding: .15em .5em .05em;*/
-    padding: .25em 1.0em;
+    padding: .2em 0.8em;
     line-height: 1.5rem;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 400;
     cursor: pointer;
     border-radius: 4px;
@@ -355,6 +355,8 @@ main {
 
 .container-col-flex {
     display: flex;
+    justify-content: space-between;
+    /*flex-wrap: wrap;*/
 }
 
 .col-analytics-1 {
@@ -602,7 +604,7 @@ li{
 
 li a{
     /*font-size: 25px;*/
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     line-height: 3rem;
     font-family: Roboto, sans-serif;
 
