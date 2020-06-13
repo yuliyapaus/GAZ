@@ -13,9 +13,10 @@
 {#<div class="container-fluid">#}
 <div id="data-container">
 
-    <div class="row">
 
-        <div class="col-sm-5">
+    <div class="row container-col-flex">
+
+        <div class="col-sm-5 col-analytics-1">
             <div class="chart-container" style="position: relative">
                 <canvas id="myChart" ></canvas>
             </div>
@@ -104,7 +105,7 @@
 
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3 col-analytics-2">
 
             <div class="chart-container" style="position: relative">
                 <canvas id="contractCountAll" width="250" height="250"></canvas>
@@ -120,7 +121,7 @@
 
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-2 col-analytics-3">
                   <form action="{% url 'analytics:implementation_plan'  %}" method="get" name="filter" class="form-group">
     <p><label for="year">Отчетный год </label>
         <select id="year" size="1" name="select_year" class="form-control" >
