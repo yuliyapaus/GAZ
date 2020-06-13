@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <div id="data-container">
+
 <table border="1">
     <tr>
         <th>Наименование (предмет) договора, <br>доп соглашения к договору <br>СОДЕРЖАНИЕ РАБОТ</th>
@@ -121,7 +120,7 @@
             <td>{{ con_sum.sum_rur.contract_sum_NDS_RUB.amount }}</td>
             <td>{{ con_sum.sum_rur.currency }}</td>
             <td>{{ con_sum.sum_rur.delta_data_ASEZ.amount }}</td>
-            <td class="no" bgcolor="red">КГГ?</td>
+            <td>{{ con_sum.contract.number_KGG }}</td>
             <td class="calc" bgcolor="red">{{ con_sum. }}</td>
             <td>{{ con_sum.sum_byn.1quart.plan_sum_SAP.amount }}</td>
             <td>{{ con_sum.sum_byn.2quart.plan_sum_SAP.amount }}</td>
@@ -298,9 +297,7 @@
 
 </div>
 
-
-
-</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $('document').ready(function () {
         $('.contract_choice').on('click', function (chose) {
@@ -345,4 +342,7 @@
 
     });
 </script>
-</html>
+
+    </div>
+
+{% endblock content %}

@@ -51,9 +51,11 @@ def get_analytics_for_all_contracts(request):
 
     if contract_status_id == '0':
         contract_status_ids = [value['id'] for value in contract_status.values('id')]
+
     elif contract_status.values('id', 'title').filter(id=status_id)[0]['title']=='Заключен':
         ad =[i['id']  for i in contract_status.values('id', 'title') if i['title'] == 'Исполнен']
         contract_status_ids = list(contract_status_id) + ad
+
     elif contract_status.values('id', 'title').filter(id=status_id)[0]['title']=='Исполнен':
         ad =[i['id']  for i in contract_status.values('id', 'title') if i['title'] == 'Заключен']
         contract_status_ids = list(contract_status_id) + ad
@@ -78,8 +80,10 @@ def get_analytics_for_all_contracts(request):
         contract__finance_cost_id = finance_cost_id,
         contract__curator_id = curator_id,
         contract__contract_type_id__in=contract_types_ids,
+
         contract__contract_status_id__in=contract_status_ids,
         contract__contract_active='True'
+
     ).aggregate(sum = Sum('plan_sum_SAP'))['sum']
         if not plan_sum_sap_all:
             plan_sum_sap_all='0'
@@ -93,6 +97,7 @@ def get_analytics_for_all_contracts(request):
             contract__finance_cost_id=finance_cost_id,
             contract__curator_id=curator_id,
             contract__contract_type_id__in=contract_types_ids,
+
             contract__contract_status_id__in=contract_status_ids,
             contract__contract_active='True'
         ).aggregate(sum=Sum('contract_sum_without_NDS_BYN'))['sum']
@@ -108,8 +113,10 @@ def get_analytics_for_all_contracts(request):
             contract__finance_cost_id=finance_cost_id,
             contract__curator_id=curator_id,
             contract__contract_type_id__in=contract_types_ids,
+
             contract__contract_status_id__in=contract_status_ids,
             contract__contract_active='True'
+
         ).aggregate(sum=Sum('forecast_total'))['sum']
         if not forecast_total_all:
             forecast_total_all='0'
@@ -125,6 +132,7 @@ def get_analytics_for_all_contracts(request):
             contract__contract_type_id__in=contract_types_ids,
             contract__contract_status_id__in=contract_status_ids,
             contract__contract_active='True'
+
         ).aggregate(sum=Sum('fact_total'))['sum']
         if not fact_total_all:
             fact_total_all='0'
@@ -136,8 +144,10 @@ def get_analytics_for_all_contracts(request):
     contracts_count_plan['Все'] = contracts.filter(
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
+
         contract_status__title__in=['Запланирован'],
         contract_active='True'
+
 
     ).count()
 
@@ -145,16 +155,20 @@ def get_analytics_for_all_contracts(request):
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
         contract_type__title__in=['Центр'],
+
         contract_status__title__in=['Запланирован'],
         contract_active = 'True'
+
     ).count()
 
     contracts_count_plan['Филиал'] = contracts.filter(
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
         contract_type__title__in=['Филиал'],
+
         contract_status__title__in=['Запланирован'],
         contract_active='True'
+
     ).count()
 
     contracts_count_fact = {}
@@ -162,24 +176,30 @@ def get_analytics_for_all_contracts(request):
     contracts_count_fact['Все'] = contracts.filter(
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
+
         contract_status__title__in=['Заключен', 'Исполнен'],
         contract_active='True'
+
     ).count()
 
     contracts_count_fact['Центр'] = contracts.filter(
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
         contract_type__title__in=['Центр'],
+
         contract_status__title__in=['Заключен', 'Исполнен'],
         contract_active='True'
+
     ).count()
 
     contracts_count_fact['Филиал'] = contracts.filter(
         finance_cost_id=finance_cost_id,
         curator_id=curator_id,
         contract_type__title__in=['Филиал'],
+
         contract_status__title__in=['Заключен', 'Исполнен'],
         contract_active='True'
+
     ).count()
 
     return render(request,
