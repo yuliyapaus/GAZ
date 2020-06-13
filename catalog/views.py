@@ -105,7 +105,7 @@ def catalog_usertypes(request):
 def catalog_numberpztru(request):
     CatalogFormset = modelformset_factory(NumberPZTRU, form=forms.CatalogNumberPZTRUForm, extra=0)
     formset = CatalogFormset()
-    title = '№ пункта положения о закупках'
+    title = 'Номер пункта Положения о закупках'
     context = {'formset': formset, 'title': title}
     return render(request, 'catalog/article.html', context)
 
