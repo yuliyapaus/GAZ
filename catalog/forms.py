@@ -11,6 +11,7 @@ from planes.models import (
     ContractStatus,
     UserTypes,
     NumberPZTRU,
+    Currency,
 )
 
 class CatalogFinanceCostsForm(ModelForm):
@@ -76,5 +77,11 @@ class CatalogUserTypesForm(ModelForm):
 class CatalogNumberPZTRUForm(ModelForm):
     class Meta:
         model = NumberPZTRU
+        fields = ('title',)
+        widgets = {'title': TextInput(attrs={'readonly': 'readonly'}),}
+
+class CatalogCurrency(ModelForm):
+    class Meta:
+        model = Currency
         fields = ('title',)
         widgets = {'title': TextInput(attrs={'readonly': 'readonly'}),}
