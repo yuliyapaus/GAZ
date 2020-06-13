@@ -168,14 +168,24 @@
 
     <div class="row">
 
-        <div class="col-sm-6" ></div>
-        <div class="col-sm-6">
-            <button type="button">Печать</button>
-            <button type="button">Отправить</button>
-            <button type="button">Сохранить</button>
-            <button type="button">
-                <a href="{% url 'analytics:analytics' %}">Назад</a>
-            </button>
+{#        <div class="col-sm-6" ></div>#}
+{#        <div class="col-sm-6">#}
+{#            <button type="button">Печать</button>#}
+{#            <button type="button">Отправить</button>#}
+{#            <button type="button">Сохранить</button>#}
+{#            <button type="button">#}
+{#                <a href="{% url 'analytics:analytics' %}">Назад</a>#}
+{#            </button>#}
+{#        </div>#}
+
+        <div class="buttons-container">
+            <button class="button" onclick="">Печать</button>
+            <button class="button" onclick="">Отправить</button>
+            <button class="button" onclick="">Сохранить</button>
+            <button class="button" onclick="history.back()">Назад</button>
+{#            <button type="button">#}
+{#                <a href="{% url 'analytics:analytics' %}">Назад</a>#}
+{#            </button>#}
         </div>
 
     </div>
