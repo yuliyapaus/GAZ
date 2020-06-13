@@ -300,9 +300,6 @@ def get_deviation_analysis(request):
         a = Planning(year=year, FinanceCosts_id=finance_cost_id, curator_id=curator_id)
         cust_planning={}
 
-        # print('При создании пустого экземпляра', a, a.q_1, type(a), planning, type(planning))
-        # print('Looking for the summer', dir(a) )
-
         cust_planning['q_1']=a.q_1
         cust_planning['q_2'] = a.q_2
         cust_planning['q_3'] = a.q_3
@@ -312,7 +309,6 @@ def get_deviation_analysis(request):
         cust_planning['q_9_months'] = a.q_9_months
         planning=[cust_planning]
 
-    # print('Вот так обычно выглядит планнинг', planning)
 
     plan_sum_sap_dict = {}
     for period in ['1quart', '2quart', '3quart', '4quart', '6months', '9months', 'year']:
