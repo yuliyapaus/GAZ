@@ -16,6 +16,20 @@
             <a href="/"><img class="logo" src="{% static 'img/gazpromlogo_5.png' %}" alt="logo"></a>
         </div>
 
+        <div class="search-block">
+
+            <div class="search-field">
+                <form class="" method="post" action="/search">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="search" name="q" id="search" placeholder="Поиск...">
+    {#                    <button type="submit" class="submit"><i class="icon-search"></i>Найти</button>#}
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
         <div class="user-info">
 
             <a href="/"><p class="user-info-txt">{{ request.user }}</p></a>

@@ -168,6 +168,59 @@ header{
     /* position: relative; */
 }
 
+.media {
+    flex: 0;
+    margin: 0 0 0 44px;
+}
+
+.search-block {
+    flex: 1;
+    align-self: flex-end;
+    margin: 0 24px;
+}
+
+.search-field {
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0 8px;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.search-textfield {
+    width: 400px;
+    height: 40px;
+    border: solid 1px #00233B;
+    padding: 4px;
+    font-family: 'Roboto-Light', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input#search {
+    font-size: 0.9rem;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.search-button {
+    background: white;
+    box-shadow: 0 0 0 transparent;
+    border: 0 solid transparent;
+    text-shadow: 0 0 0 transparent;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.search-icon {
+    height: 40px;
+    padding: 4px;
+}
+
 .btn-logout {
     display: block;
     margin-right: 24px;
@@ -227,7 +280,6 @@ a.btn-logout:focus, a.btn-logout:hover {
     width: 124px;
     height: 70px;
     padding: 0;
-    margin: 0 0 0 44px;
 }
 
 .user-info{
@@ -397,37 +449,6 @@ table input{
     display: flex;
     align-items: center;
     justify-self: start;
-}
-
-.search-field{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.search-textfield{
-    width: 400px;
-    height: 40px;
-    border: solid 1px #00233B;
-    padding: 4px;
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.search-button{
-    background: white;
-    box-shadow: 0 0 0 transparent;
-    border: 0 solid transparent;
-    text-shadow: 0 0 0 transparent;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-.search-icon{
-    height: 40px;
-    padding: 4px;
 }
 
 .action-list-headliner {
