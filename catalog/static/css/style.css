@@ -156,7 +156,7 @@ h5 {
 /* ШАПКА */
 header{
     flex: 0 0 auto;
-    padding: 16px;
+    padding: 10px 16px;
     margin: 0;    
     /*background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(13,96,209,1) 100%);*/
     background: #007ac2;
@@ -170,7 +170,7 @@ header{
 
 .media {
     flex: 0;
-    margin: 0 0 0 44px;
+    margin: 0 0 0 24px;
 }
 
 .search-block {
@@ -226,17 +226,17 @@ input#search {
     margin-right: 24px;
     margin-left: auto;
 
-    padding: .15em .5em .05em;
+    /*padding: .15em .5em .05em;*/
     cursor: pointer;
     text-decoration: none;
     font-size: 0.9rem;
-    line-height: 1.5rem;
+    line-height: 1.4rem;
     font-weight: 300;
 
     /*color: #1b86c0;*/
     background-color: #d4f0f9;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .btn-logout, .btn-logout:hover, .btn-logout:visited {
@@ -302,24 +302,27 @@ a.btn-logout:focus, a.btn-logout:hover {
 
 nav {
     flex: 0 0 auto;
-    width: 100%;
+    /*width: 100%;*/
     max-height: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
+    /*justify-content: space-around;*/
     /*justify-content: center;*/
     flex-wrap: wrap;
-    margin: 16px 0 0;
+    /*margin: 16px 24px 0;*/
+    background-color: #007ac2;
+    padding: 0 24px;
 }
 
 nav a:focus, nav a:hover {
     /*color: #036;*/
-    color: #1b86c0;
+    /*color: #1b86c0;*/
     /*font-weight: 600;*/
 }
 
 
-.nav-element{
+.nav-element {
     /*font-size: 28px;*/
     /*color: #0d60d1;*/
     /*margin: 0;*/
@@ -328,25 +331,43 @@ nav a:focus, nav a:hover {
 
     /*background: #d4f0f9;*/
     display: inline-block;
-    margin: 3px 15px 7px 0;
+    /*margin: 3px 15px 7px 0;*/
+    /*margin: 3px 15px 0 0;*/
     /*margin: 5px 12px 10px 0;*/
     /*padding: .15em .5em .05em;*/
     padding: .2em 0.8em;
     line-height: 1.5rem;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 400;
     cursor: pointer;
     border-radius: 4px;
     border-bottom: none;
-    background-color: #d4f0f9;
+    /*background-color: #1b86c0;*/
+    /*color: #d4f0f9;*/
+    text-transform: uppercase;
+    border-bottom-width: medium;
+    border-bottom-color: white;
+}
+
+.nav-active {
+    /*border-bottom-width: medium;*/
+    /*border-bottom-color: white;*/
+    border-radius: 0;
+    border-bottom: 3px solid white;
+}
+
+a:link.nav-element, a:visited.nav-element {
+    color: #a2bdc6;
+    font-family: Roboto, sans-serif;
+    /*font-weight: 600;*/
 }
 
 a:link.nav-active, a:visited.nav-active {
     background: #007ac2;
     /*background: #b8d8fa;*/
-    font-weight: 300;
+    font-weight: 400;
     color: #fff;
-    /*font-family: Roboto, sans-serif;*/
+    font-family: Roboto, sans-serif;
 }
 
 a:focus.nav-element, a:hover.nav-element {
@@ -589,19 +610,19 @@ td{
 .button{
     /*color: inherit;*/
     /*background-color: transparent;*/
-    padding: 10px 15px;
+    padding: 8px 36px;
     cursor: pointer;
     /*font-size: 17px;*/
     font-size: 1.0rem;
     /*font-family: 'Segoe UI', 'Roboto', sans-serif;*/
     color: white;
     /*font-weight: 600;*/
-    width: 150px;
+    /*width: 150px;*/
     /*height: 40px;*/
-    background-color: #0d60d1;
+    background-color: #007ac2;
     border: none;
     border-radius: 6px;
-    margin-right: 20px;
+    margin-left: 16px;
 }
 
 /* СТИЛИ ДЛЯ СПРАВОЧНИКОВ */
@@ -799,8 +820,8 @@ li a{
    }
 
    .nav-element{
-       padding-top: 10px;
-       padding-bottom: 10px;
+       /*padding-top: 10px;*/
+       /*padding-bottom: 10px;*/
    }
 
    input{
