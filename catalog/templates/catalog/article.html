@@ -41,6 +41,12 @@
                         {{field}}
                     </td>
                   {% endfor %}
+                    <td id="td-edit-mode" style="display: none">
+                        <a href="">Edit</a>
+                    </td>
+                    <td id="td-edit-mode" style="display: none">
+                        <a href="">Delete</a>
+                    </td>
                   </tr>
 
                 {% endfor %}
@@ -69,7 +75,8 @@
 {#    </div>#}
 
     <div class="buttons-container">
-        <button class="button" onclick="">Сохранить</button>
+        <button id="btn-edit-mode-show" class="button" onclick="saveEditions()" style="display: none;">Сохранить</button>
+        <button id="btn-edit-mode-hide" class="button" onclick="enableEditMode()">Редактировать</button>
         <button class="button" onclick="history.back()">Назад</button>
     </div>
 
