@@ -392,6 +392,7 @@ class ContractFabric(View):
                 'activity_form',
 
                 'related_contract'  # TODO del it
+
             ]
             user_rights['spec_ASEZ'] = [
                 'id',
@@ -484,8 +485,6 @@ class ContractFabric(View):
 
         formset_months = SumBYNFormSet_months(request.POST, prefix='months')
         formset_quarts = SumBYNFormSet_quarts(request.POST, prefix='quarts')
-
-        print(contract_form)
 
         if sum_rur_form.is_valid() \
                 and contract_form.is_valid() \
