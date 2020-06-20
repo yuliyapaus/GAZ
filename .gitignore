@@ -10,4 +10,7 @@
 /debug.log
 /analytics/static/styles/
 .idea
+debug.log
+env
+db.sqlite3
 env
