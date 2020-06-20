@@ -12,3 +12,4 @@
 .idea
 debug.log
 env
+db.sqlite3
