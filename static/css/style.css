@@ -346,8 +346,7 @@ nav a:focus, nav a:hover {
     /*background-color: #1b86c0;*/
     /*color: #d4f0f9;*/
     text-transform: uppercase;
-    border-bottom-width: medium;
-    border-bottom-color: white;
+    border-bottom: 3px solid transparent;
 }
 
 .nav-active {
