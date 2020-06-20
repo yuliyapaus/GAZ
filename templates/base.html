@@ -49,6 +49,7 @@
     </header>
 
     <nav>
+
     {% with namespace=request.resolver_match.namespace %}
         <a href="/plane" class="nav-element{% if namespace == 'planes' %} nav-active{% endif %}">
             Планирование
@@ -59,6 +60,7 @@
         <a href="{% url 'analytics:analytics' %}" class="nav-element{% if namespace == 'analytics' %} nav-active{% endif %}">
             Аналитика
         </a>
+
         <a href="/admin" class="nav-element">Администрирование</a>
         <a href="/catalog" class="nav-element{% if namespace == 'catalog' %} nav-active{% endif %}">
             Справочники
