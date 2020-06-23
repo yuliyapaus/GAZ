@@ -11,6 +11,7 @@ from planes.models import (
     ContractStatus,
     UserTypes,
     NumberPZTRU,
+    Currency,
 )
 from . import forms
 from django.forms import modelformset_factory
@@ -106,6 +107,13 @@ def catalog_numberpztru(request):
     CatalogFormset = modelformset_factory(NumberPZTRU, form=forms.CatalogNumberPZTRUForm, extra=0)
     formset = CatalogFormset()
     title = 'Номер пункта Положения о закупках'
+    context = {'formset': formset, 'title': title}
+    return render(request, 'catalog/article.html', context)
+
+def catalog_currency(request):
+    CatalogFormset = modelformset_factory(Currency, form=forms.CatalogCurrency, extra=0)
+    formset = CatalogFormset()
+    title = 'Валюта'
     context = {'formset': formset, 'title': title}
     return render(request, 'catalog/article.html', context)
 

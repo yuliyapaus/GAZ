@@ -11,6 +11,9 @@ $("document").ready(function(){
 )
 
 
+
+
+
 function exportToExcel(tableID, filename = ''){
     var downloadurl;
     var dataFileType = 'application/vnd.ms-excel;charset=UTF-8';
