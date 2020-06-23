@@ -489,23 +489,29 @@ class ContractFabric(View):
                 and formset_quarts.is_valid():
 
             new_contract = contract_form.save()
+            new_sum_rur = sum_rur_form.save(commit=False)
+            new_sum_rur.contract = new_contract
+            new_sum_rur.save()
             new_sum_byn_year = sum_byn_year_form.save(commit=False)
             new_sum_byn_year.contract = new_contract
+            new_sum_byn_year.year = new_sum_rur.year
             new_sum_byn_year.save()
             for form in formset_months:
                 new_sum_byn = form.save(commit=False)
                 new_sum_byn.contract = new_contract
+                new_sum_byn.year = new_sum_rur.year
                 new_sum_byn.save()
             for form in formset_quarts:
                 new_sum_byn = form.save(commit=False)
                 new_sum_byn.contract = new_contract
+                new_sum_byn.year = new_sum_rur.year
                 new_sum_byn.save()
             if create_periods_flag:
                 for p in self.periods:
-                    new_sum_byn = SumsBYN.objects.create(period=p, contract=new_contract)
-            new_sum_rur = sum_rur_form.save(commit=False)
-            new_sum_rur.contract = new_contract
-            new_sum_rur.save()
+                    print('FLAAAAAAAAAAG')
+                    new_sum_byn = SumsBYN.objects.create(period=p,
+                                                         contract=new_contract,
+                                                         year=new_sum_rur.year)
             return redirect(reverse('planes:contracts'))
         else:
             print( sum_rur_form.is_valid(),
