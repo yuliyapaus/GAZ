@@ -367,7 +367,6 @@ class ContractFabric(View):
             block_list = [getattr(i, 'name') for i in Contract._meta.fields]
 
             user_groups = request.user.groups.all()
-
             user_rights = {}
             user_rights['lawyers'] = [
                 'id',  # id need course you can create new or etc
@@ -386,9 +385,6 @@ class ContractFabric(View):
                 'id',
                 'finance_cost',
                 'activity_form',
-
-                'related_contract'  # TODO del it
-
             ]
             user_rights['spec_ASEZ'] = [
                 'id',
@@ -400,8 +396,6 @@ class ContractFabric(View):
                 'fact_load_date_ASEZ',
                 'currency',
                 'number_KGG',
-
-                'related_contract'  # TODO del it
             ]
 
             this_user_in_groups = [i.name for i in user_groups]
@@ -420,9 +414,9 @@ class ContractFabric(View):
                 dic = {}
                 contract_form.fields[right].widget.attrs['disabled'] = 'disabled'
                 attribute = getattr(Contract.objects.get(id=contract_id), right)
-                # TODO check if class is not FK then do any
                 dic['name'] = right
-
+                if attribute == None:
+                    attribute = ''
                 try:
                     dic['value'] = attribute.id
                 except:
