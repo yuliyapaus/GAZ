@@ -299,7 +299,6 @@ class ContractFabric(View):
         "3quart",
         "4quart",
     ]
-    # all_fields_contract = [getattr(i, 'name') for i in Contract._meta.fields].remove('id')
 
     def get(self, request, contract_id=None):
         if request.GET.__contains__('from_ajax'):
@@ -659,3 +658,25 @@ def add(request, finance_cost_id, year):
 
             # return reverse('planes', kwargs={'year': year})
     return render(request, './planes/add.html', response)
+
+
+
+
+
+import os
+import pandas as pd
+import numpy as np
+def panda(request):
+
+    data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
+    to_drop = [i for i in data1.columns if 'Unnamed' in i]
+    df1 = data1.copy()
+    df1.drop(columns=[i for i in to_drop])  # TODO dont work
+    test = df1[0:2].to_dict(orient='records')
+    print(test)
+
+
+
+    return render(request, template_name='contracts/panda.html', context={'data1':data1,
+                                                                          'df1':df1,
+                                                                          'test':test})

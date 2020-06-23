@@ -12,7 +12,7 @@ from .views import (
     ContractFabric,
     DeletedContracts,
 test,
-double_formset
+panda
 )
 
 app_name = "planes"
@@ -62,5 +62,5 @@ urlpatterns = [
          ),
 
     path('test', test),
-    path('double', double_formset)
+    path('panda', panda)
 ]
