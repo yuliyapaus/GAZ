@@ -676,10 +676,16 @@ def panda(request):
         to_drop = [i for i in excel_data.columns if 'Unnamed' in i]
         test = excel_data.drop(columns=[i for i in to_drop])
         dic = test.to_dict(orient='records')
-        title = dic[0]['Наименование (предмет) договора, доп соглашения к договору']
-        fc = dic[0]['Статья финансирования']
-        print(title)
-        print(fc)
+        for line in dic:
+            title = line['Наименование (предмет) договора, доп соглашения к договору']
+            fc = line['Статья финансирования']
+            new_contract = Contract.objects.create(
+                title=title,
+                finance_cost=None,
+                curator=None,
+                stateASEZ=None
+            )
+        print(len(dic))
         return render(request,
                       template_name='contracts/panda.html',
                       context={
