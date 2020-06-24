@@ -666,17 +666,30 @@ def add(request, finance_cost_id, year):
 import os
 import pandas as pd
 import numpy as np
+from .forms import UploadFileForm
 def panda(request):
+    if request.method == "POST":
+        #print(request.POST, request.FILES)
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_form_file = request.FILES['file']
+            for l in handle_form_file:
+                print(l)
+
+
+    else:
+        form = UploadFileForm()
 
     data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
     to_drop = [i for i in data1.columns if 'Unnamed' in i]
     df1 = data1.copy()
     df1.drop(columns=[i for i in to_drop])  # TODO dont work
     test = df1[0:2].to_dict(orient='records')
-    print(test)
+
 
 
 
     return render(request, template_name='contracts/panda.html', context={'data1':data1,
                                                                           'df1':df1,
-                                                                          'test':test})
+                                                                          'test':test,
+                                                                          'form':form})
