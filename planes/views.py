@@ -672,22 +672,23 @@ def panda(request):
         #print(request.POST, request.FILES)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_form_file = request.FILES['file']
-            for l in handle_form_file:
-                print(l)
-
+            # for l in request.FILES['file']:
+            #     print(l)
+            for chunk in request.FILES['file'].chunks():
+                # print(chunk.decode('utf-8'))
+                data1 = pd.read_excel(chunk, sheet_name='Лист3')  # Open excel
+                break
+        print(data1.head())  # do smthing with data
+        return HttpResponse('post')
 
     else:
         form = UploadFileForm()
 
-    data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
-    to_drop = [i for i in data1.columns if 'Unnamed' in i]
-    df1 = data1.copy()
-    df1.drop(columns=[i for i in to_drop])  # TODO dont work
-    test = df1[0:2].to_dict(orient='records')
-
-
-
+        data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
+        to_drop = [i for i in data1.columns if 'Unnamed' in i]
+        df1 = data1.copy()
+        df1.drop(columns=[i for i in to_drop])  # TODO dont work
+        test = df1[0:2].to_dict(orient='records')
 
     return render(request, template_name='contracts/panda.html', context={'data1':data1,
                                                                           'df1':df1,
