@@ -669,28 +669,38 @@ import numpy as np
 from .forms import UploadFileForm
 def panda(request):
     if request.method == "POST":
-        #print(request.POST, request.FILES)
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            # for l in request.FILES['file']:
-            #     print(l)
-            for chunk in request.FILES['file'].chunks():
-                # print(chunk.decode('utf-8'))
-                data1 = pd.read_excel(chunk, sheet_name='Лист3')  # Open excel
-                break
-        print(data1.head())  # do smthing with data
-        return HttpResponse('post')
+            for chunk in request.FILES['file'].chunks():  # works with last file
+                excel_data = pd.read_excel(chunk, sheet_name='Лист3')  # Open excel
+        to_drop = [i for i in excel_data.columns if 'Unnamed' in i]
+        test = excel_data.drop(columns=[i for i in to_drop])
+        dic = test.to_dict(orient='records')
+        title = dic[0]['Наименование (предмет) договора, доп соглашения к договору']
+        fc = dic[0]['Статья финансирования']
+        print(title)
+        print(fc)
+        return render(request,
+                      template_name='contracts/panda.html',
+                      context={
+                            'form': form,
+                            'test':test,
+                            'data1':excel_data,
+                            'dic':dic
+                        })
 
     else:
         form = UploadFileForm()
 
-        data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
-        to_drop = [i for i in data1.columns if 'Unnamed' in i]
-        df1 = data1.copy()
-        df1.drop(columns=[i for i in to_drop])  # TODO dont work
-        test = df1[0:2].to_dict(orient='records')
+        excel_data = None
+        df1 = None
+        #
+        # data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
+        # to_drop = [i for i in data1.columns if 'Unnamed' in i]
+        # df1 = data1.copy()
+        # df1.drop(columns=[i for i in to_drop])  # TODO dont work
+        # test = df1[0:2].to_dict(orient='records')
 
-    return render(request, template_name='contracts/panda.html', context={'data1':data1,
-                                                                          'df1':df1,
-                                                                          'test':test,
+    return render(request, template_name='contracts/panda.html', context={'data1':excel_data,
+
                                                                           'form':form})
