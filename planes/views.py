@@ -681,9 +681,18 @@ def panda(request):
             fc = line['Статья финансирования']
             new_contract = Contract.objects.create(
                 title=title,
-                finance_cost=None,
-                curator=None,
-                stateASEZ=None
+                finance_cost=FinanceCosts.objects.get(title=line['Статья финансирования']),
+                curator=Curator.objects.latest('id'),
+                stateASEZ=StateASEZ.objects.latest('id'),
+                plan_load_date_ASEZ=date.today().isoformat(),
+                plan_sign_date=date.today().isoformat(),
+                start_date=date.today().isoformat(),
+                activity_form_id=1,
+                contract_mode_id=1,
+                contract_type_id=1,
+                counterpart_id=1,
+                purchase_type_id=1,
+
             )
         print(len(dic))
         return render(request,
