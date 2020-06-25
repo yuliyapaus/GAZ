@@ -33,7 +33,8 @@ from .models import (
     StateASEZ,
     NumberPZTRU,
     ContractStatus,
-    Counterpart
+    Counterpart,
+    ActivityForm,
 )
 from django.urls import reverse
 import json
@@ -688,26 +689,39 @@ def panda(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             for chunk in request.FILES['file'].chunks():  # works with last file
-                excel_data = pd.read_excel(chunk, sheet_name='Лист3')  # Open excel
+                excel_data = pd.read_excel(chunk, sheet_name='Лист3')  # TODO Open excel
         to_drop = [i for i in excel_data.columns if 'Unnamed' in i]
         test = excel_data.drop(columns=[i for i in to_drop])
         dic = test.to_dict(orient='records')
         for line in dic:
-            title = line['Наименование (предмет) договора, доп соглашения к договору']
-            fc = line['Статья финансирования']
+            print(line['Центр/филиал'].split('.')[0])
             new_contract = Contract.objects.create(
-                title=title,
+                title=from_excel_to_model(
+                    line,
+                    try_value='Наименование (предмет) договора, доп соглашения к договору'
+                ),
+                #title=line['Наименование (предмет) договора, доп соглашения к договору'],
                 finance_cost=FinanceCosts.objects.get(title=line['Статья финансирования']),
-                curator=Curator.objects.latest('id'),
-                stateASEZ=StateASEZ.objects.latest('id'),
+                curator=Curator.objects.get(title=line['Куратор']),
+                stateASEZ_id=1,
+                #stateASEZ=line['Состояние АСЭЗ'],
                 plan_load_date_ASEZ=date.today().isoformat(),
                 plan_sign_date=date.today().isoformat(),
                 start_date=date.today().isoformat(),
-                activity_form_id=1,
+                activity_form_id=1,  # TODO placeholder
+                # activity_form=ActivityForm.objects.get(
+                #     title=line['Виды деятельности']
+                # ),
                 contract_mode_id=1,
-                contract_type_id=1,
+                contract_type=ContractType.objects.get(
+                    title=line['Центр/филиал'].split('.')[0]
+                ),
                 counterpart_id=1,
-                purchase_type_id=1,
+                # counterpart=line['Контрагент по договору'],
+                purchase_type=PurchaseType.objects.get(
+                    title=line['Тип закупки\n(конкурентная/\nнеконкурентная ЕП)']
+                ),
+
             )
             new_sum_rur = SumsRUR.objects.create(
                 contract=new_contract,
@@ -719,6 +733,7 @@ def panda(request):
                     contract=new_contract,
                     year=new_sum_rur.year
                 )
+            break
 
 
         return render(request,
@@ -732,16 +747,17 @@ def panda(request):
 
     else:
         form = UploadFileForm()
-
         excel_data = None
-        df1 = None
-        #
-        # data1 = pd.read_excel('../test_bd/kek.xls', sheet_name='Лист3')  # Open excel
-        # to_drop = [i for i in data1.columns if 'Unnamed' in i]
-        # df1 = data1.copy()
-        # df1.drop(columns=[i for i in to_drop])  # TODO dont work
-        # test = df1[0:2].to_dict(orient='records')
 
     return render(request, template_name='contracts/panda.html', context={'data1':excel_data,
 
                                                                           'form':form})
+
+
+def from_excel_to_model(line, try_value=None):
+    try:
+        res = line[try_value]
+    except ValueError as vl:
+        pass
+
+    return res
