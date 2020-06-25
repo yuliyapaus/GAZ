@@ -692,9 +692,13 @@ def panda(request):
                 contract_type_id=1,
                 counterpart_id=1,
                 purchase_type_id=1,
+            )
+            new_sum_rur = SumsRUR.objects.create(
+                contract=new_contract,
+                year='2020',
 
             )
-        print(len(dic))
+
         return render(request,
                       template_name='contracts/panda.html',
                       context={
