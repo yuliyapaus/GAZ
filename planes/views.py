@@ -694,16 +694,14 @@ def panda(request):
         test = excel_data.drop(columns=[i for i in to_drop])
         dic = test.to_dict(orient='records')
         for line in dic:
-            print(line['Центр/филиал'].split('.')[0])
             new_contract = Contract.objects.create(
-                title=from_excel_to_model(
-                    line,
-                    try_value='Наименование (предмет) договора, доп соглашения к договору'
+                title=line['Наименование (предмет) договора, доп соглашения к договору'],
+                finance_cost=FinanceCosts.objects.get(
+                    title=from_excel_to_model(line, try_value='Статья финансирования')
                 ),
-                #title=line['Наименование (предмет) договора, доп соглашения к договору'],
-                finance_cost=FinanceCosts.objects.get(title=line['Статья финансирования']),
-                curator=Curator.objects.get(title=line['Куратор']),
-                stateASEZ_id=1,
+                curator=Curator.objects.get(
+                    title=from_excel_to_model(line, 'Куратор')),
+                stateASEZ_id=1,  # TODO what in exlcel??
                 #stateASEZ=line['Состояние АСЭЗ'],
                 plan_load_date_ASEZ=date.today().isoformat(),
                 plan_sign_date=date.today().isoformat(),
@@ -757,6 +755,7 @@ def panda(request):
 def from_excel_to_model(line, try_value=None):
     try:
         res = line[try_value]
+        print(res)
     except ValueError as vl:
         pass
 
