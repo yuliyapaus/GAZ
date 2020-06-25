@@ -501,10 +501,11 @@ class ContractFabric(View):
                 new_sum_byn.save()
             if create_periods_flag:
                 for p in self.periods:
-                    print('FLAAAAAAAAAAG')
-                    new_sum_byn = SumsBYN.objects.create(period=p,
-                                                         contract=new_contract,
-                                                         year=new_sum_rur.year)
+                    new_sum_byn = SumsBYN.objects.create(
+                        period=p,
+                        contract=new_contract,
+                        year=new_sum_rur.year
+                    )
             return redirect(reverse('planes:contracts'))
         else:
             print( sum_rur_form.is_valid(),
@@ -668,6 +669,21 @@ import pandas as pd
 import numpy as np
 from .forms import UploadFileForm
 def panda(request):
+    periods = [
+        "jan",
+        "feb",
+        "mar",
+        "apr",
+        "may",
+        "jun",
+        "jul",
+        "aug",
+        "sep",
+        "oct",
+        "nov",
+        "dec",
+    ]
+
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -696,8 +712,14 @@ def panda(request):
             new_sum_rur = SumsRUR.objects.create(
                 contract=new_contract,
                 year='2020',
-
             )
+            for p in periods:
+                new_sum_byn = SumsBYN.objects.create(
+                    period=p,
+                    contract=new_contract,
+                    year=new_sum_rur.year
+                )
+
 
         return render(request,
                       template_name='contracts/panda.html',
