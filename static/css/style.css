@@ -371,6 +371,7 @@ a:link.nav-active, a:visited.nav-active {
 }
 
 a:focus.nav-element, a:hover.nav-element {
+    color: white;
     /*color: red;*/
     /*color: #1b86c0;*/
     /*background-color: #e8f8fd;*/
@@ -635,6 +636,11 @@ td{
     border: none;
     border-radius: 6px;
     margin-left: 16px;
+}
+
+button:focus.button, button:hover.button {
+    background-color: #0081ce;
+
 }
 
 /* СТИЛИ ДЛЯ СПРАВОЧНИКОВ */
