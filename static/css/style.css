@@ -502,16 +502,28 @@ table input{
 
 table {
     border-collapse: collapse;
+    border-spacing: 0;
+    /*table-layout: fixed;*/
 
     /*border-color: #ccc;*/
+
+
+    /*width: 100%;*/
+    max-width: 100%;
+    margin-bottom: 20px;
 }
 
 table div {
     padding: 10px;
 }
 
+td, th {
+    padding: 0;
+}
+
 td{
-    border: solid 1px #00233B;
+    /*border: solid 1px #00233B;*/
+    border: 1px solid #ddd;
     /*width: 300px;*/
     /*font-family: 'Roboto', sans-serif;*/
     /*font-size: 17px;*/
@@ -628,7 +640,9 @@ td{
 /* СТИЛИ ДЛЯ СПРАВОЧНИКОВ */
 
 .catalog-container input{
-    width: 400px;
+    /*width: 400px;*/
+    /*width: fit-content;*/
+    /*width: 100%;*/
 }
 
 #directories-list{
