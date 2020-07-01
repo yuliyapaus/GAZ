@@ -696,64 +696,49 @@ def panda(request):
         for line in dic:
             print(line)
             new_contract = Contract.objects.create(
-                title=from_excel_to_model(
-                    line,
-                    try_value='Наименование (предмет) договора, доп соглашения к договору',
-                    is_fk_model=True,
-                ),
-                finance_cost=compile_from_excel(
-                    line,
-                    try_value='Статья финансирования',
-                    fk_model=FinanceCosts,
-                ),
-                # finance_cost=FinanceCosts.objects.get(
-                #     title=from_excel_to_model(line, try_value='Статья финансирования')
-                # ),
-                curator=Curator.objects.get(
-                    title=from_excel_to_model(line, 'Куратор')),
-               # stateASEZ_id=1,  # TODO what in exlcel??
-                stateASEZ=StateASEZ.objects.get(
-                    Q(title=from_excel_to_model(line, 'Состояние АСЭЗ')) | Q(id=1), # use title or id if not title
-                ),
+                title=line['Наименование (предмет) договора, доп соглашения к договору'],
+                finance_cost=fk_model(line,
+                                      model=FinanceCosts,
+                                      value='Статья финансирования'),
+                curator=fk_model(line,
+                                 model=Curator,
+                                 value='Куратор'),
+                stateASEZ=fk_model(line,
+                                   model=StateASEZ,
+                                   value='Состояние АСЭЗ'),
                 plan_load_date_ASEZ=date.today().isoformat(),
                 plan_sign_date=date.today().isoformat(),
                 start_date=date.today().isoformat(),
-                activity_form_id=1,  # TODO placeholder
-                # activity_form=ActivityForm.objects.get(
-                #     title=line['Виды деятельности']
-                # ),
-                contract_mode_id=1,
-                contract_type=ContractType.objects.get(
-                    title=line['Центр/филиал'].split('.')[0]
-                ),
-                counterpart_id=1,
-                # counterpart=line['Контрагент по договору'],
-                purchase_type=PurchaseType.objects.get(
-                    title=line['Тип закупки\n(конкурентная/\nнеконкурентная ЕП)']
-                ),
+                activity_form=fk_model(line,
+                                       model=ActivityForm,
+                                       value='Виды деятельности'),
+                contract_mode_id=1,  # Основной
+                contract_type=fk_model(line,
+                                       model=ContractType,
+                                       value='Центр/филиал'.split('.')[0]),
+                counterpart=fk_model(line,
+                                     model=Counterpart,
+                                     value='Контрагент по договору'),
+                purchase_type=fk_model(line,
+                                       model=PurchaseType,
+                                       value='Тип закупки\n(конкурентная/\nнеконкурентная ЕП)'
+                                       ),
+
 
             )
             new_sum_rur = SumsRUR.objects.create(
                 contract=new_contract,
-                year='2020',
+                year='2020',  # TODO
             )
             for p in periods:
                 new_sum_byn = SumsBYN.objects.create(
                     period=p,
                     contract=new_contract,
                     year=new_sum_rur.year
-                )
-            break  # TODO
+            )
+            break
 
 
-        return render(request,
-                      template_name='contracts/panda.html',
-                      context={
-                            'form': form,
-                            'test':test,
-                            'data1':excel_data,
-                            'dic':dic
-                        })
 
     else:
         form = UploadFileForm()
@@ -766,44 +751,124 @@ def panda(request):
                       'form':form
                   })
 
-
-def from_excel_to_model(line, try_value=None, is_fk_model=True):
-    if not is_fk_model:  # if field is not FK or etc
-        res = None
-    else:
-        try:
-            res = line[try_value]  # try to get column in pd
-            print(res)
-        except ValueError as vl:  # if not such column in pd - try to find similar
-            res = None
-    if not res:
-        text = (((try_value.split(' ', '')).split('.', '')).split('/','')).split('')
-        print(text)
-        res = 1
-    return res
-
-
-def compile_from_excel(line, try_value=None, fk_model=None):
-    value = line[try_value]
-
-    # checking field name:
-    try:  # todo - can make using if model else
-        fk_model._meta.get_field('title')
-        field_name = 'title'
+def fk_model(line, model, value):
+    try:
+        res = model.objects.get(title=value)
     except:
-        try:
-            fk_model._meta.get_field('name')
-            field_name = 'name'
-        except:
-            field_name = 'id'
-
-    if not field_name == 'id':
-        try:
-            res = fk_model.objects.get(field_name=value)  # TODO loop checking title, name, id
-        except:
-            text = (((try_value.split(' ', '')).split('.', '')).split('/', '')).split('')
-
-            res = fk_model.objects.filter(field_name__icontains=None)
-
-    print('this is rs: ', res, res.id)
+        res = model.objects.get(id=1)
     return res
+
+
+
+#             new_contract = Contract.objects.create(
+#                 title=from_excel_to_model(
+#                     line,
+#                     try_value='Наименование (предмет) договора, доп соглашения к договору',
+#                     is_fk_model=True,
+#                 ),
+#                 finance_cost=compile_from_excel(
+#                     line,
+#                     try_value='Статья финансирования',
+#                     fk_model=FinanceCosts,
+#                 ),
+#                 # finance_cost=FinanceCosts.objects.get(
+#                 #     title=from_excel_to_model(line, try_value='Статья финансирования')
+#                 # ),
+#                 curator=Curator.objects.get(
+#                     title=from_excel_to_model(line, 'Куратор')),
+#                # stateASEZ_id=1,  # TODO what in exlcel??
+#                 stateASEZ=StateASEZ.objects.get(
+#                     Q(title=from_excel_to_model(line, 'Состояние АСЭЗ')) | Q(id=1), # use title or id if not title
+#                 ),
+#                 plan_load_date_ASEZ=date.today().isoformat(),
+#                 plan_sign_date=date.today().isoformat(),
+#                 start_date=date.today().isoformat(),
+#                 activity_form_id=1,  # TODO placeholder
+#                 # activity_form=ActivityForm.objects.get(
+#                 #     title=line['Виды деятельности']
+#                 # ),
+#                 contract_mode_id=1,
+#                 contract_type=ContractType.objects.get(
+#                     title=line['Центр/филиал'].split('.')[0]
+#                 ),
+#                 counterpart_id=1,
+#                 # counterpart=line['Контрагент по договору'],
+#                 purchase_type=PurchaseType.objects.get(
+#                     title=line['Тип закупки\n(конкурентная/\nнеконкурентная ЕП)']
+#                 ),
+#
+#             )
+#             new_sum_rur = SumsRUR.objects.create(
+#                 contract=new_contract,
+#                 year='2020',
+#             )
+#             for p in periods:
+#                 new_sum_byn = SumsBYN.objects.create(
+#                     period=p,
+#                     contract=new_contract,
+#                     year=new_sum_rur.year
+#                 )
+#             break  # TODO
+#
+#
+#         return render(request,
+#                       template_name='contracts/panda.html',
+#                       context={
+#                             'form': form,
+#                             'test':test,
+#                             'data1':excel_data,
+#                             'dic':dic
+#                         })
+#
+#     else:
+#         form = UploadFileForm()
+#         excel_data = None
+#
+#     return render(request,
+#                   template_name='contracts/panda.html',
+#                   context={
+#                       'data1':excel_data,
+#                       'form':form
+#                   })
+#
+#
+# def from_excel_to_model(line, try_value=None, is_fk_model=True):
+#     if not is_fk_model:  # if field is not FK or etc
+#         res = None
+#     else:
+#         try:
+#             res = line[try_value]  # try to get column in pd
+#             print(res)
+#         except ValueError as vl:  # if not such column in pd - try to find similar
+#             res = None
+#     if not res:
+#         text = (((try_value.split(' ', '')).split('.', '')).split('/','')).split('')
+#         print(text)
+#         res = 1
+#     return res
+#
+#
+# def compile_from_excel(line, try_value=None, fk_model=None):
+#     value = line[try_value]
+#
+#     # checking field name:
+#     try:  # todo - can make using if model else
+#         fk_model._meta.get_field('title')
+#         field_name = 'title'
+#     except:
+#         try:
+#             fk_model._meta.get_field('name')
+#             field_name = 'name'
+#         except:
+#             field_name = 'id'
+#
+#     if not field_name == 'id':
+#         try:
+#             res = fk_model.objects.get(field_name=str(value))  # TODO loop checking title, name, id
+#         except:
+#             text = (((try_value.split(' ', '')).split('.', '')).split('/', '')).split('')
+#
+#             res = fk_model.objects.filter(field_name__icontains=None)
+#
+#     print('this is rs: ', res, res.id)
+#     return res
