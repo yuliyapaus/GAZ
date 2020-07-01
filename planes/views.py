@@ -695,14 +695,25 @@ def panda(request):
         dic = test.to_dict(orient='records')
         for line in dic:
             new_contract = Contract.objects.create(
-                title=line['Наименование (предмет) договора, доп соглашения к договору'],
-                finance_cost=FinanceCosts.objects.get(
-                    title=from_excel_to_model(line, try_value='Статья финансирования')
+                title=from_excel_to_model(
+                    line,
+                    try_value='Наименование (предмет) договора, доп соглашения к договору',
+                    is_fk_model=True,
                 ),
+                finance_cost=compile_from_excel(
+                    line,
+                    try_value='Статья финансирования',
+                    fk_model=FinanceCosts,
+                ),
+                # finance_cost=FinanceCosts.objects.get(
+                #     title=from_excel_to_model(line, try_value='Статья финансирования')
+                # ),
                 curator=Curator.objects.get(
                     title=from_excel_to_model(line, 'Куратор')),
-                stateASEZ_id=1,  # TODO what in exlcel??
-                #stateASEZ=line['Состояние АСЭЗ'],
+               # stateASEZ_id=1,  # TODO what in exlcel??
+                stateASEZ=StateASEZ.objects.get(
+                    Q(title=Contract.objects.latest('id')) | Q(id=1),
+                ),
                 plan_load_date_ASEZ=date.today().isoformat(),
                 plan_sign_date=date.today().isoformat(),
                 start_date=date.today().isoformat(),
@@ -747,16 +758,33 @@ def panda(request):
         form = UploadFileForm()
         excel_data = None
 
-    return render(request, template_name='contracts/panda.html', context={'data1':excel_data,
+    return render(request,
+                  template_name='contracts/panda.html',
+                  context={
+                      'data1':excel_data,
+                      'form':form
+                  })
 
-                                                                          'form':form})
+
+def from_excel_to_model(line, try_value=None, is_fk_model=True):
+    if not is_fk_model:  # if field is not FK or etc
+        res = None
+    else:
+        try:
+            res = line[try_value]  # try to get column in pd
+            print(res)
+        except ValueError as vl:  # if not such column in pd - try to find similar
+            res = None
+    if not res:
+        text = (((try_value.split(' ', '')).split('.', '')).split('/','')).split('')
+        print(text)
+        res = 1
+    return res
 
 
-def from_excel_to_model(line, try_value=None):
-    try:
-        res = line[try_value]
-        print(res)
-    except ValueError as vl:
-        pass
+def compile_from_excel(line, try_value=None, fk_model=None):
+    value = line[try_value]
+    res = fk_model.objects.get(title=value)  # TODO loop checking title, name, id
 
+    print('this is rs: ', res, res.id)
     return res
