@@ -694,6 +694,7 @@ def panda(request):
         test = excel_data.drop(columns=[i for i in to_drop])
         dic = test.to_dict(orient='records')
         for line in dic:
+            print(line)
             new_contract = Contract.objects.create(
                 title=from_excel_to_model(
                     line,
@@ -712,7 +713,7 @@ def panda(request):
                     title=from_excel_to_model(line, 'Куратор')),
                # stateASEZ_id=1,  # TODO what in exlcel??
                 stateASEZ=StateASEZ.objects.get(
-                    Q(title=Contract.objects.latest('id')) | Q(id=1),
+                    Q(title=from_excel_to_model(line, 'Состояние АСЭЗ')) | Q(id=1), # use title or id if not title
                 ),
                 plan_load_date_ASEZ=date.today().isoformat(),
                 plan_sign_date=date.today().isoformat(),
@@ -742,7 +743,7 @@ def panda(request):
                     contract=new_contract,
                     year=new_sum_rur.year
                 )
-            break
+            break  # TODO
 
 
         return render(request,
@@ -784,7 +785,25 @@ def from_excel_to_model(line, try_value=None, is_fk_model=True):
 
 def compile_from_excel(line, try_value=None, fk_model=None):
     value = line[try_value]
-    res = fk_model.objects.get(title=value)  # TODO loop checking title, name, id
+
+    # checking field name:
+    try:  # todo - can make using if model else
+        fk_model._meta.get_field('title')
+        field_name = 'title'
+    except:
+        try:
+            fk_model._meta.get_field('name')
+            field_name = 'name'
+        except:
+            field_name = 'id'
+
+    if not field_name == 'id':
+        try:
+            res = fk_model.objects.get(field_name=value)  # TODO loop checking title, name, id
+        except:
+            text = (((try_value.split(' ', '')).split('.', '')).split('/', '')).split('')
+
+            res = fk_model.objects.filter(field_name__icontains=None)
 
     print('this is rs: ', res, res.id)
     return res
