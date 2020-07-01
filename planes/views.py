@@ -663,27 +663,27 @@ def add(request, finance_cost_id, year):
 
 
 
-
-
+import math
+from decimal import *
 import os
 import pandas as pd
 import numpy as np
 from .forms import UploadFileForm
 def panda(request):
-    periods = [
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "may",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "oct",
-        "nov",
-        "dec",
-    ]
+    periods = {
+        "jan":'Янв',
+        "feb":'Фев',
+        "mar":'Март',
+        "apr":'Апр',
+        "may":'Май',
+        "jun":'Июнь',
+        "jul":'Июль',
+        "aug":'Авг',
+        "sep":'Сент',
+        "oct":'Окт',
+        "nov":'Нояб',
+        "dec":'Дек',
+    }
 
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
@@ -731,10 +731,22 @@ def panda(request):
                 year='2020',  # TODO
             )
             for p in periods:
+                month = periods[p]
+                forecast = line['Прогноз {0}'.format(month)]
+                try:
+                    fact = line['Факт {0}'.format(month)]
+                except:
+                    fact = line['Факт {0}.'.format(month)]
+                if math.isnan(forecast):
+                    forecast = 0
+                if math.isnan(fact):
+                    fact = 0
                 new_sum_byn = SumsBYN.objects.create(
                     period=p,
                     contract=new_contract,
-                    year=new_sum_rur.year
+                    year=new_sum_rur.year,
+                    forecast_total=Decimal(forecast),
+                    fact_total=Decimal(fact),
             )
             break
 
