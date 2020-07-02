@@ -786,6 +786,6 @@ def panda(request):
 def fk_model(line, model, value):
     try:
         res = model.objects.get(title=value)
-    except:
+    except:  # TODO filler ny it
         res = model.objects.get(id=1)
     return res
