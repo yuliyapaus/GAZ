@@ -685,6 +685,13 @@ def panda(request):
         "dec":'Дек',
     }
 
+    quarts = {
+        "1quart":' I кв.',
+        "2quart":'II кв.',
+        "3quart":' III кв.',
+        "4quart":' IV кв.',
+    }
+
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -732,22 +739,38 @@ def panda(request):
             )
             for p in periods:
                 month = periods[p]
-                forecast = line['Прогноз {0}'.format(month)]
+                forecast_month = line['Прогноз {0}'.format(month)]
                 try:
                     fact = line['Факт {0}'.format(month)]
                 except:
                     fact = line['Факт {0}.'.format(month)]
-                if math.isnan(forecast):
-                    forecast = 0
+                if math.isnan(forecast_month):
+                    forecast_month = 0
                 if math.isnan(fact):
                     fact = 0
+
                 new_sum_byn = SumsBYN.objects.create(
                     period=p,
                     contract=new_contract,
                     year=new_sum_rur.year,
-                    forecast_total=Decimal(forecast),
+                    forecast_total=Decimal(forecast_month),
                     fact_total=Decimal(fact),
-            )
+                )
+            for q in quarts:
+                quart = quarts[q]
+                forecast_quart = line['Плановая сумма SAP {0}'.format(quart)]
+                if math.isnan(forecast_quart):
+                    forecast_quart = 0
+                elif forecast_quart is str:
+                    forecast_quart = forecast_quart.replace(',', '.')
+                quart_sum_byn = SumsBYN.objects.get(
+                    contract=new_contract,
+                    period=q,
+                    year=new_sum_rur.year
+                )
+                quart_sum_byn.plan_sum_SAP = Decimal(forecast_quart)
+                quart_sum_byn.save()
+
             break
 
 
