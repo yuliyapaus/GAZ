@@ -705,36 +705,29 @@ def panda(request):
                 title=line['Наименование (предмет) договора, доп соглашения к договору'],
                 finance_cost=fk_model(line,
                                       model=FinanceCosts,
-                                      value='Статья финансирования'
-                ),
+                                      value='Статья финансирования'),
                 curator=fk_model(line,
                                  model=Curator,
-                                 value='Куратор'
-                ),
+                                 value='Куратор'),
                 stateASEZ=fk_model(line,
                                    model=StateASEZ,
-                                   value='Состояние АСЭЗ'
-                ),
+                                   value='Состояние АСЭЗ'),
                 plan_load_date_ASEZ=date.today().isoformat(),  # TODO what is it?
                 plan_sign_date=date.today().isoformat(),  # TODO what is it?
                 start_date=line['Дата заключения'].to_pydatetime(),
                 activity_form=fk_model(line,
                                        model=ActivityForm,
-                                       value='Виды деятельности'
-                ),
+                                       value='Виды деятельности'),
                 contract_mode_id=1,  # Основной
                 contract_type=fk_model(line,
                                        model=ContractType,
-                                       value='Центр/филиал'.split('.')[0]
-                ),
+                                       value='Центр/филиал'.split('.')[0]),
                 counterpart=fk_model(line,
                                      model=Counterpart,
-                                     value='Контрагент по договору'
-                ),
+                                     value='Контрагент по договору'),
                 purchase_type=fk_model(line,
                                        model=PurchaseType,
-                                       value='Тип закупки\n(конкурентная/\nнеконкурентная ЕП)'
-                ),
+                                       value='Тип закупки\n(конкурентная/\nнеконкурентная ЕП)'),
                 number_ppz=line['№ ППЗ АСЭЗ'],
                 number_KGG=line['Номер договора']
             )
@@ -743,7 +736,6 @@ def panda(request):
                 contract=new_contract,
                 year='2020',  # TODO
                 start_max_price_ASEZ_NDS=None,  # TODO where is info?
-
             )
             for p in periods:
                 month = periods[p]
@@ -778,10 +770,6 @@ def panda(request):
                 )
                 quart_sum_byn.plan_sum_SAP = Decimal(forecast_quart)
                 quart_sum_byn.save()
-
-            break
-
-
 
     else:
         form = UploadFileForm()
