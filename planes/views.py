@@ -11,6 +11,7 @@ from .forms import (
     SumsBYNForm_months,
     SumsBYNForm_quarts,
     SumsBYNForm_year,
+    UploadFileForm,
 )
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
@@ -40,6 +41,10 @@ from django.urls import reverse
 import json
 from django.forms import formset_factory, modelformset_factory
 from django.db.models import Q
+import math
+from decimal import *
+import pandas as pd
+import numpy as np
 
 
 @login_required
@@ -662,70 +667,74 @@ def add(request, finance_cost_id, year):
     return render(request, './planes/add.html', response)
 
 
-
-import math
-from decimal import *
-import os
-import pandas as pd
-import numpy as np
-from .forms import UploadFileForm
-def panda(request):
+class parse_excel(View):
     periods = {
-        "jan":'Янв',
-        "feb":'Фев',
-        "mar":'Март',
-        "apr":'Апр',
-        "may":'Май',
-        "jun":'Июнь',
-        "jul":'Июль',
-        "aug":'Авг',
-        "sep":'Сент',
-        "oct":'Окт',
-        "nov":'Нояб',
-        "dec":'Дек',
+        "jan": 'Янв',
+        "feb": 'Фев',
+        "mar": 'Март',
+        "apr": 'Апр',
+        "may": 'Май',
+        "jun": 'Июнь',
+        "jul": 'Июль',
+        "aug": 'Авг',
+        "sep": 'Сент',
+        "oct": 'Окт',
+        "nov": 'Нояб',
+        "dec": 'Дек',
     }
 
     quarts = {
-        "1quart":' I кв.',
-        "2quart":'II кв.',
-        "3quart":' III кв.',
-        "4quart":' IV кв.',
+        "1quart": ' I кв.',
+        "2quart": 'II кв.',
+        "3quart": ' III кв.',
+        "4quart": ' IV кв.',
     }
 
-    if request.method == "POST":
+    def get(self, request):
+        form = UploadFileForm()
+        excel_data = None
+        return render(request,
+                      template_name='contracts/panda.html',
+                      context={
+                          'data1': excel_data,
+                          'form': form
+                      })
+
+    def post(self, request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             for chunk in request.FILES['file'].chunks():  # works with last file
-                excel_data = pd.read_excel(chunk, sheet_name='Лист3')  # TODO Open excel
+                excel_data = self.find_excel(chunk)
+                # excel_data = pd.read_excel(chunk, sheet_name='Лист2')  # TODO Open excel
         to_drop = [i for i in excel_data.columns if 'Unnamed' in i]
         test = excel_data.drop(columns=[i for i in to_drop])
         dic = test.to_dict(orient='records')
         for line in dic:
             new_contract = Contract.objects.create(
                 title=line['Наименование (предмет) договора, доп соглашения к договору'],
-                finance_cost=fk_model(line,
+                finance_cost=self.fk_model(line,
                                       model=FinanceCosts,
                                       value='Статья финансирования'),
-                curator=fk_model(line,
+                curator=self.fk_model(line,
                                  model=Curator,
                                  value='Куратор'),
-                stateASEZ=fk_model(line,
+                stateASEZ=self.fk_model(line,
                                    model=StateASEZ,
                                    value='Состояние АСЭЗ'),
                 plan_load_date_ASEZ=date.today().isoformat(),  # TODO what is it?
                 plan_sign_date=date.today().isoformat(),  # TODO what is it?
                 start_date=line['Дата заключения'].to_pydatetime(),
-                activity_form=fk_model(line,
+                activity_form=self.fk_model(line,
                                        model=ActivityForm,
                                        value='Виды деятельности'),
                 contract_mode_id=1,  # Основной
-                contract_type=fk_model(line,
+                contract_type=self.fk_model(line,
                                        model=ContractType,
                                        value='Центр/филиал'.split('.')[0]),
-                counterpart=fk_model(line,
+                counterpart=self.fk_model(line,
                                      model=Counterpart,
                                      value='Контрагент по договору'),
-                purchase_type=fk_model(line,
+                purchase_type=self.fk_model(line,
                                        model=PurchaseType,
                                        value='Тип закупки\n(конкурентная/\nнеконкурентная ЕП)'),
                 number_ppz=line['№ ППЗ АСЭЗ'],
@@ -734,11 +743,11 @@ def panda(request):
 
             new_sum_rur = SumsRUR.objects.create(
                 contract=new_contract,
-                year='2020',  # TODO
+                year='2020',  # TODO parse it from excel
                 start_max_price_ASEZ_NDS=None,  # TODO where is info?
             )
-            for p in periods:
-                month = periods[p]
+            for p in self.periods:
+                month = self.periods[p]
                 forecast_month = line['Прогноз {0}'.format(month)]
                 try:
                     fact = line['Факт {0}'.format(month)]
@@ -756,8 +765,8 @@ def panda(request):
                     forecast_total=Decimal(forecast_month),
                     fact_total=Decimal(fact),
                 )
-            for q in quarts:
-                quart = quarts[q]
+            for q in self.quarts:
+                quart = self.quarts[q]
                 forecast_quart = line['Плановая сумма SAP {0}'.format(quart)]
                 if math.isnan(forecast_quart):
                     forecast_quart = 0
@@ -771,21 +780,25 @@ def panda(request):
                 quart_sum_byn.plan_sum_SAP = Decimal(forecast_quart)
                 quart_sum_byn.save()
 
-    else:
-        form = UploadFileForm()
-        excel_data = None
+        return redirect(reverse('planes:contracts'))
 
-    return render(request,
-                  template_name='contracts/panda.html',
-                  context={
-                      'data1':excel_data,
-                      'form':form
-                  })
+    @staticmethod
+    def find_excel(chunk):
+        sheet_list = [
+            'Лист1',
+            'Лист2',
+            'Лист3',
+        ]
+        for page in sheet_list:
+            excel_data = pd.read_excel(chunk, sheet_name=page, skiprows=2)
+            if excel_data.shape != (0, 0):
+                return excel_data
 
 
-def fk_model(line, model, value):
-    try:
-        res = model.objects.get(title=value)
-    except:  # TODO filler ny it
-        res = model.objects.get(id=1)
-    return res
+    @staticmethod
+    def fk_model(line, model, value):
+        try:
+            res = model.objects.get(title=value)
+        except:  # TODO filler ny it
+            res = model.objects.get(id=1)
+        return res
