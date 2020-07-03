@@ -100,3 +100,7 @@ class YearForm(forms.ModelForm):
         labels = {
             'year': 'Год'
         }
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
