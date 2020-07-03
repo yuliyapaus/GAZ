@@ -245,43 +245,6 @@ class DeletedContracts(View):
         return contract_to_recover
 
 
-def test(request):
-
-
-    return render(request, template_name='contracts/test.html', context={})
-
-
-def double_formset(request):
-    months = [
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "may",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "oct",
-        "nov",
-        "dec",
-    ]
-    quarts = [
-        "1quart",
-        "2quart",
-        "3quart",
-        "4quart",
-    ]
-
-    form_fac_1 = modelformset_factory(SumsBYN, SumsBYNForm_months, extra=0)
-    formset_1 = form_fac_1(queryset=SumsBYN.objects.filter(period__in=months), prefix='test_1')
-    form_fac_2 = modelformset_factory(SumsBYN, SumsBYNForm_quarts, extra=0)
-    formset_2 = form_fac_2(queryset=SumsBYN.objects.filter(period__in=quarts), prefix='test_2')
-
-    return render(request, template_name='contracts/double_test.html', context={'formset_1':formset_1,
-                                                                                'formset_2':formset_2})
-
-
 class ContractFabric(View):
     ''' allow to create, change, copy and delete (move to deleted) contracts '''
     create_or_add = 'contracts/add_new_contract.html'
