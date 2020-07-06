@@ -101,41 +101,41 @@
     </tr>
 
     {% for con_sum in contract_and_sum %}
-        <tr>
+        <tr id="table_{{ con_sum.contract.id }}">
             <td>
                 <input type="checkbox" value="{{ con_sum.contract.id }}" class="contract_choice">
                 <a href="{{ con_sum.contract.get_absolute_url }}" id="{{ con_sum.contract.id }}">{{ con_sum.contract.title }}</a>
             </td>
-            <td><input value="{{ con_sum.contract.finance_cost }}"></td>
-            <td>{{ con_sum.contract.activity_form }}</td>
-            <td>{{ con_sum.contract.curator }}</td>
-            <td>{{ con_sum.contract.contract_type }}</td>
-            <td>{{ con_sum.contract.contract_mode }}</td>
-            <td>{{ con_sum.contract.purchase_type }}</td>
-            <td>{{ con_sum.contract.number_ppz }}</td>
-            <td>{{ con_sum.contract.stateASEZ }}</td>
-            <td>{{ con_sum.contract.number_PZTRU }}</td>
-            <td>{{ con_sum.contract.contract_status }}</td>
-            <td>{{ con_sum.contract.plan_load_date_ASEZ }}</td>
-            <td>{{ con_sum.contract.fact_load_date_ASEZ }}</td>
-            <td>{{ con_sum.sum_rur.start_max_price_ASEZ_NDS }}</td>
-            <td>{{ con_sum.sum_rur.currency_rate_on_load_date_ASEZ_NDS }}</td>
-            <td>{{ con_sum.sum_rur.contract_sum_NDS_RUB }}</td>
-            <td>{{ con_sum.sum_rur.currency }}</td>
-            <td>{{ con_sum.sum_rur.delta_data_ASEZ }}</td>
-            <td>{{ con_sum.contract.number_KGG }}</td>
-            <td class="calc" bgcolor="red">{{ con_sum. }}</td>
-            <td>{{ con_sum.sum_byn.1quart.plan_sum_SAP }}</td>
-            <td>{{ con_sum.sum_byn.2quart.plan_sum_SAP }}</td>
-            <td>{{ con_sum.sum_byn.3quart.plan_sum_SAP }}</td>
-            <td>{{ con_sum.sum_byn.4quart.plan_sum_SAP }}</td>
-            <td>{{ con_sum.contract.register_number_SAP }}</td>
-            <td>{{ con_sum.contract.contract_number }}</td>
-            <td>{{ con_sum.contract.plan_sign_date }}</td>
-            <td>{{ con_sum.contract.fact_sign_date }}</td>
-            <td>{{ con_sum.contract.start_date }}</td>
-            <td>{{ con_sum.contract.end_time }}</td>
-            <td>{{ con_sum.contract.counterpart }}</td>
+            <td><input readonly value="{{ con_sum.contract.finance_cost }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.activity_form }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.curator }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.contract_type }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.contract_mode }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.purchase_type }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.number_ppz }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.stateASEZ }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.number_PZTRU }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.contract_status }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.plan_load_date_ASEZ }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.fact_load_date_ASEZ }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_rur.start_max_price_ASEZ_NDS }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_rur.currency_rate_on_load_date_ASEZ_NDS }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_rur.contract_sum_NDS_RUB }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_rur.currency }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_rur.delta_data_ASEZ }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.number_KGG }}"></td>
+            <td class="calc" bgcolor="red"><input readonly="readonly" value="{{ con_sum. }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_byn.1quart.plan_sum_SAP }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_byn.2quart.plan_sum_SAP }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_byn.3quart.plan_sum_SAP }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.sum_byn.4quart.plan_sum_SAP }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.register_number_SAP }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.contract_number }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.plan_sign_date }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.fact_sign_date }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.start_date }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.end_time }}"></td>
+            <td><input readonly="readonly" value="{{ con_sum.contract.counterpart }}"></td>
             <td class="calc" bgcolor="red">{{ con_sum.sum_byn.contract_sum_without_NDS_BYN }}</td>
             <td>{{ con_sum.sum_byn.1quart.contract_sum_without_NDS_BYN }}</td>
             <td>{{ con_sum.sum_byn.2quart.contract_sum_without_NDS_BYN }}</td>
@@ -340,13 +340,17 @@
                 alert('Выбрано более одного контракта для редактирования');
             }
             else {
-                    $.ajax({
-                        'url': TODO,
-                        'data': DATA,
-                        success: function (suc) {
-                            console.log('success');
-                        }
-                    });
+
+                    let test = $('#table_'+checked);
+                    console.log(test.find('input'))
+
+<!--                    $.ajax({-->
+<!--                        'url': TODO,-->
+<!--                        'data': DATA,-->
+<!--                        success: function (suc) {-->
+<!--                            console.log('success');-->
+<!--                        }-->
+<!--                    });-->
             };
         });
 
