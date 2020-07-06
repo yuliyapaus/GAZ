@@ -102,8 +102,11 @@
 
     {% for con_sum in contract_and_sum %}
         <tr>
-            <td><input type="checkbox" value="{{ con_sum.contract.id }}" class="contract_choice"><a href="{{ con_sum.contract.get_absolute_url }}" id="{{ con_sum.contract.id }}">{{ con_sum.contract.title }}</a></td>
-            <td>{{ con_sum.contract.finance_cost }}</td>
+            <td>
+                <input type="checkbox" value="{{ con_sum.contract.id }}" class="contract_choice">
+                <a href="{{ con_sum.contract.get_absolute_url }}" id="{{ con_sum.contract.id }}">{{ con_sum.contract.title }}</a>
+            </td>
+            <td><input value="{{ con_sum.contract.finance_cost }}"></td>
             <td>{{ con_sum.contract.activity_form }}</td>
             <td>{{ con_sum.contract.curator }}</td>
             <td>{{ con_sum.contract.contract_type }}</td>
@@ -196,6 +199,8 @@
         </tr>
     {% endfor %}
 </table>
+<button type="button" id="change_mode_ok">Применить изменение</button>
+
 <a href="{% url 'planes:create_contract' %}">Создать договор</a>
 <br>
 <button class="delete_contract">Удалить контракты</button>
@@ -325,6 +330,25 @@
                 });
             });
         {% endif %}
+
+        $('#change_mode_ok').on('click', function (change_in_table) {
+            let checked = []
+            $('input:checkbox:checked').each(function() {
+                checked.push($(this).val());
+            });
+            if (checked.length != 1) {
+                alert('Выбрано более одного контракта для редактирования');
+            }
+            else {
+                    $.ajax({
+                        'url': TODO,
+                        'data': DATA,
+                        success: function (suc) {
+                            console.log('success');
+                        }
+                    });
+            };
+        });
 
         $('.copy_contract').on('click', function (copy_con) {
             let checked = []

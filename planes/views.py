@@ -134,7 +134,6 @@ class ContractView(View):
 
     def get(self, request):
         context = self.cont.copy()
-
         if request.GET.__contains__('search_name'):
             print(request.GET)
             contracts = self.search(request)
@@ -221,6 +220,9 @@ class ContractView(View):
             )
         return contract_and_sum
 
+    def change_in_table(self, contract_id):
+
+        return None
 
 class DeletedContracts(View):
     ''' render deleted contracts and allow to recover contract '''
