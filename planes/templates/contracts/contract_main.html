@@ -342,7 +342,11 @@
             else {
 
                     let test = $('#table_'+checked);
-                    console.log(test.find('input'))
+
+                    x = test.find('input').each(function () {
+                        $(this).attr('readonly', false)
+                    });
+
 
 <!--                    $.ajax({-->
 <!--                        'url': TODO,-->
