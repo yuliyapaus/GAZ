@@ -365,15 +365,10 @@
             table_id = 'table_'+checked
             let container = $('#table_'+checked);
             test = container.find('input').each(function () {
-                console.log(this.name)
+                result[this.name] = this.value
             });
 
-
-
-<!--            for (let i = 0, col; col = container.cells; i++) {-->
-<!--              console.log(i)-->
-<!--            };-->
-
+<!-- send to backend and make changes in model-->
 
 <!--            $.ajax({-->
 <!--                'url': '123',-->
