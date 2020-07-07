@@ -3,8 +3,6 @@
 
 {% block content %}
 
-    <div id="data-container">
-
 <table border="1">
     <tr>
         <th>Наименование (предмет) договора, <br>доп соглашения к договору <br>СОДЕРЖАНИЕ РАБОТ</th>
@@ -199,15 +197,16 @@
         </tr>
     {% endfor %}
 </table>
-<button type="button" id="change_mode_ok">Применить изменение</button>
+<div class="table_actions">
+    <button type="button" id="change_mode_ok">Применить изменение</button>
 
-<a href="{% url 'planes:create_contract' %}">Создать договор</a>
-<br>
-<button class="delete_contract">Удалить контракты</button>
-<button class="copy_contract">Копировать контракт</button>
-<a href="{% url 'planes:deleted_contracts' %}">Уаленные контракты</a><br>
-<a href="{% url 'planes:excel_parser' %}">Импортировать excel</a>
-
+    <a href="{% url 'planes:create_contract' %}">Создать договор</a>
+    <br>
+    <button class="delete_contract">Удалить контракты</button>
+    <button class="copy_contract">Копировать контракт</button>
+    <a href="{% url 'planes:deleted_contracts' %}">Уаленные контракты</a><br>
+    <a href="{% url 'planes:excel_parser' %}">Импортировать excel</a>
+</div>
 <br><br>
 <div class="contract_search_div">
 
@@ -300,8 +299,13 @@
         <button type="submit">Найти</button>
         <a href="{% url 'planes:contracts' %}">Вернуть исходные</a>
     </form>
-
 </div>
+
+<div hidden class="change_mode_actions">
+    <button type="button" id="change_mode_save">Сохранить</button>
+    <button type="button" id="change_mode_back">Назад</button>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -341,22 +345,37 @@
             }
             else {
 
-                    let test = $('#table_'+checked);
-
-                    x = test.find('input').each(function () {
-                        $(this).attr('readonly', false)
-                    });
-
-
-<!--                    $.ajax({-->
-<!--                        'url': TODO,-->
-<!--                        'data': DATA,-->
-<!--                        success: function (suc) {-->
-<!--                            console.log('success');-->
-<!--                        }-->
-<!--                    });-->
+                let test = $('#table_'+checked);
+                console.log('tst')
+                x = test.find('input').each(function () {
+                    $(this).attr('readonly', false)
+                });
+                $('.table_actions').toggle()
+                $('.contract_search_div').toggle()
+                $('.change_mode_actions').toggle()
             };
         });
+
+        $('#change_mode_save').on('click', function (save_changes) {
+            console.log('save it')
+            $.ajax({
+                'url': '123',
+                'data': '00',
+                success: function (suc) {
+                    console.log('success');
+                }
+            });
+        });
+
+        $('#change_mode_back').unbind('click').bind('click', function (back) {
+            $('.table_actions').toggle()
+            $('.contract_search_div').toggle()
+            $('.change_mode_actions').toggle()
+        });
+
+
+
+
 
         $('.copy_contract').on('click', function (copy_con) {
             let checked = []
