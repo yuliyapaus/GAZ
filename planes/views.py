@@ -768,3 +768,8 @@ class parse_excel(View):
         except:  # TODO filler ny it
             res = model.objects.get(id=1)
         return res
+
+
+def test(request):
+    print(request.GET)
+    return HttpResponse()

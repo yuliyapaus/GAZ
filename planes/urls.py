@@ -11,7 +11,8 @@ from .views import (
     plane,
     ContractFabric,
     DeletedContracts,
-    parse_excel
+    parse_excel,
+    test
 )
 
 app_name = "planes"
@@ -60,4 +61,5 @@ urlpatterns = [
         name='recover_contract'
          ),
     path('parse_excel', login_required(parse_excel.as_view()), name='excel_parser'),
+    path('test', test)
 ]

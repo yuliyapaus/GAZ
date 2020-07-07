@@ -321,7 +321,6 @@
                     checked.push($(this).val());
 
                 });
-                console.log(checked);
                 $.ajax({
                     'url':'/plane/contracts/copy_contract/',
                     'data': {'contract_id':'con_id',
@@ -357,14 +356,32 @@
         });
 
         $('#change_mode_save').on('click', function (save_changes) {
-            console.log('save it')
-            $.ajax({
-                'url': '123',
-                'data': '00',
-                success: function (suc) {
-                    console.log('success');
-                }
+            let checked = []
+            $('input:checkbox:checked').each(function() {
+                checked.push($(this).val());
             });
+            console.log('save it')
+            let result = {}
+            table_id = 'table_'+checked
+            let container = $('#table_'+checked);
+            test = container.find('input').each(function () {
+                console.log(this.value)
+            });
+
+
+
+<!--            for (let i = 0, col; col = container.cells; i++) {-->
+<!--              console.log(i)-->
+<!--            };-->
+
+
+<!--            $.ajax({-->
+<!--                'url': '123',-->
+<!--                'data': '00',-->
+<!--                success: function (suc) {-->
+<!--                    console.log('success');-->
+<!--                }-->
+<!--            });-->
         });
 
         $('#change_mode_back').unbind('click').bind('click', function (back) {
