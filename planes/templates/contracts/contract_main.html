@@ -367,24 +367,18 @@
             });
             console.log('save it')
             let result = {}
+            let all_values = {}
             table_id = 'table_'+checked
             let container = $('#table_'+checked);
-<!--            test = container.find('input').each(function () {-->
-<!--                result[this.name] = this.value-->
-<!--            });-->
+            test = container.find('input').each(function () {
+                all_values[this.name] = this.value
+            });
 
             $.each(changes_in, function() {
                 console.log(this)
-                result[this] = 44
+                result[this] = all_values[this]
             });
             console.log(result)
-
-
-
-<!--            for (let i=0; i<changes_in.length ; i++) {-->
-<!--                console.log('for');-->
-<!--            };-->
-
 
 <!-- send to backend and make changes in model-->
 
