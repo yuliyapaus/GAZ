@@ -104,7 +104,19 @@
                 <input type="checkbox" value="{{ con_sum.contract.id }}" class="contract_choice">
                 <a href="{{ con_sum.contract.get_absolute_url }}" id="{{ con_sum.contract.id }}">{{ con_sum.contract.title }}</a>
             </td>
-            <td><input readonly name="contract.finance_cost" value="{{ con_sum.contract.finance_cost }}"></td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.finance_cost }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.finance_cost">
+                    <option value="0">{{ con_sum.contract.finance_cost }}</option>
+                    {% for fin_cost in all_fin_costs %}
+                        <option value="{{ fin_cost.id }}">{{ fin_cost }}</option>
+                    {% endfor %}
+                </select>
+
+            </td>
+            <!--            <td><input readonly name="contract.finance_cost" value="{{ con_sum.contract.finance_cost }}"></td>-->
             <td><input readonly name="contract.activity_form" value="{{ con_sum.contract.activity_form }}"></td>
             <td><input readonly name="contract.curator" value="{{ con_sum.contract.curator }}"></td>
             <td><input readonly name="contract.contract_type" value="{{ con_sum.contract.contract_type }}"></td>
@@ -349,14 +361,19 @@
                 cells.each(function () {
                     $(this).attr('readonly', false);
                 });
-                $('input').on('click', function() {
-                    console.log(this.name);
+                $('input').on('change', function() {
                     changes_in.push(this.name)
                 });
+                $('select').on('change', function() {
+                    changes_in.push(this.name)
+                    console.log(this)
+                });
+
 
                 $('.table_actions').toggle();
                 $('.contract_search_div').toggle();
                 $('.change_mode_actions').toggle();
+                $('.choiser_FK').toggle()
             };
         });
 
@@ -370,12 +387,14 @@
             let all_values = {}
             table_id = 'table_'+checked
             let container = $('#table_'+checked);
-            test = container.find('input').each(function () {
+            container.find('input').each(function () {
                 all_values[this.name] = this.value
             });
 
+            container.find('select').each(function () {
+                all_values[this.name] = this.value
+            });
             $.each(changes_in, function() {
-                console.log(this)
                 result[this] = all_values[this]
             });
             console.log(result)
@@ -397,6 +416,7 @@
             $('.table_actions').toggle()
             $('.contract_search_div').toggle()
             $('.change_mode_actions').toggle()
+             $('.choiser_FK').toggle()
         });
 
         $('.copy_contract').on('click', function (copy_con) {
