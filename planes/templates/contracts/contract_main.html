@@ -116,22 +116,112 @@
                 </select>
 
             </td>
-            <!--            <td><input readonly name="contract.finance_cost" value="{{ con_sum.contract.finance_cost }}"></td>-->
-            <td><input readonly name="contract.activity_form" value="{{ con_sum.contract.activity_form }}"></td>
-            <td><input readonly name="contract.curator" value="{{ con_sum.contract.curator }}"></td>
-            <td><input readonly name="contract.contract_type" value="{{ con_sum.contract.contract_type }}"></td>
-            <td><input readonly name="contract.contract_mode" value="{{ con_sum.contract.contract_mode }}"></td>
-            <td><input readonly name="contract.purchase_type" value="{{ con_sum.contract.purchase_type }}"></td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.activity_form }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.activity_form">
+                    <option value="0">{{ con_sum.contract.activity_form }}</option>
+                    {% for activity_form in all_activity_forms %}
+                        <option value="{{ activity_form.id }}">{{ activity_form }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.curator }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.curator">
+                    <option value="0">{{ con_sum.contract.curator }}</option>
+                    {% for curator in all_curators %}
+                        <option value="{{ curator.id }}">{{ curator }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.contract_type }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.contract_type">
+                    <option value="0">{{ con_sum.contract.contract_type }}</option>
+                    {% for contract_type in all_contract_types %}
+                        <option value="{{ contract_type.id }}">{{ contract_type }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.contract_mode }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.contract_mode">
+                    <option value="0">{{ con_sum.contract.contract_mode }}</option>
+                    {% for contract_mode in all_contract_modes %}
+                        <option value="{{ contract_mode.id }}">{{ contract_mode }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.purchase_type }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.purchase_type">
+                    <option value="0">{{ con_sum.contract.purchase_type }}</option>
+                    {% for purchase_type in all_purchase_types %}
+                        <option value="{{ purchase_type.id }}">{{ purchase_type }}</option>
+                    {% endfor %}
+                </select>
+            </td>
             <td><input readonly name="contract.number_ppz" value="{{ con_sum.contract.number_ppz }}"></td>
-            <td><input readonly name="contract.stateASEZ" value="{{ con_sum.contract.stateASEZ }}"></td>
-            <td><input readonly name="contract.number_PZTRU" value="{{ con_sum.contract.number_PZTRU }}"></td>
-            <td><input readonly name="contract.contract_status" value="{{ con_sum.contract.contract_status }}"></td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.stateASEZ }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.stateASEZ">
+                    <option value="0">{{ con_sum.contract.stateASEZ }}</option>
+                    {% for stateASEZ in all_state_asez %}
+                        <option value="{{ stateASEZ.id }}">{{ stateASEZ }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.number_PZTRU }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.number_PZTRU">
+                    <option value="0">{{ con_sum.contract.number_PZTRU }}</option>
+                    {% for number_PZTRU in all_pztru %}
+                        <option value="{{ number_PZTRU.id }}">{{ number_PZTRU }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+                  <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.contract_status }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.contract_status">
+                    <option value="0">{{ con_sum.contract.contract_status }}</option>
+                    {% for contract_status in all_cont_suatus %}
+                        <option value="{{ contract_status.id }}">{{ contract_status }}</option>
+                    {% endfor %}
+                </select>
+            </td>
             <td><input readonly name="contract.plan_load_date_ASEZ" value="{{ con_sum.contract.plan_load_date_ASEZ }}"></td>
             <td><input readonly name="contract.fact_load_date_ASEZ" value="{{ con_sum.contract.fact_load_date_ASEZ }}"></td>
             <td><input readonly name="sum_rur.start_max_price_ASEZ_NDS" value="{{ con_sum.sum_rur.start_max_price_ASEZ_NDS }}"></td>
             <td><input readonly name="sum_rur.currency_rate_on_load_date_ASEZ_NDS" value="{{ con_sum.sum_rur.currency_rate_on_load_date_ASEZ_NDS }}"></td>
             <td><input readonly name="sum_rur.contract_sum_NDS_RUB" value="{{ con_sum.sum_rur.contract_sum_NDS_RUB }}"></td>
-            <td><input readonly name="sum_rur.currency" value="{{ con_sum.sum_rur.currency }}"></td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.sum_rur.currency }}
+                </div>
+                <select hidden class="choiser_FK" name="sum_rur.currency">
+                    <option value="0">{{ con_sum.sum_rur.currency }}</option>
+                    {% for currency in all_currenses %}
+                        <option value="{{ currency.id }}">{{ currency }}</option>
+                    {% endfor %}
+                </select>
+            </td>
             <td><input readonly name="sum_rur.delta_data_ASEZ" value="{{ con_sum.sum_rur.delta_data_ASEZ }}"></td>
             <td><input readonly name="contract.number_KGG" value="{{ con_sum.contract.number_KGG }}"></td>
             <td class="calc" bgcolor="red"><input readonly value="{{ con_sum. }}"></td>
@@ -145,7 +235,17 @@
             <td><input readonly name="contract.fact_sign_date" value="{{ con_sum.contract.fact_sign_date }}"></td>
             <td><input readonly name="contract.start_date" value="{{ con_sum.contract.start_date }}"></td>
             <td><input readonly name="contract.end_time" value="{{ con_sum.contract.end_time }}"></td>
-            <td><input readonly name="contract.counterpart" value="{{ con_sum.contract.counterpart }}"></td>
+            <td>
+                <div class="choiser_FK">
+                    {{ con_sum.contract.counterpart }}
+                </div>
+                <select hidden class="choiser_FK" name="contract.counterpart">
+                    <option value="0">{{ con_sum.contract.counterpart }}</option>
+                    {% for counterpart in all_counterparts %}
+                        <option value="{{ counterpart.id }}">{{ counterpart }}</option>
+                    {% endfor %}
+                </select>
+            </td>
             <td class="calc" bgcolor="red">{{ con_sum.sum_byn.contract_sum_without_NDS_BYN }}</td>
             <td><input readonly name="sum_byn.1quart.contract_sum_without_NDS_BYN" value="{{ con_sum.sum_byn.1quart.contract_sum_without_NDS_BYN }}"></td>
             <td><input readonly name="sum_byn.2quart.contract_sum_without_NDS_BYN" value="{{ con_sum.sum_byn.2quart.contract_sum_without_NDS_BYN }}"></td>

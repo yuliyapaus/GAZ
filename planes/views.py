@@ -36,6 +36,7 @@ from .models import (
     ContractStatus,
     Counterpart,
     ActivityForm,
+    Currency
 )
 from django.urls import reverse
 import json
@@ -131,6 +132,9 @@ class ContractView(View):
     cont['all_pztru'] = NumberPZTRU.objects.all()
     cont['all_cont_suatus'] = ContractStatus.objects.all()
     cont['all_counterparts'] = Counterpart.objects.all()
+    cont['all_activity_forms'] = ActivityForm.objects.all()
+    cont['all_currenses'] = Currency.objects.all()
+
 
     def get(self, request):
         context = self.cont.copy()
