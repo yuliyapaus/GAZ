@@ -22,6 +22,9 @@ urlpatterns = [
     path('', plane, name='planes' ),
     path('register/', register_view, name='register'),
     path('contracts/', login_required(ContractView.as_view()), name='contracts'),
+
+    path('contracts/change_table/', ContractFabric.as_view()),
+
     path('contracts/create_contract/',
          login_required(
              permission_required('planes:add_contract')

@@ -277,6 +277,10 @@ class ContractFabric(View):
                 contract_id_list = request.GET.getlist('choosed[]')
                 Contract.objects.filter(id__in=contract_id_list).update(contract_active=False)
                 return HttpResponse('this is delete contract')
+            if request.GET['from_ajax'] == 'change_table':
+                contract_id = request.GET['contract_id[]']
+                print(request.GET)
+                return HttpResponse('this is changing contract from the table')
 
         if request.GET.__contains__('pattern_contract_id'):
             contract_id = int(request.GET['pattern_contract_id'])

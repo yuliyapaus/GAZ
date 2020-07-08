@@ -345,7 +345,6 @@
             else {
 
                 let test = $('#table_'+checked);
-                console.log('tst')
                 x = test.find('input').each(function () {
                     $(this).attr('readonly', false)
                 });
@@ -370,13 +369,15 @@
 
 <!-- send to backend and make changes in model-->
 
-<!--            $.ajax({-->
-<!--                'url': '123',-->
-<!--                'data': '00',-->
-<!--                success: function (suc) {-->
-<!--                    console.log('success');-->
-<!--                }-->
-<!--            });-->
+            $.ajax({
+                'url': '/plane/contracts/change_table/',
+                'data': {'contract_id':checked,
+                        'from_ajax':'change_table',
+                        'upp_data':result},
+                success: function (suc) {
+                    console.log('success');
+                }
+            });
         });
 
         $('#change_mode_back').unbind('click').bind('click', function (back) {
