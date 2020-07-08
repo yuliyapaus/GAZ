@@ -106,7 +106,7 @@
             </td>
             <td><input readonly name="contract.finance_cost" value="{{ con_sum.contract.finance_cost }}"></td>
             <td><input readonly name="contract.activity_form" value="{{ con_sum.contract.activity_form }}"></td>
-            <td><input readonly name="" value="{{ con_sum.contract.curator }}"></td>
+            <td><input readonly name="contract.curator" value="{{ con_sum.contract.curator }}"></td>
             <td><input readonly name="contract.contract_type" value="{{ con_sum.contract.contract_type }}"></td>
             <td><input readonly name="contract.contract_mode" value="{{ con_sum.contract.contract_mode }}"></td>
             <td><input readonly name="contract.purchase_type" value="{{ con_sum.contract.purchase_type }}"></td>
@@ -343,14 +343,20 @@
                 alert('Выбрано более одного контракта для редактирования');
             }
             else {
-
+                changes_in = []
                 let test = $('#table_'+checked);
-                x = test.find('input').each(function () {
-                    $(this).attr('readonly', false)
+                cells = test.find('input');
+                cells.each(function () {
+                    $(this).attr('readonly', false);
                 });
-                $('.table_actions').toggle()
-                $('.contract_search_div').toggle()
-                $('.change_mode_actions').toggle()
+                $('input').on('click', function() {
+                    console.log(this.name);
+                    changes_in.push(this.name)
+                });
+
+                $('.table_actions').toggle();
+                $('.contract_search_div').toggle();
+                $('.change_mode_actions').toggle();
             };
         });
 
@@ -363,9 +369,22 @@
             let result = {}
             table_id = 'table_'+checked
             let container = $('#table_'+checked);
-            test = container.find('input').each(function () {
-                result[this.name] = this.value
+<!--            test = container.find('input').each(function () {-->
+<!--                result[this.name] = this.value-->
+<!--            });-->
+
+            $.each(changes_in, function() {
+                console.log(this)
+                result[this] = 44
             });
+            console.log(result)
+
+
+
+<!--            for (let i=0; i<changes_in.length ; i++) {-->
+<!--                console.log('for');-->
+<!--            };-->
+
 
 <!-- send to backend and make changes in model-->
 
