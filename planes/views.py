@@ -311,12 +311,14 @@ class ContractFabric(View):
 
                         print(info)
                         if len(info) != 3:
-                            # model = apps.get_model(app_label='planes',model_name=info[1])
-                            # print('model', model)
-                            fk_field = q_dic[info[0]]._meta.get_field(info[1])
+                            # model = apps.get_model(app_label='planes', model_name=q_dic[info[0]]._meta.get_field(info[1]))
+                            #    print('model', model)
 
-                            print(fk_field.title)
+                            fk_field = q_dic[info[0]]._meta.get_field(info[1])  # planes.Contract.finance_cost
 
+
+                          #  sub_model = q_dic[info[0]].fk_field
+                            print('ewrq', fk_field)
 
                             # field = getattr(q_dic[info[0]], info[1])
                             # print(field)
