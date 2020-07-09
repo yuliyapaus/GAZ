@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.apps import apps
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import (
@@ -283,19 +284,46 @@ class ContractFabric(View):
                 return HttpResponse('this is delete contract')
             if request.GET['from_ajax'] == 'change_table':
                 contract_id = request.GET['contract_id[]']
-                changing_contract = Contract.objects.get(id=contract_id)
-                changing_sum_byn = SumsBYN.objects.filter(contract__id=contract_id)
-                changing_sum_rur = SumsRUR.objects.get(contract__id=contract_id)
+                q_dic = {
+                    'contract': Contract.objects.get(id=contract_id),
+                    'sum_byn': SumsBYN.objects.filter(contract__id=contract_id),
+                    'sum_rur': SumsRUR.objects.get(contract__id=contract_id)
+                }
+
+                # changing_contract = Contract.objects.get(id=contract_id)
+                # changing_sum_byn = SumsBYN.objects.filter(contract__id=contract_id)
+                # changing_sum_rur = SumsRUR.objects.get(contract__id=contract_id)
                 dic = dict(request.GET)
                 for key in dic:
                     if 'up_data' in key:
+                        #  print(key)
                         info = key.replace('up_data', '').replace('[', '').replace(']','')
                         info = info.split('.')  # first - model, second - submodel (if exists), third - FK
+                        val = dic[key][0]
 
-
+                        if info[1] != 'number_ppz':
+                            if 'date' not in info[1]:
+                                val = int(val)
+                            else:
+                                pass  # todo iso time field
+                        else:
+                            val = str(val)
 
                         print(info)
-                print(request.GET)
+                        if len(info) != 3:
+                            # model = apps.get_model(app_label='planes',model_name=info[1])
+                            # print('model', model)
+                            fk_field = q_dic[info[0]]._meta.get_field(info[1])
+
+                            print(fk_field.title)
+
+
+                            # field = getattr(q_dic[info[0]], info[1])
+                            # print(field)
+                            # setattr(q_dic[info[0]], info[1], fk_field)
+
+
+                            # q_dic[info]
                 return HttpResponse('this is changing contract from the table')
 
         if request.GET.__contains__('pattern_contract_id'):
