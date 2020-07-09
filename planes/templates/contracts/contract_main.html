@@ -300,10 +300,10 @@
             <td><input readonly name="sum_byn.nov.fact_total" value="{{ con_sum.sum_byn.nov.fact_total }}"></td>
             <td><input readonly name="sum_byn.dec.fact_total" value="{{ con_sum.sum_byn.dec.fact_total }}"></td>
             <td class="calc" bgcolor="red">{{ con_sum. }}</td>
-            <td><input readonly name="sum_byn.1quart.economy_contract_result" value="{{ con_sum.sum_byn.1quart.economy_contract_result }}"></td>
-            <td><input readonly name="sum_byn.2quart.economy_contract_result" value="{{ con_sum.sum_byn.2quart.economy_contract_result }}"></td>
-            <td><input readonly name="sum_byn.3quart.economy_contract_result" value="{{ con_sum.sum_byn.3quart.economy_contract_result }}"></td>
-            <td><input readonly name="sum_byn.4quart.economy_contract_result" value="{{ con_sum.sum_byn.4quart.economy_contract_result }}"></td>
+            <td><input readonly name="sum_byn.1quart.economy_contract_up_data" value="{{ con_sum.sum_byn.1quart.economy_contract_up_data }}"></td>
+            <td><input readonly name="sum_byn.2quart.economy_contract_up_data" value="{{ con_sum.sum_byn.2quart.economy_contract_up_data }}"></td>
+            <td><input readonly name="sum_byn.3quart.economy_contract_up_data" value="{{ con_sum.sum_byn.3quart.economy_contract_up_data }}"></td>
+            <td><input readonly name="sum_byn.4quart.economy_contract_up_data" value="{{ con_sum.sum_byn.4quart.economy_contract_up_data }}"></td>
             <td class="calc" bgcolor="red">{{ con_sum. }}</td>
             <td class="calc" bgcolor="red">{{ con_sum. }}</td>
         </tr>
@@ -483,7 +483,7 @@
                 checked.push($(this).val());
             });
             console.log('save it')
-            let result = {}
+            let up_data = {}
             let all_values = {}
             table_id = 'table_'+checked
             let container = $('#table_'+checked);
@@ -495,9 +495,8 @@
                 all_values[this.name] = this.value
             });
             $.each(changes_in, function() {
-                result[this] = all_values[this]
+                up_data[this] = all_values[this]
             });
-            console.log(result)
 
 <!-- send to backend and make changes in model-->
 
@@ -505,7 +504,8 @@
                 'url': '/plane/contracts/change_table/',
                 'data': {'contract_id':checked,
                         'from_ajax':'change_table',
-                        'upp_data':result},
+                         up_data,
+                dataType: "json",
                 success: function (suc) {
                     console.log('success');
                 }
