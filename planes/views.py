@@ -283,6 +283,18 @@ class ContractFabric(View):
                 return HttpResponse('this is delete contract')
             if request.GET['from_ajax'] == 'change_table':
                 contract_id = request.GET['contract_id[]']
+                changing_contract = Contract.objects.get(id=contract_id)
+                changing_sum_byn = SumsBYN.objects.filter(contract__id=contract_id)
+                changing_sum_rur = SumsRUR.objects.get(contract__id=contract_id)
+                dic = dict(request.GET)
+                for key in dic:
+                    if 'up_data' in key:
+                        info = key.replace('up_data', '').replace('[', '').replace(']','')
+                        info = info.split('.')  # first - model, second - submodel (if exists), third - FK
+
+
+
+                        print(info)
                 print(request.GET)
                 return HttpResponse('this is changing contract from the table')
 
