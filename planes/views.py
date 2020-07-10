@@ -338,9 +338,22 @@ class ContractFabric(View):
                             setattr(q_dic[info[0]], info[-1], new_fk_value)
                             q_dic[info[0]].save()  # TODO put it at the end
 
+                        else:
+                            quart = info[1]
+                            try:
+                                new_fk_value = self.fk_model[info[-1]].objects.get(id=val)
+                            except:
+                                new_fk_value = val
+                            this_model = q_dic[info[0]].get(period=quart)
+                            setattr(this_model, info[-1], new_fk_value)
+                            print(this_model)
+                            this_model.save()  # TODO put it at the end
+                            print(new_fk_value, this_model)
+
+
+
+
                             # print(self.fk_model[info[-1]].objects.get(id=val))
-
-
                 return HttpResponse('this is changing contract from the table')
 
         if request.GET.__contains__('pattern_contract_id'):
