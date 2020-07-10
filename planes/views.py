@@ -325,35 +325,17 @@ class ContractFabric(View):
                         else:
                             val = str(val)
 
-                        print(info)
-                        if len(info) != 3:
-                            # model = apps.get_model(app_label='planes', model_name=q_dic[info[0]]._meta.get_field(info[1]))
-                            #    print('model', model)
-
-                            try:
-                                new_fk_value = self.fk_model[info[-1]].objects.get(id=val)
-                            except:
-                                new_fk_value = val
-
-                            setattr(q_dic[info[0]], info[-1], new_fk_value)
-                            q_dic[info[0]].save()  # TODO put it at the end
-
-                        else:
+                        if len(info) !=2 :
                             quart = info[1]
-                            try:
-                                new_fk_value = self.fk_model[info[-1]].objects.get(id=val)
-                            except:
-                                new_fk_value = val
                             this_model = q_dic[info[0]].get(period=quart)
-                            setattr(this_model, info[-1], new_fk_value)
-                            print(this_model)
-                            this_model.save()  # TODO put it at the end
-                            print(new_fk_value, this_model)
-
-
-
-
-                            # print(self.fk_model[info[-1]].objects.get(id=val))
+                        else:
+                            this_model = q_dic[info[0]]
+                        try:
+                            new_fk_value = self.fk_model[info[-1]].objects.get(id=val)
+                        except:
+                            new_fk_value = val
+                        setattr(this_model, info[-1], new_fk_value)
+                        this_model.save()  # TODO put it at the end
                 return HttpResponse('this is changing contract from the table')
 
         if request.GET.__contains__('pattern_contract_id'):
