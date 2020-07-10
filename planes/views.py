@@ -275,6 +275,22 @@ class ContractFabric(View):
         "3quart",
         "4quart",
     ]
+    fk_model = {
+            # "contract":Contract,
+            # "sum_byn":SumsBYN,
+            # "sum_rur":SumsRUR,
+            "curator":Curator,
+            "finance_cost":FinanceCosts,
+            "contract_type":ContractType,
+            "contract_mode":ContractMode,
+            "purchase_type":PurchaseType,
+            "stateASEZ":StateASEZ,
+            "number_PZTRU":NumberPZTRU,
+            "contract_status":ContractStatus,
+            "counterpart":Counterpart,
+            "activity_form":ActivityForm,
+            "currency":Currency
+    }
 
     def get(self, request, contract_id=None):
         if request.GET.__contains__('from_ajax'):
@@ -313,9 +329,14 @@ class ContractFabric(View):
                         if len(info) != 3:
                             # model = apps.get_model(app_label='planes', model_name=q_dic[info[0]]._meta.get_field(info[1]))
                             #    print('model', model)
+                            print(q_dic[info[0]].finance_cost)
 
                             fk_field = q_dic[info[0]]._meta.get_field(info[1])  # planes.Contract.finance_cost
+                            setattr(q_dic[info[0]], info[1], self.fk_model[info[1]].objects.get(id=val))
+                            print(q_dic[info[0]].finance_cost)
+                            q_dic[info[0]].save()
 
+                            print(self.fk_model[info[1]].objects.get(id=val))
 
                           #  sub_model = q_dic[info[0]].fk_field
                             print('ewrq', fk_field)
