@@ -49,6 +49,38 @@ import pandas as pd
 import numpy as np
 
 
+user_rights = {}
+user_rights['lawyers'] = [
+    'id',  # id need course you can create new or etc
+    'contract_mode',
+    'number_ppz',
+    'contract_status',
+    'register_number_SAP',
+    'contract_number',
+    'fact_sign_date',
+    'start_date',
+    'end_time',
+    'counterpart',
+    'related_contract'
+]
+user_rights['economists'] = [
+    'id',
+    'finance_cost',
+    'activity_form',
+]
+user_rights['spec_ASEZ'] = [
+    'id',
+    'purchase_type',
+    'number_ppz',
+    'number_PZTRU',
+    'stateASEZ',
+    'plan_load_date_ASEZ',
+    'fact_load_date_ASEZ',
+    'currency',
+    'number_KGG',
+]
+
+
 @login_required
 def index(request):
     return render(request, 'planes/index.html')
@@ -306,9 +338,6 @@ class ContractFabric(View):
                     'sum_rur': SumsRUR.objects.get(contract__id=contract_id)
                 }
 
-                # changing_contract = Contract.objects.get(id=contract_id)
-                # changing_sum_byn = SumsBYN.objects.filter(contract__id=contract_id)
-                # changing_sum_rur = SumsRUR.objects.get(contract__id=contract_id)
                 dic = dict(request.GET)
                 for key in dic:
                     if 'up_data' in key:
@@ -344,7 +373,7 @@ class ContractFabric(View):
         contract_mode_flag = False
         finance_cost_flag = False
         activity_form_flag = False
-        cant_do_this = []
+        cant_do_this = []  # TDOD remove if it is in def
 
         if not contract_id:
             ''' Create new contract with initial sumBYN and sumRUR'''
@@ -363,8 +392,8 @@ class ContractFabric(View):
                 queryset=contract_sum_byn.filter(period__in=self.quarts),
                 prefix='quarts'
             )
-            for form in formset_months:  # this is props for month fields
-                pass
+            # for form in formset_months:  # this is props for month fields
+            #     pass
 
         else:
             SumBYNFormSet_months = modelformset_factory(SumsBYN, SumsBYNForm_months, extra=0)  # Берет ИЗ БД
@@ -397,37 +426,6 @@ class ContractFabric(View):
             block_list = [getattr(i, 'name') for i in Contract._meta.fields]
 
             user_groups = request.user.groups.all()
-            user_rights = {}
-            user_rights['lawyers'] = [
-                'id',  # id need course you can create new or etc
-                'contract_mode',
-                'number_ppz',
-                'contract_status',
-                'register_number_SAP',
-                'contract_number',
-                'fact_sign_date',
-                'start_date',
-                'end_time',
-                'counterpart',
-                'related_contract'
-            ]
-            user_rights['economists'] = [
-                'id',
-                'finance_cost',
-                'activity_form',
-            ]
-            user_rights['spec_ASEZ'] = [
-                'id',
-                'purchase_type',
-                'number_ppz',
-                'number_PZTRU',
-                'stateASEZ',
-                'plan_load_date_ASEZ',
-                'fact_load_date_ASEZ',
-                'currency',
-                'number_KGG',
-            ]
-
             this_user_in_groups = [i.name for i in user_groups]
             this_user_can_do = []
             for i in this_user_in_groups:
