@@ -206,8 +206,8 @@
                     {% endfor %}
                 </select>
             </td>
-            <td><input readonly name="contract.plan_load_date_ASEZ" value="{{ con_sum.contract.plan_load_date_ASEZ }}"></td>
-            <td><input readonly name="contract.fact_load_date_ASEZ" value="{{ con_sum.contract.fact_load_date_ASEZ }}"></td>
+            <td><input readonly name="contract.plan_load_date_ASEZ" value="{{ con_sum.contract.plan_load_date_ASEZ.isoformat }}"></td>
+            <td><input readonly name="contract.fact_load_date_ASEZ" value="{{ con_sum.contract.fact_load_date_ASEZ.isoformat }}"></td>
             <td><input readonly name="sum_rur.start_max_price_ASEZ_NDS" value="{{ con_sum.sum_rur.start_max_price_ASEZ_NDS }}"></td>
             <td><input readonly name="sum_rur.currency_rate_on_load_date_ASEZ_NDS" value="{{ con_sum.sum_rur.currency_rate_on_load_date_ASEZ_NDS }}"></td>
             <td><input readonly name="sum_rur.contract_sum_NDS_RUB" value="{{ con_sum.sum_rur.contract_sum_NDS_RUB }}"></td>
@@ -231,9 +231,9 @@
             <td><input readonly name="sum_byn.4quart.plan_sum_SAP" value="{{ con_sum.sum_byn.4quart.plan_sum_SAP }}"></td>
             <td><input readonly name="contract.register_number_SAP" value="{{ con_sum.contract.register_number_SAP }}"></td>
             <td><input readonly name="contract.contract_number" value="{{ con_sum.contract.contract_number }}"></td>
-            <td><input readonly name="contract.plan_sign_date" value="{{ con_sum.contract.plan_sign_date }}"></td>
-            <td><input readonly name="contract.fact_sign_date" value="{{ con_sum.contract.fact_sign_date }}"></td>
-            <td><input readonly name="contract.start_date" value="{{ con_sum.contract.start_date }}"></td>
+            <td><input readonly name="contract.plan_sign_date" value="{{ con_sum.contract.plan_sign_date.isoformat }}"></td>
+            <td><input readonly name="contract.fact_sign_date" value="{{ con_sum.contract.fact_sign_date.isoformat }}"></td>
+            <td><input readonly name="contract.start_date" value="{{ con_sum.contract.start_date.isoformat }}"></td>
             <td><input readonly name="contract.end_time" value="{{ con_sum.contract.end_time }}"></td>
             <td>
                 <div class="choiser_FK">
