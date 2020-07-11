@@ -86,7 +86,9 @@
         <a href="{% url 'analytics:analytics' %}" class="nav-element{% if url_name|slice:":6" == '/analy' %} nav-active{% endif %}">
             Аналитика
         </a>
-        <a href="/admin" class="nav-element">Администрирование</a>
+        <a href="/administration" class="nav-element{% if url_name|slice:":6" == '/admin' %} nav-active{% endif %}">
+            Администрирование
+        </a>
         <a href="/catalog" class="nav-element{% if url_name|slice:":6" == '/catal' %} nav-active{% endif %}">
             Справочники
         </a>

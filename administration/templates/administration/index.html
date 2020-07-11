@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+{% endblock styles %}
+
+
+{% block content %}
+    <div class="headline">
+        <h1>Администрирование</h1>
+    </div>
+
+    <div id="data-container" class="catalog-container">
+        Administration content
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+{% endblock scripts %}
