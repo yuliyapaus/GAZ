@@ -5,4 +5,5 @@ app_name = "administration"
 
 urlpatterns = [
     path('', views.index),
+    path('reg/', views.user_reg),
 ]
