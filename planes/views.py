@@ -539,6 +539,7 @@ class ContractFabric(View):
                     )
             return redirect(reverse('planes:contracts'))
         else:
+            print(sum_rur_form.errors)
             print(contract_form.errors)
             print( sum_rur_form.is_valid(),
                    contract_form.is_valid(),
